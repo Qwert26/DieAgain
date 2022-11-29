@@ -12,14 +12,29 @@ public class SqueezeTest extends AbstractTest {
 														306.66, 179.39, 103.24, 58.51, 32.69, 18.03, 9.82, 11.21};
 	private int trials = STANDARD_TRIALS;
 	public SqueezeTest() {}
+	/**
+	 * 
+	 */
 	@Override
 	public double[] test(Random rngToTest) {
 		return doTest(rngToTest, trials, useFloats);
 	}
+	/**
+	 * 
+	 */
 	@Override
 	public double[] quickTest(Random rngToTest) {
 		return doTest(rngToTest, STANDARD_TRIALS, true);
 	}
+	/**
+	 * Executes the squeeze test: The value 2147483647, which is 2<sup>31</sup>-1, is being repeatedly multiplied with supposedly uniform values from 0 to 1 and rounded up,
+	 * until it reaches 1. The amount of repeats necessary is recorded for each trial. Values less than 6 are all handled the same and after the 48th iteration,
+	 * the trial gets aborted as in theory an infinity amount of multiplications can be necessary.
+	 * @param rngToTest
+	 * @param trials
+	 * @param useFloats
+	 * @return
+	 */
 	public static double[] doTest(Random rngToTest, int trials, boolean useFloats) {
 		double[]expected=new double[DEFAULT_EXPECTED.length];
 		int[] actual=new int[DEFAULT_EXPECTED.length];
@@ -50,7 +65,7 @@ public class SqueezeTest extends AbstractTest {
 		switch(identifier.toLowerCase()) {
 		case "trials":
 			if(value instanceof Number) {
-				trials=((Number) value).intValue();
+				setTrials(((Number) value).intValue());
 			} else {
 				throw new IllegalArgumentException("Can not set setting "+identifier+": value can not be converted!");
 			}
@@ -75,6 +90,10 @@ public class SqueezeTest extends AbstractTest {
 		return trials;
 	}
 	public void setTrials(int trials) {
-		this.trials = trials;
+		if(trials<0) {
+			this.trials=-trials;
+		} else {
+			this.trials = trials;
+		}
 	}
 }
