@@ -39,7 +39,7 @@ public abstract class AbstractTest implements ITest {
 		return new String[] {"usefloats"};
 	}
 	/**
-	 * 
+	 * Determines if {@link Random#nextFloat()} or {@link Random#nextDouble()} should be used in the test.
 	 * @param floats
 	 */
 	public void setUseFloats(boolean floats) {
@@ -47,11 +47,17 @@ public abstract class AbstractTest implements ITest {
 	}
 	/**
 	 * 
-	 * @return
+	 * @return If this test is using floats or doubles.
 	 */
 	public boolean isUsingFloats() {
 		return useFloats;
 	}
+	/**
+	 * 
+	 * @param rng
+	 * @param useFloats
+	 * @return A supposedly uniform value from 0 to 1 by either calling {@link Random#nextFloat()} or {@link Random#nextDouble()}.
+	 */
 	protected static double getUniformValue(Random rng, boolean useFloats) {
 		return useFloats?rng.nextFloat():rng.nextDouble();
 	}

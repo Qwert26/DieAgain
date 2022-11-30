@@ -12,14 +12,29 @@ public class MinimumDistanceTest extends AbstractTest {
 	private int samples=STANDARD_SAMPLES;
 	private boolean uselarge=true;
 	public MinimumDistanceTest() {}
+	/**
+	 * 
+	 */
 	@Override
 	public double[] test(Random rngToTest) {
 		return new double[] {doTest(rngToTest, samples, uselarge, useFloats)};
 	}
+	/**
+	 * 
+	 */
 	@Override
 	public double[] quickTest(Random rngToTest) {
 		return new double[] {doTest(rngToTest, STANDARD_SAMPLES, false, true)};
 	}
+	/**
+	 * Does the minimum distance test: For the small version, it chooses 4000 random points in a square of side length 1000 and finds the smallest distance between them.
+	 * For the large version, it chooses 8000 points in a square of side length 10000.
+	 * @param rngToTest
+	 * @param samples
+	 * @param useLarge
+	 * @param useFloats
+	 * @return
+	 */
 	public static double doTest(Random rngToTest, int samples, boolean useLarge, boolean useFloats) {
 		double[] data=new double[samples];
 		for(int i=0;i<samples;i++) {
@@ -27,7 +42,7 @@ public class MinimumDistanceTest extends AbstractTest {
 		}
 		return Functions.ksTest(data);
 	}
-	public static double generateDataPoint(Random rngToTest, boolean useLarge, boolean useFloats) {
+	private static double generateDataPoint(Random rngToTest, boolean useLarge, boolean useFloats) {
 		double mean=useLarge?MEAN_LARGE:MEAN_SMALL;
 		int points=useLarge?POINTS_LARGE:POINTS_SMALL;
 		int side=useLarge?SIDE_LARGE:SIDE_SMALL;
