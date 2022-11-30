@@ -32,7 +32,7 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 	/**
-	 * 
+	 * Available Parameters inside the Test itself. Subclasses need to extend the output of this method with their own parameters.
 	 */
 	@Override
 	public String[] availableSettings() {
