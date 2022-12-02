@@ -1,6 +1,12 @@
 package battery;
 import java.util.*;
 import util.*;
+/**
+ * Minimum distance^2 between n random 2d-points. Mean is about 0.04 for 4000 points in a square of side 1000 and 0.995 for 8000 points in a square of side 10000.
+ * Since distance^2 is approximately exponential with mean 0.04 or 0.995, 1-exp(-d^2/mean) should be uniform on [0,1).
+ * @author George Marsaglia
+ * @author Christian Schürhoff
+ */
 public class MinimumDistanceTest extends AbstractTest {
 	private static final double MEAN_SMALL=0.04;
 	private static final double MEAN_LARGE=0.995;

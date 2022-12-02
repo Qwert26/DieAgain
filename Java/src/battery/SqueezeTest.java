@@ -1,6 +1,13 @@
 package battery;
 import java.util.*;
 import util.*;
+/**
+ * How many iterations of k=k*uniform()+1 are required to squeeze k down to 1, starting with k=2147483647=2^31-1? The exact distribution of the required j is used,
+ * with a chi-square test based on 100000 tries. The mean of j is 23.064779, with a variance of 23.70971151.
+ * @author George Marsaglia
+ * @author Christian Schürhoff
+ *
+ */
 public class SqueezeTest extends AbstractTest {
 	private static final int STANDARD_TRIALS = 100000;
 	//private static final double STANDARD_DEVIATION = Math.sqrt(84);

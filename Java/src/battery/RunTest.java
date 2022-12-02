@@ -1,6 +1,12 @@
 package battery;
 import java.util.*;
 import util.*;
+/**
+ * Count the number of runs and compute the statistics
+ * @author George Marsaglia
+ * @author Christian Schürhoff
+ * @see Algorithm AS 157 Appl. Statist. (1921) vol. 30, No. 1
+ */
 public class RunTest extends AbstractTest {
 	private static final int STANDARD_LENGTH = 10000;
 	private static final int MINIMUM_LENGTH = 4000;
