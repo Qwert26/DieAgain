@@ -22,7 +22,6 @@ public class OverlappingSumsTest extends AbstractTest {
 		double[] pv=new double[numberOfObservations];
 		for (int i=0;i<numberOfObservations;i++) {
 			pv[i]=singleTest(rngToTest, numberOfSums, numberOfNumbers, useFloats);
-			System.out.println("\tTest "+i+" returned "+pv[i]);
 		}
 		return Functions.ksTest(pv);
 	}
@@ -30,7 +29,6 @@ public class OverlappingSumsTest extends AbstractTest {
 		double[] p=new double[numberOfSums];
 		for (int i=0;i<numberOfSums;i++) {
 			p[i]=subTest(rngToTest, numberOfNumbers, useFloats);
-			System.out.println("\t\tSubtest "+i+" returned "+p[i]);
 		}
 		return Functions.ksTest(p);
 	}
@@ -54,7 +52,7 @@ public class OverlappingSumsTest extends AbstractTest {
 		for (int i=2;i<numberOfNumbers;i++) {
 			a=2*numberOfNumbers+1-i;
 			b=2*a-2;
-			x[i]=y[0]/Math.sqrt(a*b)-Math.sqrt((a-1)/(b+2))*y[i-1]+y[i]*Math.sqrt(a/b);
+			x[i]=y[i-2]/Math.sqrt(a*b)-y[i-1]*Math.sqrt((a-1)/(b+2))+y[i]*Math.sqrt(a/b);
 			x[i]=Functions.cdfStandardNormal(x[i]);
 		}
 		return Functions.ksTest(x);
@@ -130,13 +128,5 @@ public class OverlappingSumsTest extends AbstractTest {
 		} else {
 			this.numbers=numbers;
 		}
-	}
-	public static void main(String... args) {
-		OverlappingSumsTest test=new OverlappingSumsTest();
-		test.setNumbers(55);
-		test.setSums(55);
-		test.setObservations(6);
-		Random r=new Random();
-		System.out.println("Multiple test returned "+test.test(r)[0]);
 	}
 }
