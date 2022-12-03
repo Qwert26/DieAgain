@@ -2,9 +2,9 @@ package battery;
 import java.util.*;
 import util.*;
 public class Sphere3DTest extends AbstractTest {
-	private static final int STANDARD_OBSERVATIONS=20;
-	private static final int POINTS=4000;
-	private static final int EDGE_LENGTH=1000;
+	public static final int STANDARD_OBSERVATIONS=20;
+	public static final int POINTS=4000;
+	public static final int EDGE_LENGTH=1000;
 	private int observations=STANDARD_OBSERVATIONS;
 	public Sphere3DTest() {}
 	/**

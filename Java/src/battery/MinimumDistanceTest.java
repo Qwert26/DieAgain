@@ -8,13 +8,13 @@ import util.*;
  * @author Christian Schürhoff
  */
 public class MinimumDistanceTest extends AbstractTest {
-	private static final double MEAN_SMALL=0.04;
-	private static final double MEAN_LARGE=0.995;
-	private static final int POINTS_SMALL=4000;
-	private static final int POINTS_LARGE=8000;
-	private static final int SIDE_SMALL=1000;
-	private static final int SIDE_LARGE=10000;
-	private static final int STANDARD_SAMPLES=100;
+	public static final double MEAN_SMALL=0.04;
+	public static final double MEAN_LARGE=0.995;
+	public static final int POINTS_SMALL=4000;
+	public static final int POINTS_LARGE=8000;
+	public static final int SIDE_SMALL=1000;
+	public static final int SIDE_LARGE=10000;
+	public static final int STANDARD_SAMPLES=100;
 	private int samples=STANDARD_SAMPLES;
 	private boolean uselarge=true;
 	public MinimumDistanceTest() {}
@@ -48,6 +48,13 @@ public class MinimumDistanceTest extends AbstractTest {
 		}
 		return Functions.ksTest(data);
 	}
+	/**
+	 * Places the appropiate number of points inside an appropiate sized square.
+	 * @param rngToTest
+	 * @param useLarge
+	 * @param useFloats
+	 * @return
+	 */
 	private static double generateDataPoint(Random rngToTest, boolean useLarge, boolean useFloats) {
 		double mean=useLarge?MEAN_LARGE:MEAN_SMALL;
 		int points=useLarge?POINTS_LARGE:POINTS_SMALL;

@@ -8,10 +8,10 @@ import util.*;
  * @see Algorithm AS 157 Appl. Statist. (1921) vol. 30, No. 1
  */
 public class RunTest extends AbstractTest {
-	private static final int STANDARD_LENGTH = 10000;
-	private static final int MINIMUM_LENGTH = 4000;
-	private static final int STANDARD_SEQUENCE_COUNT = 10;
-	private static final int STANDARD_SET_COUNT = 3;
+	public static final int STANDARD_LENGTH = 10000;
+	public static final int MINIMUM_LENGTH = 4000;
+	public static final int STANDARD_SEQUENCE_COUNT = 10;
+	public static final int STANDARD_SET_COUNT = 3;
 	private static final double[][] COVARIANCE_MATRIX = {	{4529.4, 9044.9, 13568.0, 18091.0, 22615.0, 27892.0},
 															{9044.9, 18097.0, 27139.0, 36187.0, 45234.0, 55789.0}, 
 															{13568.0, 27139.0, 40721.0, 54281.0, 67852.0, 83685.0},

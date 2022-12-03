@@ -3,9 +3,9 @@ import java.util.*;
 import java.util.function.*;
 import util.*;
 public class CountOnesTest extends AbstractTest {
-	private static final long STANDARD_WORD_COUNT=256000;
-	private static final double MEAN=2500;//5^5-5^4
-	private static final double STANDARD_DEVIATION=Math.sqrt(5000);//mean*2
+	public static final long STANDARD_WORD_COUNT=256000;
+	public static final double MEAN=2500;//5^5-5^4
+	public static final double STANDARD_DEVIATION=Math.sqrt(5000);//mean*2
 	private static final double[] LETTER_PROBABILITIES = {37/256.0, 56/256.0, 70/256.0, 56/256.0, 37/256.0};
 	private boolean byteStream=true;
 	private int rightShift=24;
@@ -70,7 +70,7 @@ public class CountOnesTest extends AbstractTest {
 						rest=4;
 					}
 					rest--;
-					return (pseudoByte>>rest*8)&255;
+					return (pseudoByte>>(rest*8))&255;
 				}
 			};
 		} else {
@@ -81,18 +81,19 @@ public class CountOnesTest extends AbstractTest {
 				}
 			};
 		}
+		//create the first word:
 		word = 625*byteToLetter(getter.applyAsInt(rightShift))+
 				125*byteToLetter(getter.applyAsInt(rightShift))+
 				25*byteToLetter(getter.applyAsInt(rightShift))+
 				5*byteToLetter(getter.applyAsInt(rightShift))+
 				byteToLetter(getter.applyAsInt(rightShift));
 		for (long i=0;i<numberOfWords;i++) {
-			word%=625;
+			word%=625; //Remove the first letter
 			actual4[word]++;
-			word=5*word+byteToLetter(getter.applyAsInt(rightShift));
+			word=5*word+byteToLetter(getter.applyAsInt(rightShift)); //Add a new letter at the end.
 			actual5[word]++;
 		}
-		for (int i=0;i<actual4.length;i++) { //Starts at AAAA.
+		for (int i=0;i<actual4.length;i++) { //Starts at AAAA or 0 in base 5 and ends at EEEE or 4444 in base 5.
 			expected=numberOfWords;
 			word=i;
 			for(int j=0;j<4;j++) {
@@ -102,7 +103,7 @@ public class CountOnesTest extends AbstractTest {
 			chsq+=(actual4[i]-expected)*(actual4[i]-expected)/expected;
 		}
 		chsq=-chsq;
-		for (int i=0;i<actual5.length;i++) { //Starts at AAAAA.
+		for (int i=0;i<actual5.length;i++) { //Starts at AAAAA or 0 in base 5 and ends at EEEEE or 44444 in base 5.
 			expected=numberOfWords;
 			word=i;
 			for(int j=0;j<5;j++) {

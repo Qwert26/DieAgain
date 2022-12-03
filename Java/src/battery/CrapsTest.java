@@ -2,7 +2,7 @@ package battery;
 import java.util.*;
 import util.*;
 public class CrapsTest extends AbstractTest {
-	private static final int STANDARD_GAMES=200000;
+	public static final int STANDARD_GAMES=200000;
 	private int games=STANDARD_GAMES;
 	public CrapsTest() {}
 	/**
@@ -54,24 +54,28 @@ public class CrapsTest extends AbstractTest {
 		expected[20]=1-sum;
 		actual[0]=actual[20]=0;
 		for (i=0;i<games;i++) {
-			out1st=throwDie(rngToTest, useFloats)+throwDie(rngToTest, useFloats);
+			out1st=throwDie(rngToTest, useFloats)+throwDie(rngToTest, useFloats); //Throw first pair.
 			numberOfThrows=0;
 			if(out1st==7 || out1st==11) {
 				numberOfWins++;
-				actual[Math.min(20, numberOfThrows)]++;
+				actual[0]++;
+				//We won, next game
 			} else if (out1st==2 || out1st==3 || out1st==12) {
-				actual[Math.min(20, numberOfThrows)]++;
+				actual[0]++;
+				//We lost, next game.
 			} else {
 				while (true) {
-					outnxt=throwDie(rngToTest, useFloats)+throwDie(rngToTest, useFloats);
+					outnxt=throwDie(rngToTest, useFloats)+throwDie(rngToTest, useFloats); //Throw next pair
 					numberOfThrows++;
 					if(outnxt==7) {
 						actual[Math.min(20, numberOfThrows)]++;
 						break;
+						//We lost, next game
 					} else if (outnxt==out1st) {
 						numberOfWins++;
 						actual[Math.min(20, numberOfThrows)]++;
 						break;
+						//We won, next game.
 					}
 				}
 			}

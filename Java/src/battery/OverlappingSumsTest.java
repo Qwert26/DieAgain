@@ -18,6 +18,15 @@ public class OverlappingSumsTest extends AbstractTest {
 	public double[] quickTest(Random rngToTest) {
 		return new double[] {subTest(rngToTest, MINIMUM_NUMBERS, true)};
 	}
+	/**
+	 * 
+	 * @param rngToTest
+	 * @param numberOfObservations
+	 * @param numberOfSums
+	 * @param numberOfNumbers
+	 * @param useFloats
+	 * @return
+	 */
 	public static double multipleTests(Random rngToTest, int numberOfObservations, int numberOfSums, int numberOfNumbers, boolean useFloats) {
 		double[] pv=new double[numberOfObservations];
 		for (int i=0;i<numberOfObservations;i++) {
@@ -25,6 +34,14 @@ public class OverlappingSumsTest extends AbstractTest {
 		}
 		return Functions.ksTest(pv);
 	}
+	/**
+	 * 
+	 * @param rngToTest
+	 * @param numberOfSums
+	 * @param numberOfNumbers
+	 * @param useFloats
+	 * @return
+	 */
 	public static double singleTest(Random rngToTest, int numberOfSums, int numberOfNumbers, boolean useFloats) {
 		double[] p=new double[numberOfSums];
 		for (int i=0;i<numberOfSums;i++) {
@@ -32,19 +49,27 @@ public class OverlappingSumsTest extends AbstractTest {
 		}
 		return Functions.ksTest(p);
 	}
+	/**
+	 * 
+	 * @param rngToTest
+	 * @param numberOfNumbers
+	 * @param useFloats
+	 * @return
+	 */
 	public static double subTest(Random rngToTest, int numberOfNumbers, boolean useFloats) {
 		double x[]=new double[numberOfNumbers], y[]=new double[numberOfNumbers], sum=0, tmp, mean=numberOfNumbers*0.5, rstd=Math.sqrt(12), a, b;
+		//Fill y with the used numbers of the first sum.
 		for (int i=0;i<numberOfNumbers;i++) {
 			y[i]=getUniformValue(rngToTest, useFloats);
 			sum+=y[i];
 		}
 		for (int i=1;i<numberOfNumbers;i++) {
-			tmp=y[i-1];
-			y[i-1]=(sum-mean)*rstd;
-			sum-=tmp;
-			sum+=getUniformValue(rngToTest, useFloats);
+			tmp=y[i-1]; //Store the first number of the previous sum.
+			y[i-1]=(sum-mean)*rstd; //Convert the previous sum into a number of the standard normal distribution.
+			sum-=tmp; //Subtract the first number of the previous sum.
+			sum+=getUniformValue(rngToTest, useFloats); //Add a new number for the next sum.
 		}
-		y[numberOfNumbers-1]=(sum-mean)*rstd;
+		y[numberOfNumbers-1]=(sum-mean)*rstd; //Convert the last sum into a number of the standard normal distribution.
 		x[0]=y[0]/Math.sqrt(numberOfNumbers);
 		x[1]=-x[0]*(numberOfNumbers-1)/Math.sqrt(2*numberOfNumbers-1)+y[1]*Math.sqrt(numberOfNumbers/(2.0*numberOfNumbers+1.0));
 		x[0]=Functions.cdfStandardNormal(x[0]);
@@ -128,5 +153,14 @@ public class OverlappingSumsTest extends AbstractTest {
 		} else {
 			this.numbers=numbers;
 		}
+	}
+	@Deprecated
+	public static void main(String...args) {
+		OverlappingSumsTest test=new OverlappingSumsTest();
+		test.setNumbers(100);
+		test.setSums(100);
+		test.setObservations(10);
+		Random r=new Random();
+		System.out.println("p = "+test.test(r)[0]);
 	}
 }

@@ -2,11 +2,11 @@ package battery;
 import java.util.*;
 import util.*;
 public class ParkingLotTest extends AbstractTest {
-	private static final int STANDARD_TRIALS=10;
-	private static final int OBSERVATIONS=12000;
-	private static final double SIDE=100;
-	private static final int MEAN=3523;
-	private static final double SIGMA=21.9;
+	public static final int STANDARD_TRIALS=10;
+	public static final int OBSERVATIONS=12000;
+	public static final double SIDE=100;
+	public static final int MEAN=3523;
+	public static final double SIGMA=21.9;
 	private int trials=STANDARD_TRIALS;
 	public ParkingLotTest() {}
 	/**

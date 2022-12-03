@@ -9,7 +9,7 @@ import util.*;
  *
  */
 public class SqueezeTest extends AbstractTest {
-	private static final int STANDARD_TRIALS = 100000;
+	public static final int STANDARD_TRIALS = 100000;
 	//private static final double STANDARD_DEVIATION = Math.sqrt(84);
 	private static final double[] DEFAULT_EXPECTED = {	21.03, 57.79, 175.54, 467.32, 1107.83, 2367.84,
 														4609.44, 8241.16, 13627.81, 20968.49, 30176.12, 40801.97, 52042.03,
