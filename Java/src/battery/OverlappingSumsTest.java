@@ -157,9 +157,9 @@ public class OverlappingSumsTest extends AbstractTest {
 	@Deprecated
 	public static void main(String...args) {
 		OverlappingSumsTest test=new OverlappingSumsTest();
-		test.setNumbers(100);
-		test.setSums(100);
-		test.setObservations(10);
+		test.setNumbers(50);
+		test.setSums(50);
+		test.setObservations(5);
 		Random r=new Random();
 		System.out.println("p = "+test.test(r)[0]);
 	}

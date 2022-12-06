@@ -104,6 +104,42 @@ public final class Functions {
 		if (z<=4) return 1-0.6621361*exp(-1.091638*z)-0.95095*exp(-2.005138*z);
 		return 1-0.4938691*exp(-1.050321*z)-0.5946335*exp(-1.527198*z);
 	}
+	public static double pmfBinomial(long k, long n, double p) {
+		if(0<=p&&p<=1) {
+			if(0<=k&&k<=n) {
+				return binomialCoefficent(n, k)*pow(p,k)*pow(1-p,n-k);
+			} else {
+				throw new IllegalArgumentException("k is unsupported.");
+			}
+		} else {
+			throw new IllegalArgumentException("Probability must be between 0 and 1.");
+		}
+	}
+	public static double cdfBinomial(long k, long n, double p) {
+		if(0<=p&&p<=1) {
+			if(0<=k&&k<=n) {
+				double sum=0;
+				for (long i=0;i<=k;i++) {
+					sum+=pmfBinomial(i, n, p);
+				}
+				return sum;
+			} else {
+				throw new IllegalArgumentException("k is unsupported.");
+			}
+		} else {
+			throw new IllegalArgumentException("Probability must be between 0 and 1.");
+		}
+	}
+	public static double binomialCoefficent(long n, long k) {
+		if(k<0 || k>n)  return 0;
+		if(k==0 || k==n) return 1;
+		k=min(k,n-k);
+		double c=1;
+		for (long i=0;i<k;i++) {
+			c=c*(n-i)/(i+1);
+		}
+		return c;
+	}
 	public static double spline(double x, int n) {
 		double tmp=abs(10*x+0.5-n);
 		if (n<7) {
