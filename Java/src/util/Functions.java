@@ -180,4 +180,56 @@ public final class Functions {
 		pvalue=1-cdfAndersonDarling(z);
 		return pvalue;
 	}
+	public static int numberOfLeadingZeros(short s) {
+		if(s<0) {
+			return 0;
+		} else if(s==0) {
+			return Short.SIZE;
+		} else {
+			int ret=0;
+			do {
+				s<<=1;
+				ret++;
+			} while (s>0);
+			return ret;
+		}
+	}
+	public static int numberOfTrailingZeros(short s) {
+		if(s==0) {
+			return Short.SIZE;
+		} else {
+			int ret=0;
+			while ((s&1)!=1) {
+				s>>>=1;
+				ret++;
+			}
+			return ret;
+		}
+	}
+	public static int numberOfLeadingZeros(byte b) {
+		if(b<0) {
+			return 0;
+		} else if(b==0) {
+			return Byte.SIZE;
+		} else {
+			int ret=0;
+			do {
+				b<<=1;
+				ret++;
+			} while (b>0);
+			return ret;
+		}
+	}
+	public static int numberOfTrailingZeros(byte b) {
+		if(b==0) {
+			return Byte.SIZE;
+		} else {
+			int ret=0;
+			while ((b&1)!=1) {
+				b>>>=1;
+				ret++;
+			}
+			return ret;
+		}
+	}
 }

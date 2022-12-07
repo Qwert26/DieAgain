@@ -1,4 +1,5 @@
 package battery;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
 import util.*;
@@ -16,8 +17,7 @@ public class TakeAndSkipTest extends AbstractTest {
 	}
 	@Override
 	public double[] quickTest(Random rngToTest) {
-		// TODO Auto-generated method stub
-		return null;
+		return doTest(rngToTest, 64, 64, (byte)4, 2, new long[] {0}, new long[] {2});
 	}
 	public static double[] doTest(Random rngToTest, int samples, long values, byte bits, final long initial, final long[] skips, final long[] takes) {
 		long[][] counts=new long[samples][1<<(bits)];
@@ -120,6 +120,28 @@ public class TakeAndSkipTest extends AbstractTest {
 				throw new IllegalArgumentException("Can not set setting "+identifier+": value can not be converted!");
 			}
 			break;
+		case "skipbits":
+			if (value.getClass().isArray()) {
+				long[] params=new long[Array.getLength(value)];
+				for(int i=0;i<params.length;i++) {
+					params[i]=Array.getLong(value, i);
+				}
+				setSkipBits(params);
+			} else {
+				throw new IllegalArgumentException("Can not set setting "+identifier+": value is not an array!");
+			}
+			break;
+		case "takebits":
+			if (value.getClass().isArray()) {
+				long[] params=new long[Array.getLength(value)];
+				for(int i=0;i<params.length;i++) {
+					params[i]=Array.getLong(value, i);
+				}
+				setTakeBits(params);
+			} else {
+				throw new IllegalArgumentException("Can not set setting "+identifier+": value is not an array!");
+			}
+			break;
 		default:
 			super.setSetting(identifier, value);
 			break;
@@ -185,15 +207,16 @@ public class TakeAndSkipTest extends AbstractTest {
 			this.bits=bits;
 		}
 	}
+	@Deprecated
 	public static void main(String...args) {
 		TakeAndSkipTest test=new TakeAndSkipTest();
 		Random r=new Random();
 		test.setInitialTake(2);
 		test.setSkipBits(6);
 		test.setTakeBits(2);
-		test.setBits((byte)4);
-		test.setSamples(100);
-		test.setValues(100);
+		test.setBits((byte)8);
+		test.setSamples(32);
+		test.setValues(1024);
 		double[] res=test.test(r);
 		System.out.println("p-Value for Uniformity: "+res[0]);
 		System.out.println("p-Value for Binomial Distributions: "+res[1]);
