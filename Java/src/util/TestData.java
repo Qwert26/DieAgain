@@ -24,6 +24,10 @@ public class TestData {
 	 * Number of independant statistics generated per run.
 	 */
 	private int nkps;
+	/**
+	 * An instance of the class implementing the test.
+	 */
+	private test.ITest testMethod;
 	public TestData() {}
 	public String getName() {
 		return name;
@@ -60,5 +64,11 @@ public class TestData {
 	}
 	public void setNkps(int nkps) {
 		this.nkps = nkps;
+	}
+	public test.ITest getTestMethod() {
+		return testMethod;
+	}
+	public void setTestMethod(test.ITest testMethod) {
+		this.testMethod = testMethod;
 	}
 }
