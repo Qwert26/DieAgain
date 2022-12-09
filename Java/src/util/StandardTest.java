@@ -1,10 +1,6 @@
 package util;
 public class StandardTest {
 	/**
-	 * Number of test statistics created per run
-	 */
-	private int nkps;
-	/**
 	 * Number of samples per test if applicable
 	 */
 	private int tSamples;
@@ -21,9 +17,9 @@ public class StandardTest {
 	 */
 	private double[] pValues;
 	/**
-	 * Array of length {@link #pSamples} to hold labels per p-value.
+	 * Holds labels for p-values.
 	 */
-	private String[] pvLabels;
+	private String pvLabels;
 	/**
 	 * Final KS p-value from run of many tests.
 	 */
@@ -33,12 +29,6 @@ public class StandardTest {
 	 */
 	private double x, y, z;
 	public StandardTest() {}
-	public int getNkps() {
-		return nkps;
-	}
-	public void setNkps(int nkps) {
-		this.nkps = nkps;
-	}
 	public int gettSamples() {
 		return tSamples;
 	}
@@ -51,7 +41,6 @@ public class StandardTest {
 	public void setpSamples(int pSamples) {
 		this.pSamples = pSamples;
 		pValues = new double[pSamples];
-		pvLabels = new String[pSamples];
 	}
 	public int getnTuple() {
 		return nTuple;
@@ -62,8 +51,11 @@ public class StandardTest {
 	public double[] getpValues() {
 		return pValues;
 	}
-	public String[] getPvLabels() {
+	public String getPvLabels() {
 		return pvLabels;
+	}
+	public void setPvLabels(String pvLabels) {
+		this.pvLabels=pvLabels;
 	}
 	public double getKs_pValue() {
 		return ks_pValue;
