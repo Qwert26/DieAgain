@@ -170,13 +170,15 @@ public final class Functions {
 	 */
 	public static double ksTest(double...x) {
 		double pvalue, tmp, z=-x.length*x.length, epsilon=pow(10,-20);
-		Arrays.sort(x);
-		for (int i=0;i<x.length;i++) {
-			tmp=x[i]*(1-x[x.length-1-i]);
+		double[] xCopy=new double[x.length];
+		System.arraycopy(x, 0, xCopy, 0, x.length);
+		Arrays.sort(xCopy);
+		for (int i=0;i<xCopy.length;i++) {
+			tmp=xCopy[i]*(1-xCopy[xCopy.length-1-i]);
 			tmp=max(epsilon,tmp);
 			z-=(2*i+1)*log(tmp);
 		}
-		z/=x.length;
+		z/=xCopy.length;
 		pvalue=1-cdfAndersonDarling(z);
 		return pvalue;
 	}
@@ -231,5 +233,26 @@ public final class Functions {
 			}
 			return ret;
 		}
+	}
+	public static double evaluateMostExtreme(double... pValues) {
+		double ext=1.0;
+		int sign=1;
+		for (int i=0;i<pValues.length;i++) {
+			double p=pValues[i];
+			int cursign=-1;
+			if (p>0.5) {
+				p=1-p;
+				cursign=1;
+			}
+			if (p<ext) {
+				ext=p;
+				sign=cursign;
+			}
+		}
+		ext=pow(1.0-ext,pValues.length);
+		if (sign==1) {
+			ext=1-ext;
+		}
+		return ext;
 	}
 }

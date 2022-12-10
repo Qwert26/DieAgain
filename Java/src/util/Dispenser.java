@@ -86,7 +86,29 @@ public class Dispenser {
 			}
 			return ret;
 		} else {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Can not provide "+bits+" Bits!");
+		}
+	}
+	public double getBitsAsDouble(byte bits) {
+		return getBitsAsDouble(bits, bits);
+	}
+	public double getBitsAsDouble(byte bits, long bitsToMove) {
+		if(bits<=63) {
+			long raw=getBits(bits, bitsToMove);
+			double mult=Math.pow(2.0, -bits);
+			return raw*mult;
+		} else {
+			throw new IllegalArgumentException("The highest order bit must be 0 at all times!");
+		}
+	}
+	public byte getBitsAsByte(byte bits) {
+		return getBitsAsByte(bits, bits);
+	}
+	public byte getBitsAsByte(byte bits, long bitsToMove) {
+		if (bits<=8) {
+			return (byte)getBits(bits, bitsToMove);
+		} else {
+			throw new IllegalArgumentException("Can at most provide 8 Bits!");
 		}
 	}
 	/**

@@ -7,7 +7,7 @@ public class TestData {
 	/**
 	 * The short name of the test, also its call name.
 	 */
-	private String shortName;
+	private String shortName="runTestOn";
 	/**
 	 * The test description;
 	 */
@@ -28,6 +28,10 @@ public class TestData {
 	 * An instance of the class implementing the test.
 	 */
 	private test.ITest testMethod;
+	/**
+	 * Extra information for the test.
+	 */
+	private double[] extra;
 	public TestData() {}
 	public String getName() {
 		return name;
@@ -70,5 +74,21 @@ public class TestData {
 	}
 	public void setTestMethod(test.ITest testMethod) {
 		this.testMethod = testMethod;
+	}
+	public double[] getExtra() {
+		return extra;
+	}
+	public void setExtra(double...extra) {
+		this.extra = extra;
+	}
+	public StandardTest createTest(int pSamples, int tSamples) {
+		StandardTest ret=new StandardTest();
+		ret.setpSamples(pSamples);
+		ret.settSamples(tSamples);
+		ret.setNkps(nkps);
+		return ret;
+	}
+	public StandardTest createTest() {
+		return createTest(pSamplesStandard, tSamplesStandard);
 	}
 }

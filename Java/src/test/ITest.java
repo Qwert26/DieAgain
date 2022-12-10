@@ -8,7 +8,7 @@ public interface ITest {
 	 * @param rng
 	 * The Source of randomness to test.
 	 * @param parameters
-	 * A test can choose
+	 * Each complete run of a single Test uses one of the given parameters.
 	 */
 	void runTestOn(Random rng, StandardTest...parameters);
 }

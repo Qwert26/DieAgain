@@ -35,6 +35,8 @@ public class TestVector {
 	public void setNvec(int nvec) {
 		this.nvec = nvec;
 		ndof=nvec-1;
+		x=new double[nvec];
+		y=new double[nvec];
 	}
 	public int getNdof() {
 		return ndof;

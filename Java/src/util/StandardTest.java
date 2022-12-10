@@ -1,37 +1,71 @@
 package util;
+
+import java.util.*;
+
 public class StandardTest {
+	/**
+	 * Number of test statistics created per run
+	 */
+	private int nkps=1;
 	/**
 	 * Number of samples per test if applicable
 	 */
-	private int tSamples;
+	private int tSamples=1;
 	/**
-	 * Number of test runs per final KS p-value;
+	 * Number of test runs per final p-value;
 	 */
-	private int pSamples;
+	private int pSamples=1;
 	/**
-	 * Number of Bits in nTuples being tested.
+	 * Number of Bits in nTuples being tested. Usually in the range from 1 to 64. 0 means unset and the test should use its default.
 	 */
-	private int nTuple;
+	private byte nTuple=0;
 	/**
-	 * Array of length {@link #pSamples} to hold test p-values.
+	 * Array of length {@link #pSamples}*{@link #nkps} to hold test p-values.
 	 */
 	private double[] pValues;
 	/**
-	 * Holds labels for p-values.
+	 * Holds {@link nkps} labels for p-values.
 	 */
-	private String pvLabels;
+	private String[] pvLabels;
 	/**
-	 * Final KS p-value from run of many tests.
+	 * Final KS p-value from run of many tests. Any value outside [0;1] means unset.
 	 */
-	private double ks_pValue;
+	private double ks_pValue=-1.0;
 	/**
 	 * Extra Variables
 	 */
-	private double x, y, z;
+	private double[] xyz;
 	public StandardTest() {}
+	/**
+	 * @return
+	 * The number of p-values created in a single run.
+	 */
+	public int getNkps() {
+		return nkps;
+	}
+	/**
+	 * Sets the number of p-values created in a single run.
+	 * @param nkps
+	 */
+	public void setNkps(int nkps) {
+		this.nkps = nkps;
+		pValues = new double[pSamples*nkps];
+		pvLabels = new String[nkps];
+		for (int i=0;i<pValues.length;i++) {
+			pValues[i]=-1.0;
+		}
+	}
+	/**
+	 * @return
+	 * Sample-count inside a single run.
+	 */
 	public int gettSamples() {
 		return tSamples;
 	}
+	/**
+	 * Sets the sample count inside a single run.
+	 * @param tSamples
+	 */
 	public void settSamples(int tSamples) {
 		this.tSamples = tSamples;
 	}
@@ -40,22 +74,22 @@ public class StandardTest {
 	}
 	public void setpSamples(int pSamples) {
 		this.pSamples = pSamples;
-		pValues = new double[pSamples];
+		pValues = new double[pSamples*nkps];
+		for (int i=0;i<pValues.length;i++) {
+			pValues[i]=-1.0;
+		}
 	}
-	public int getnTuple() {
+	public byte getnTuple() {
 		return nTuple;
 	}
-	public void setnTuple(int nTuple) {
+	public void setnTuple(byte nTuple) {
 		this.nTuple = nTuple;
 	}
 	public double[] getpValues() {
 		return pValues;
 	}
-	public String getPvLabels() {
+	public String[] getPvLabels() {
 		return pvLabels;
-	}
-	public void setPvLabels(String pvLabels) {
-		this.pvLabels=pvLabels;
 	}
 	public double getKs_pValue() {
 		return ks_pValue;
@@ -63,22 +97,77 @@ public class StandardTest {
 	public void setKs_pValue(double ks_pValue) {
 		this.ks_pValue = ks_pValue;
 	}
-	public double getX() {
-		return x;
+	public double[] getXyz() {
+		return xyz;
 	}
-	public void setX(double x) {
-		this.x = x;
+	public void setXyz(double...xyz) {
+		this.xyz = xyz;
 	}
-	public double getY() {
-		return y;
+	public void evaluate() {
+		ks_pValue = Functions.ksTest(pValues);
 	}
-	public void setY(double y) {
-		this.y = y;
+	public boolean isWeak() {
+		return ks_pValue<0.005;
 	}
-	public double getZ() {
-		return z;
+	public boolean hasFailed() {
+		return ks_pValue<0.000001;
 	}
-	public void setZ(double z) {
-		this.z = z;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(ks_pValue);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + nTuple;
+		result = prime * result + nkps;
+		result = prime * result + pSamples;
+		result = prime * result + Arrays.hashCode(pValues);
+		result = prime * result + Arrays.hashCode(pvLabels);
+		result = prime * result + tSamples;
+		result = prime * result + Arrays.hashCode(xyz);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof StandardTest)) {
+			return false;
+		}
+		StandardTest other = (StandardTest) obj;
+		if (Double.doubleToLongBits(ks_pValue) != Double.doubleToLongBits(other.ks_pValue)) {
+			return false;
+		}
+		if (nTuple != other.nTuple) {
+			return false;
+		}
+		if (nkps != other.nkps) {
+			return false;
+		}
+		if (pSamples != other.pSamples) {
+			return false;
+		}
+		if (!Arrays.equals(pValues, other.pValues)) {
+			return false;
+		}
+		if (!Arrays.equals(pvLabels, other.pvLabels)) {
+			return false;
+		}
+		if (tSamples != other.tSamples) {
+			return false;
+		}
+		if (!Arrays.equals(xyz, other.xyz)) {
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "StandardTest [nkps=" + nkps + ", tSamples=" + tSamples + ", pSamples=" + pSamples + ", nTuple=" + nTuple
+				+ ", " + (pValues != null ? "pValues=" + Arrays.toString(pValues) + ", " : "")
+				+ (pvLabels != null ? "pvLabels=" + Arrays.toString(pvLabels) + ", " : "") + "ks_pValue=" + ks_pValue
+				+ ", " + (xyz != null ? "xyz=" + Arrays.toString(xyz) : "") + "]";
 	}
 }
