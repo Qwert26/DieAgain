@@ -65,7 +65,7 @@ public final class Functions {
 	 * @return
 	 */
 	public static double pdfChiSquare(int df, double x) {
-		return (pow(x/2,(df-2)/2.0)*exp(-x/2)/(2*gamma(df/2.0)));
+		return (pow(x/2, (df-2)/2.0) * exp(-x/2) / (2 * gamma(df/2.0)));
 	}
 	/**
 	 * Cumulative density function of the chi-square distribution.
@@ -254,5 +254,16 @@ public final class Functions {
 			ext=1-ext;
 		}
 		return ext;
+	}
+	public static double chiSquarePoisson(int[] observed, double lambda, int kmax, int nSamples) {
+		double[] expected=new double[kmax];
+		double chisq=0;
+		for (int k=0;k<kmax;k++) {
+			expected[k]=nSamples*pdfPoisson(lambda, k);
+		}
+		for (int k=0;k<kmax;k++) {
+			chisq+=(observed[k]-expected[k])*(observed[k]-expected[k])/expected[k];
+		}
+		return 1-cdfChiSquare(kmax-1, chisq);
 	}
 }

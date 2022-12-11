@@ -1,11 +1,15 @@
 package test;
 import java.util.*;
 import util.*;
+/**
+ * @author Christian Schürhoff
+ */
 public class BitDistributionTest implements ITest {
 	public static final TestData BIT_DISTRIBUTION;
 	static {
 		BIT_DISTRIBUTION=new TestData();
 		BIT_DISTRIBUTION.setName("Bit Patterns Distributions");
+		BIT_DISTRIBUTION.setDescription("This Test works on the premise, that Bit Patterns should be uniformly distributed and the distance between identical Bit Patterns should be geometric distributed.");
 		BIT_DISTRIBUTION.setNkps(2);
 		BIT_DISTRIBUTION.setpSamplesStandard(32);
 		BIT_DISTRIBUTION.settSamplesStandard(4096);
@@ -57,7 +61,7 @@ public class BitDistributionTest implements ITest {
 				}
 				TestVector distances=new TestVector();
 				distances.setNvec(distance2Frequency.lastKey()+1);
-				distances.setCutoff(0);
+				distances.setCutoff(1);
 				distance2Frequency.forEach((key, value) -> distances.getX()[key]=value);
 				distances.getY()[0]=current.gettSamples()*success;
 				for (int d=1;d<distances.getNvec();d++) {
@@ -67,6 +71,9 @@ public class BitDistributionTest implements ITest {
 				distances.evaluate();
 				current.getpValues()[2*run]=counts.getpValue();
 				current.getpValues()[2*run+1]=distances.getpValue();
+				if (Double.isNaN(distances.getpValue())) {
+					System.err.println("DEBUG NOW!");
+				}
 			}
 			current.getPvLabels()[0]="Uniformity BitPatterns";
 			current.getPvLabels()[1]="Geometric Waiting Times";
@@ -75,8 +82,9 @@ public class BitDistributionTest implements ITest {
 	}
 	@Deprecated
 	public static void main(String...args) {
-		StandardTest test=BIT_DISTRIBUTION.createTest(32, 4096);
-		BIT_DISTRIBUTION.getTestMethod().runTestOn(new util.randoms.SuperKISS(), test);
+		StandardTest test=BIT_DISTRIBUTION.createTest(48, 0x10000);
+		test.setnTuple((byte) 4);
+		BIT_DISTRIBUTION.getTestMethod().runTestOn(new util.randoms.KISS32(), test);
 		//System.out.println(test);
 		for (int nk=0;nk<test.getNkps();nk++) {
 			System.out.print(test.getPvLabels()[nk]+"\t");
@@ -84,7 +92,7 @@ public class BitDistributionTest implements ITest {
 		System.out.println();
 		for (int pSample=0;pSample<test.getpSamples();pSample++) {
 			for (int nk=0;nk<test.getNkps();nk++) {
-				System.out.print(test.getpValues()[pSample*test.getNkps()+nk]+"\t");
+				System.out.print("%f\t".formatted(test.getpValues()[pSample*test.getNkps()+nk]));
 			}
 			System.out.println();
 		}
