@@ -1,6 +1,8 @@
 package util.randoms;
+
 import java.util.concurrent.atomic.*;
 import java.util.*;
+
 public class SuperKISS extends Random {
 	/**
 	 * 
@@ -15,25 +17,28 @@ public class SuperKISS extends Random {
 	private AtomicInteger carry;
 	private AtomicInteger linearCongruence;
 	private AtomicInteger xorShift;
-	private boolean initialized=false;
+	private boolean initialized = false;
+
 	public SuperKISS() {
 		this(System.nanoTime());
 	}
+
 	public SuperKISS(long seed) {
 		super(seed);
-		q=new AtomicIntegerArray(Q_MAX);
-		index=new AtomicInteger();
-		carry=new AtomicInteger();
-		linearCongruence=new AtomicInteger();
-		xorShift=new AtomicInteger();
-		initialized=true;
+		q = new AtomicIntegerArray(Q_MAX);
+		index = new AtomicInteger();
+		carry = new AtomicInteger();
+		linearCongruence = new AtomicInteger();
+		xorShift = new AtomicInteger();
+		initialized = true;
 		setSeed(seed);
 	}
+
 	@Override
 	public synchronized void setSeed(long seed) {
-		if(initialized) {
+		if (initialized) {
 			super.setSeed(seed);
-			for(int i=0;i<Q_MAX;i++) {
+			for (int i = 0; i < Q_MAX; i++) {
 				q.set(i, super.next(32));
 			}
 			carry.set(362436);
@@ -42,49 +47,52 @@ public class SuperKISS extends Random {
 			index.set(Q_MAX);
 		}
 	}
+
 	@Override
 	protected int next(int bits) {
-		int oldLC,newLC;
-		int oldXS,newXS;
-		int oldIndex,newIndex;
+		int oldLC, newLC;
+		int oldXS, newXS;
+		int oldIndex, newIndex;
 		int returnQ;
 		do {
-			oldLC=linearCongruence.get();
-			oldXS=xorShift.get();
-			oldIndex=index.get();
-			
-			newLC=LCG_MULT*oldLC+LCG_ADD;
-			newXS=oldXS^(oldXS<<13);
-			newXS^=newXS>>17;
-			newXS^=newXS>>5;
-			
-			if(oldIndex==Q_MAX) {
-				returnQ=refill();
-				oldIndex=1;
+			oldLC = linearCongruence.get();
+			oldXS = xorShift.get();
+			oldIndex = index.get();
+
+			newLC = LCG_MULT * oldLC + LCG_ADD;
+			newXS = oldXS ^ (oldXS << 13);
+			newXS ^= newXS >> 17;
+			newXS ^= newXS >> 5;
+
+			if (oldIndex == Q_MAX) {
+				returnQ = refill();
+				oldIndex = 1;
 			} else {
-				returnQ=q.get(oldIndex);
+				returnQ = q.get(oldIndex);
 			}
-			newIndex=oldIndex+1;
-			
-		} while (!(linearCongruence.compareAndSet(oldLC, newLC)&&xorShift.compareAndSet(oldXS, newXS)&&index.compareAndSet(oldIndex, newIndex)));
-		return (returnQ+newLC+newXS)>>>(32-bits);
+			newIndex = oldIndex + 1;
+
+		} while (!(linearCongruence.compareAndSet(oldLC, newLC) && xorShift.compareAndSet(oldXS, newXS)
+				&& index.compareAndSet(oldIndex, newIndex)));
+		return (returnQ + newLC + newXS) >>> (32 - bits);
 	}
-	private int refill() {
+
+	private synchronized int refill() {
 		long t;
-		int oldQ,newQ;
-		int oldCarry,newCarry;
+		int oldQ, newQ;
+		int oldCarry, newCarry;
 		do {
-			for(int i=0;i<Q_MAX;i++) {
+			for (int i = 0; i < Q_MAX; i++) {
 				do {
-					oldQ=q.get(i);
-					oldCarry=carry.get();
-				
-					t=MWC_MULT*oldQ+oldCarry;
-					newCarry=(int) (t>>32);
-					newQ=(int) ~t;
-				} while (q.compareAndSet(i, oldQ, newQ)&&carry.compareAndSet(oldCarry, newCarry));
+					oldQ = q.get(i);
+					oldCarry = carry.get();
+
+					t = MWC_MULT * oldQ + oldCarry;
+					newCarry = (int) (t >> 32);
+					newQ = (int) ~t;
+				} while (!(q.compareAndSet(i, oldQ, newQ) && carry.compareAndSet(oldCarry, newCarry)));
 			}
-		} while (index.compareAndSet(Q_MAX, 1));
+		} while (!(index.compareAndSet(Q_MAX, 1)));
 		return q.get(0);
 	}
 }

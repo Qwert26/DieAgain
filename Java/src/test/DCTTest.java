@@ -1,6 +1,7 @@
 package test;
 import java.util.*;
 import util.*;
+@Deprecated
 public class DCTTest implements ITest {
 	public static final TestData DCT;
 	static {
@@ -23,7 +24,7 @@ public class DCTTest implements ITest {
 				current.setXyz(256);
 			}
 			if (current.getnTuple()==0) {
-				current.setnTuple((byte)32);
+				current.setnTuple((byte)16);
 			}
 			final int v=1<<(current.getnTuple()-1);
 			final double mean=current.getXyz()[0]*(v-0.5);
@@ -40,5 +41,9 @@ public class DCTTest implements ITest {
 		return output;
 	}
 	@Deprecated
-	public static void main(String...args) {}
+	public static void main(String...args) {
+		int input[]={4,5,6,5,4,3,2,1,1,2,3,4,5,6,7,8};
+		double[] dct=discreteCosineTransform(input);
+		System.out.println(Arrays.toString(dct));
+	}
 }

@@ -12,9 +12,10 @@ public class TestVector {
 	 */
 	private int ndof;
 	/**
-	 * An element in y must be greater than this value to be included. The default is 5, unless specified otherwise.
+	 * An element in y must be greater than this value to be included. The default
+	 * is 5, unless specified otherwise.
 	 */
-	private double cutoff=5;
+	private double cutoff = 5;
 	/**
 	 * Measured values.
 	 */
@@ -31,78 +32,94 @@ public class TestVector {
 	 * Resulting p-value.
 	 */
 	private double pValue;
-	public TestVector() {}
+
+	public TestVector() {
+	}
+
 	public int getNvec() {
 		return nvec;
 	}
+
 	public void setNvec(int nvec) {
 		this.nvec = nvec;
-		ndof=nvec-1;
-		x=new double[nvec];
-		y=new double[nvec];
+		ndof = nvec - 1;
+		x = new double[nvec];
+		y = new double[nvec];
 	}
+
 	public int getNdof() {
 		return ndof;
 	}
+
 	public void setNdof(int ndof) {
 		this.ndof = ndof;
 	}
+
 	public double getCutoff() {
 		return cutoff;
 	}
+
 	public void setCutoff(double cutoff) {
 		this.cutoff = cutoff;
 	}
+
 	public double[] getX() {
 		return x;
 	}
+
 	public double[] getY() {
 		return y;
 	}
+
 	public double getChsq() {
 		return chsq;
 	}
+
 	public void setChsq(double chsq) {
 		this.chsq = chsq;
 	}
+
 	public double getpValue() {
 		return pValue;
 	}
+
 	public void setpValue(double pValue) {
 		this.pValue = pValue;
 	}
+
 	public void evaluate() {
-		chsq=0;
-		boolean calcNDOF=ndof==0;
-		int indexTail=-1;
-		for (int i=0;i<nvec;i++) {
-			if (y[i]>=cutoff) {
-				chsq+=(x[i]-y[i])*(x[i]-y[i])/y[i];
-				if(calcNDOF) {
+		chsq = 0;
+		boolean calcNDOF = ndof == 0;
+		int indexTail = -1;
+		for (int i = 0; i < nvec; i++) {
+			if (y[i] >= cutoff) {
+				chsq += (x[i] - y[i]) * (x[i] - y[i]) / y[i];
+				if (calcNDOF) {
 					ndof++;
 				}
 			} else {
-				if (indexTail==-1) {
-					indexTail=i;
+				if (indexTail == -1) {
+					indexTail = i;
 				} else {
-					x[indexTail]+=x[i];
-					y[indexTail]+=y[i];
+					x[indexTail] += x[i];
+					y[indexTail] += y[i];
 				}
 			}
 		}
-		if(indexTail!=-1) {
-			if(y[indexTail]>=cutoff) {
-				chsq+=(x[indexTail]-y[indexTail])*(x[indexTail]-y[indexTail])/y[indexTail];
-				if(calcNDOF) {
+		if (indexTail != -1) {
+			if (y[indexTail] >= cutoff) {
+				chsq += (x[indexTail] - y[indexTail]) * (x[indexTail] - y[indexTail]) / y[indexTail];
+				if (calcNDOF) {
 					ndof++;
 				}
 			}
 		}
-		if(calcNDOF) {
+		if (calcNDOF) {
 			ndof--;
 		}
-		pValue=Math.min(Math.max(1-Functions.cdfChiSquare(ndof, chsq),0),1);
+		pValue = Math.min(Math.max(1 - Functions.cdfChiSquare(ndof, chsq), 0), 1);
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -120,6 +137,7 @@ public class TestVector {
 		result = prime * result + Arrays.hashCode(y);
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -152,6 +170,7 @@ public class TestVector {
 		}
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "TestVector [nvec=" + nvec + ", ndof=" + ndof + ", cutoff=" + cutoff + ", "

@@ -6,19 +6,20 @@ public class StandardTest {
 	/**
 	 * Number of test statistics created per run
 	 */
-	private int nkps=1;
+	private int nkps = 1;
 	/**
 	 * Number of samples per test if applicable
 	 */
-	private int tSamples=1;
+	private int tSamples = 1;
 	/**
 	 * Number of test runs per final p-value;
 	 */
-	private int pSamples=1;
+	private int pSamples = 1;
 	/**
-	 * Number of Bits in nTuples being tested. Usually in the range from 1 to 64. 0 means unset and the test should use its default.
+	 * Number of Bits in nTuples being tested. Usually in the range from 1 to 64. 0
+	 * means unset and the test should use its default.
 	 */
-	private byte nTuple=0;
+	private byte nTuple = 0;
 	/**
 	 * Array of length {@link #pSamples}*{@link #nkps} to hold test p-values.
 	 */
@@ -30,88 +31,108 @@ public class StandardTest {
 	/**
 	 * Final KS p-value from run of many tests. Any value outside [0;1] means unset.
 	 */
-	private double ks_pValue=-1.0;
+	private double ks_pValue = -1.0;
 	/**
 	 * Extra Variables
 	 */
 	private double[] xyz;
-	public StandardTest() {}
+
+	public StandardTest() {
+	}
+
 	/**
-	 * @return
-	 * The number of p-values created in a single run.
+	 * @return The number of p-values created in a single run.
 	 */
 	public int getNkps() {
 		return nkps;
 	}
+
 	/**
 	 * Sets the number of p-values created in a single run.
+	 * 
 	 * @param nkps
 	 */
 	public void setNkps(int nkps) {
 		this.nkps = nkps;
-		pValues = new double[pSamples*nkps];
+		pValues = new double[pSamples * nkps];
 		pvLabels = new String[nkps];
-		for (int i=0;i<pValues.length;i++) {
-			pValues[i]=-1.0;
+		for (int i = 0; i < pValues.length; i++) {
+			pValues[i] = -1.0;
 		}
 	}
+
 	/**
-	 * @return
-	 * Sample-count inside a single run.
+	 * @return Sample-count inside a single run.
 	 */
 	public int gettSamples() {
 		return tSamples;
 	}
+
 	/**
 	 * Sets the sample count inside a single run.
+	 * 
 	 * @param tSamples
 	 */
 	public void settSamples(int tSamples) {
 		this.tSamples = tSamples;
 	}
+
 	public int getpSamples() {
 		return pSamples;
 	}
+
 	public void setpSamples(int pSamples) {
 		this.pSamples = pSamples;
-		pValues = new double[pSamples*nkps];
-		for (int i=0;i<pValues.length;i++) {
-			pValues[i]=-1.0;
+		pValues = new double[pSamples * nkps];
+		for (int i = 0; i < pValues.length; i++) {
+			pValues[i] = -1.0;
 		}
 	}
+
 	public byte getnTuple() {
 		return nTuple;
 	}
+
 	public void setnTuple(byte nTuple) {
 		this.nTuple = nTuple;
 	}
+
 	public double[] getpValues() {
 		return pValues;
 	}
+
 	public String[] getPvLabels() {
 		return pvLabels;
 	}
+
 	public double getKs_pValue() {
 		return ks_pValue;
 	}
+
 	public void setKs_pValue(double ks_pValue) {
 		this.ks_pValue = ks_pValue;
 	}
+
 	public double[] getXyz() {
 		return xyz;
 	}
-	public void setXyz(double...xyz) {
+
+	public void setXyz(double... xyz) {
 		this.xyz = xyz;
 	}
+
 	public void evaluate() {
 		ks_pValue = Functions.ksTest(pValues);
 	}
+
 	public boolean isWeak() {
-		return ks_pValue<0.005;
+		return ks_pValue < 0.005;
 	}
+
 	public boolean hasFailed() {
-		return ks_pValue<0.000001;
+		return ks_pValue < 0.000001;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -128,6 +149,7 @@ public class StandardTest {
 		result = prime * result + Arrays.hashCode(xyz);
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -163,6 +185,7 @@ public class StandardTest {
 		}
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "StandardTest [nkps=" + nkps + ", tSamples=" + tSamples + ", pSamples=" + pSamples + ", nTuple=" + nTuple
