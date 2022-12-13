@@ -106,6 +106,7 @@ public class TestData {
 		ret.setpSamples(pSamples);
 		ret.settSamples(tSamples);
 		ret.setNkps(nkps);
+		ret.setXyz(extra);
 		return ret;
 	}
 

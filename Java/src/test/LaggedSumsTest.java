@@ -8,7 +8,7 @@ public class LaggedSumsTest implements ITest {
 	static {
 		LAGGED_SUMS = new TestData();
 		LAGGED_SUMS.setName("Lagged Sums Test");
-		LAGGED_SUMS.setDescription("");
+		LAGGED_SUMS.setDescription("Lagged Sums is summing up only 1 every nTuple numbers, for a total of t-sample numbers.");
 		LAGGED_SUMS.setNkps(1);
 		LAGGED_SUMS.setpSamplesStandard(100);
 		LAGGED_SUMS.settSamplesStandard(1000000);
@@ -43,7 +43,7 @@ public class LaggedSumsTest implements ITest {
 	
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = LAGGED_SUMS.createTest();
+		StandardTest test = LAGGED_SUMS.createTest(32,1000000);
 		test.setnTuple((byte) 3);
 		LAGGED_SUMS.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);
@@ -51,12 +51,13 @@ public class LaggedSumsTest implements ITest {
 			System.out.println(test.getpValues()[pv]);
 		}
 		System.out.println("Final p-Value: " + test.getKs_pValue());
+		System.out.print("Final Verdict: ");
 		if (test.hasFailed()) {
-			System.out.println("Bits are not random.");
+			System.out.println("Failed");
 		} else if (test.isWeak()) {
-			System.out.println("Bits are weakly non-random.");
+			System.out.println("Weak");
 		} else {
-			System.out.println("Bits are random");
+			System.out.println("Passed");
 		}
 	}
 }
