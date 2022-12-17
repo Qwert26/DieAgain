@@ -98,10 +98,10 @@ public class DCTTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = DCT.createTest(48, 0x1000);
+		StandardTest test = DCT.createTest(48, 4096);
 		test.setXyz(64);
-		test.setnTuple((byte) 16);
-		DCT.getTestMethod().runTestOn(new util.randoms.ArcfourPRG(), test);
+		test.setnTuple((byte) 8);
+		DCT.getTestMethod().runTestOn(new util.randoms.ArcfourAPlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

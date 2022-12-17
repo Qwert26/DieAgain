@@ -75,7 +75,7 @@ public class TestPoint {
 
 	public void evaluate() {
 		pValue = 1 - Functions.cdfStandardNormal((y - x) / sigma);
-		p = 1 - Math.abs(pValue - 0.5);
+		p = 1 - 2 * Math.abs(pValue - 0.5);
 	}
 
 	@Override

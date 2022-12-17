@@ -17,16 +17,14 @@ public class CountOnesInBytesTest implements ITest {
 	static {
 		COUNT1S_BYTES = new TestData();
 		COUNT1S_BYTES.setName("Count 1s in Bytes");
-		COUNT1S_BYTES.setDescription("");
+		COUNT1S_BYTES.setDescription("Counts the set bits in five successive non-overlapping bytes and uses these to create a 5-letter world.");
 		COUNT1S_BYTES.setpSamplesStandard(100);
 		COUNT1S_BYTES.settSamplesStandard(256000);
 		COUNT1S_BYTES.setNkps(1);
 		COUNT1S_BYTES.setTestMethod(new CountOnesInBytesTest());
 	}
 
-	public CountOnesInBytesTest() {
-		// TODO Auto-generated constructor stub
-	}
+	public CountOnesInBytesTest() {}
 
 	@Override
 	public void runTestOn(Random rng, StandardTest... parameters) {
@@ -81,14 +79,15 @@ public class CountOnesInBytesTest implements ITest {
 				pTest.evaluate();
 				current.getpValues()[pSample] = pTest.getpValue();
 			}
-			current.getPvLabels()[0] = "";
+			current.getPvLabels()[0] = "Normality of Chi-Square difference";
 			current.evaluate();
 		}
 	}
 
+	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = COUNT1S_BYTES.createTest();
-		COUNT1S_BYTES.getTestMethod().runTestOn(new Random(), test);
+		StandardTest test = COUNT1S_BYTES.createTest(48);
+		COUNT1S_BYTES.getTestMethod().runTestOn(new util.randoms.ArcfourAPlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

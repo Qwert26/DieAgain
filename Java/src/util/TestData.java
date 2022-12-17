@@ -109,8 +109,21 @@ public class TestData {
 		ret.setXyz(extra);
 		return ret;
 	}
+	
+	public StandardTest createTest(int pSamples) {
+		return createTest(pSamples, tSamplesStandard);
+	}
 
 	public StandardTest createTest() {
 		return createTest(pSamplesStandard, tSamplesStandard);
+	}
+	
+	public StandardTest[] createTests(int[] pSamples, int[] tSamples) {
+		int count=Math.min(pSamples.length, tSamples.length);
+		StandardTest[] ret=new StandardTest[count];
+		for (int i=0;i<count;i++) {
+			ret[i]=createTest(pSamples[i], tSamples[i]);
+		}
+		return ret;
 	}
 }

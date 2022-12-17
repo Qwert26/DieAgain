@@ -75,10 +75,6 @@ public class TestVector {
 		return chsq;
 	}
 
-	public void setChsq(double chsq) {
-		this.chsq = chsq;
-	}
-
 	public double getpValue() {
 		return pValue;
 	}
@@ -118,6 +114,9 @@ public class TestVector {
 			ndof--;
 		}
 		pValue = Math.min(Math.max(1 - Functions.cdfChiSquare(ndof, chsq), 0), 1);
+		if (Double.isNaN(pValue)) {
+			pValue = 0.5;
+		}
 	}
 
 	@Override

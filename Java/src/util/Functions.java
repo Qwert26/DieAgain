@@ -15,24 +15,32 @@ public final class Functions {
 	 * factorial-function.
 	 * 
 	 * @param z
-	 * @return
+	 * @return {@code z!} for integer values of z or 2z.
 	 */
 	public static double gamma(double z) {
 		int tmp = (int) (2 * z);
 		if (tmp != 2 * z) {
-			System.err.println("2*z was not an integer! Result might be inaccurate.");
+			System.err.println("2z was not an integer! Result might be inaccurate.");
 		}
-		switch (tmp) {
-		case 0:
+		if (tmp == 0) {
 			return Double.POSITIVE_INFINITY;
-		case 1:
-			return sqrt(PI);
-		case 2:
-			return 1;
-		default:
-			break;
+		} else if (tmp > 0) {
+			double ret = 1;
+			for (; tmp > 2; tmp -= 2) {
+				ret *= tmp / 2.0;
+			}
+			if (tmp == 2) {
+				return ret;
+			} else /*tmp == 1*/ {
+				return ret * sqrt(PI);
+			}
+		} else {
+			throw new IllegalArgumentException("z is less than or equal to -0.5, gamma(z) can not be calculated!");
 		}
-		return (z - 1) * gamma(z - 1);
+		/*
+		 * switch (tmp) { case 0: return Double.POSITIVE_INFINITY; case 1: return
+		 * sqrt(PI); case 2: return 1; default: break; } return (z - 1) * gamma(z - 1);
+		 */
 	}
 
 	/**
@@ -92,19 +100,29 @@ public final class Functions {
 	/**
 	 * Cumulative density function of the chi-square distribution.
 	 * 
-	 * @param df
-	 * @param x
-	 * @return
+	 * @param df degrees of freedom
+	 * @param x  the value
+	 * @return The relative amount of numbers smaller than the given value of x.
 	 */
 	public static double cdfChiSquare(int df, double x) {
-		switch (df) {
-		case 1:
-			return 2 * cdfStandardNormal(sqrt(x)) - 1;
-		case 2:
-			return 1 - exp(-x / 2);
-		default:
-			return cdfChiSquare(df - 2, x) - 2 * pdfChiSquare(df, x);
+		double[] prevCDFs = new double[(df + 1) / 2];
+		if (df % 2 == 0) {
+			prevCDFs[0] = 1 - exp(-x / 2); // 0->2
+			for (int i = 1; i < prevCDFs.length; i++) {
+				prevCDFs[i] = prevCDFs[i - 1] - 2 * pdfChiSquare(2 * i + 2, x); // 1->4, 2->6, 3->8
+			}
+		} else {
+			prevCDFs[0] = 2 * cdfStandardNormal(sqrt(x)) - 1; // 0->1
+			for (int i = 1; i < prevCDFs.length; i++) {
+				prevCDFs[i] = prevCDFs[i - 1] - 2 * pdfChiSquare(2 * i + 1, x); // 1->3, 2->5, 3->7
+			}
 		}
+		return prevCDFs[prevCDFs.length - 1];
+		/*
+		 * switch (df) { case 1: return 2 * cdfStandardNormal(sqrt(x)) - 1; case 2:
+		 * return 1 - exp(-x / 2); default: return cdfChiSquare(df - 2, x) - 2 *
+		 * pdfChiSquare(df, x); }
+		 */
 	}
 
 	/**
