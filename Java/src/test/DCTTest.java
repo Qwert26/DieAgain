@@ -3,17 +3,24 @@ package test;
 import java.util.*;
 import util.*;
 
+/**
+ * Performs a frequency analysis on a specific count of output values. A good PRNG does not produce frequencies of only a few values.
+ * 
+ * @author Christian Schürhoff (Java-Version)
+ *
+ */
 public class DCTTest implements ITest {
 	public static final TestData DCT;
 	static {
 		DCT = new TestData();
 		DCT.setName("Discrete Cosinus Transformation");
-		DCT.setDescription("");
-		DCT.setpSamplesStandard(1);
-		DCT.settSamplesStandard(50000);
+		DCT.setDescription(
+				"Transforms extra[0] output-values of the PRNG into a frequency-strength-relationship. The peaks of this relation should be uniformly distributed.");
+		DCT.setpSamplesStandard(3);
+		DCT.settSamplesStandard(48000);
 		DCT.setNkps(1);
 		DCT.setTestMethod(new DCTTest());
-		DCT.setExtra(256);
+		DCT.setExtra(96); // 256 nicht berechenbar...
 	}
 
 	public DCTTest() {
@@ -25,10 +32,16 @@ public class DCTTest implements ITest {
 		bitSource.setRandom(rng);
 		for (StandardTest current : parameters) {
 			if (current.getXyz() == null || current.getXyz().length < 1) {
-				current.setXyz(256);
+				current.setXyz(96);
 			}
 			if (current.getnTuple() == 0) {
 				current.setnTuple((byte) 16);
+			}
+			if (current.getnTuple() % 4 != 0) {
+				current.setnTuple((byte) (current.getnTuple() - (current.getnTuple() % 4)));
+			}
+			if (current.gettSamples() % 4 != 0) {
+				current.settSamples(current.gettSamples() - (current.gettSamples() % 4));
 			}
 			final int v = 1 << (current.getnTuple() - 1);
 			final double mean = current.getXyz()[0] * (v - 0.5);
@@ -42,9 +55,14 @@ public class DCTTest implements ITest {
 				TestPoint pTest = new TestPoint();
 				pTest.setSigma(1);
 				pTest.setY(0);
+				byte rotationAmount = 0;
 				for (int tSample = 0; tSample < current.gettSamples(); tSample++) {
+					if (tSample != 0 && (tSample % (current.gettSamples() / 4) == 0)) {
+						rotationAmount += current.getnTuple() / 4;
+					}
 					for (int i = 0; i < input.length; i++) {
-						input[i] = (int) bitSource.getBits(current.getnTuple());
+						input[i] = rotateLeft((int) bitSource.getBits(current.getnTuple()), current.getnTuple(),
+								rotationAmount);
 					}
 					dct = discreteCosineTransform(input);
 					dct[0] -= mean;
@@ -86,6 +104,13 @@ public class DCTTest implements ITest {
 		}
 	}
 
+	/**
+	 * Performs a type 2 DCT on the input. The input can be of any length.
+	 * 
+	 * @param input
+	 * @return the dct coefficients, an array of {@code double}s with the identical
+	 *         size as the input.
+	 */
 	private static double[] discreteCosineTransform(int[] input) {
 		double[] output = new double[input.length];
 		for (int i = 0; i < input.length; i++) {
@@ -96,12 +121,16 @@ public class DCTTest implements ITest {
 		return output;
 	}
 
+	private static int rotateLeft(int value, byte bits, byte amount) {
+		return (value << amount) | (value >> (bits - amount));
+	}
+
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = DCT.createTest(48, 4096);
-		test.setXyz(64);
-		test.setnTuple((byte) 8);
-		DCT.getTestMethod().runTestOn(new util.randoms.ArcfourAPlusPRG(), test);
+		StandardTest test = DCT.createTest(48, 9600);
+		test.setXyz(96);
+		test.setnTuple((byte) 24);
+		DCT.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

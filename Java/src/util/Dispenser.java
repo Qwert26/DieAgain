@@ -129,7 +129,7 @@ public class Dispenser {
 	}
 
 	/**
-	 * Shift the buffer array over by one, get the next integer and set
+	 * Shift the buffer array over by one, get the next integer and sets
 	 * {@link #availableBits} to 32.
 	 */
 	private void shift() {

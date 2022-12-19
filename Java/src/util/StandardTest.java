@@ -81,6 +81,11 @@ public class StandardTest {
 		return pSamples;
 	}
 
+	/**
+	 * Sets the amount of runs.
+	 * 
+	 * @param pSamples
+	 */
 	public void setpSamples(int pSamples) {
 		this.pSamples = pSamples;
 		pValues = new double[pSamples * nkps];
@@ -93,6 +98,11 @@ public class StandardTest {
 		return nTuple;
 	}
 
+	/**
+	 * Sets the number of bits to analyze.
+	 * 
+	 * @param nTuple
+	 */
 	public void setnTuple(byte nTuple) {
 		this.nTuple = nTuple;
 	}
@@ -125,10 +135,22 @@ public class StandardTest {
 		ks_pValue = Functions.ksTest(pValues);
 	}
 
+	/**
+	 * A test is weak, if the final evaluation of produced p-values has resulted in
+	 * a non-uniformity of 0.005 or less.
+	 * 
+	 * @return {@code true} if the PRNG produces bits which are weakly non-random.
+	 */
 	public boolean isWeak() {
 		return ks_pValue < 0.005;
 	}
 
+	/**
+	 * A test has failed, if the final evaluation or produced p-values has resulted
+	 * in a non-uniformity of 0.000001 or less.
+	 * 
+	 * @return {@code true} if the PRNG produces bits which are not random.
+	 */
 	public boolean hasFailed() {
 		return ks_pValue < 0.000001;
 	}

@@ -2,7 +2,11 @@ package util;
 
 import static java.lang.Math.*;
 import java.util.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public final class Functions {
 	private Functions() {
 	}
@@ -31,7 +35,7 @@ public final class Functions {
 			}
 			if (tmp == 2) {
 				return ret;
-			} else /*tmp == 1*/ {
+			} else /* tmp == 1 */ {
 				return ret * sqrt(PI);
 			}
 		} else {
@@ -92,9 +96,10 @@ public final class Functions {
 	 * @param df
 	 * @param x
 	 * @return
+	 * @implNote Can return {@code NaN}!
 	 */
 	public static double pdfChiSquare(int df, double x) {
-		return (pow(x / 2, (df - 2) / 2.0) * exp(-x / 2) / (2 * gamma(df / 2.0)));
+		return (pow(x / 2, (df - 2) / 2.0) * exp(-x / 2)) / (2 * gamma(df / 2.0));
 	}
 
 	/**
