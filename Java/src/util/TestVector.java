@@ -79,10 +79,6 @@ public class TestVector {
 		return pValue;
 	}
 
-	public void setpValue(double pValue) {
-		this.pValue = pValue;
-	}
-
 	public void evaluate() {
 		chsq = 0;
 		boolean calcNDOF = ndof == 0;

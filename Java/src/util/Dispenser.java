@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Dispenser {
 	/**
-	 * 
+	 * Turns a signed integer into an unsigned one.
 	 */
 	public static final long MASK = 0xFFFFFFFFL;
 	/**
@@ -35,7 +35,10 @@ public class Dispenser {
 	public Random getRandom() {
 		return random;
 	}
-
+	/**
+	 * Sets the random to use, also replaces the {@link generated}-array with three new values and also sets {@link #availableBits} to 32.
+	 * @param random
+	 */
 	public void setRandom(Random random) {
 		this.random = random;
 		generated = new int[] { random.nextInt(), random.nextInt(), random.nextInt() };
@@ -101,6 +104,17 @@ public class Dispenser {
 			throw new IllegalArgumentException("Can not provide " + bits + " Bits!");
 		}
 	}
+	/**
+	 * Creates a double value in the same manner as all {@link Random}-instances would: By taking the first 26 and then 27 bits of two consecutive integers
+	 * @return
+	 * @see Random#nextDouble()
+	 */
+	public double getStandardDouble() {
+		long ret = getBits((byte) 26, 32);
+		ret <<= 27;
+		ret |= getBits((byte) 27, 32);
+		return ret / (double) (1L << 53);
+	}
 
 	public double getBitsAsDouble(byte bits) {
 		return getBitsAsDouble(bits, bits);
@@ -125,6 +139,52 @@ public class Dispenser {
 			return (byte) getBits(bits, bitsToMove);
 		} else {
 			throw new IllegalArgumentException("Can at most provide 8 Bits!");
+		}
+	}
+
+	public short getBitsAsShort(byte bits) {
+		return getBitsAsShort(bits, bits);
+	}
+
+	public short getBitsAsShort(byte bits, long bitsToMove) {
+		if (bits <= 16) {
+			return (short) getBits(bits, bitsToMove);
+		} else {
+			throw new IllegalArgumentException("Can at most provide 16 Bits!");
+		}
+	}
+
+	public int getBitsAsInteger(byte bits) {
+		return getBitsAsInteger(bits, bits);
+	}
+
+	public int getBitsAsInteger(byte bits, long bitsToMove) {
+		if (bits <= 32) {
+			return (int) getBits(bits, bitsToMove);
+		} else {
+			throw new IllegalArgumentException("Can at most provide 32 Bits!");
+		}
+	}
+	/**
+	 * Returns a float value by taking first 24 bits of an integer.
+	 * @return
+	 * @see Random#nextFloat()
+	 */
+	public float getStandardFloat() {
+		return getBitsAsFloat((byte) 24, 32);
+	}
+
+	public float getBitsAsFloat(byte bits) {
+		return getBitsAsFloat(bits, bits);
+	}
+
+	public float getBitsAsFloat(byte bits, long bitsToMove) {
+		if (bits <= 31) {
+			int raw = getBitsAsInteger(bits, bitsToMove);
+			double mult = Math.pow(2.0, -bits);
+			return (float) (raw * mult);
+		} else {
+			throw new IllegalArgumentException("The highest order bit must be 0 at all times!");
 		}
 	}
 

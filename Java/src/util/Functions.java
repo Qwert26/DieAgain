@@ -2,6 +2,7 @@ package util;
 
 import static java.lang.Math.*;
 import java.util.*;
+
 /**
  * 
  * @author Christian Schürhoff
@@ -99,7 +100,7 @@ public final class Functions {
 	 * @implNote Can return {@code NaN}!
 	 */
 	public static double pdfChiSquare(int df, double x) {
-		return (pow(x / 2, (df - 2) / 2.0) * exp(-x / 2)) / (2 * gamma(df / 2.0));
+		return (pow(x, (df - 2) / 2.0) * exp(-x / 2)) / (pow(2, df / 2.0) * gamma(df / 2.0));
 	}
 
 	/**
@@ -116,7 +117,7 @@ public final class Functions {
 			for (int i = 1; i < prevCDFs.length; i++) {
 				prevCDFs[i] = prevCDFs[i - 1] - 2 * pdfChiSquare(2 * i + 2, x); // 1->4, 2->6, 3->8
 			}
-		} else {
+		} else /* df % 2 == 1 */ {
 			prevCDFs[0] = 2 * cdfStandardNormal(sqrt(x)) - 1; // 0->1
 			for (int i = 1; i < prevCDFs.length; i++) {
 				prevCDFs[i] = prevCDFs[i - 1] - 2 * pdfChiSquare(2 * i + 1, x); // 1->3, 2->5, 3->7
@@ -189,6 +190,13 @@ public final class Functions {
 		}
 	}
 
+	/**
+	 * Computes nCk.
+	 * 
+	 * @param n
+	 * @param k
+	 * @return
+	 */
 	public static double binomialCoefficent(long n, long k) {
 		if (k < 0 || k > n)
 			return 0;
