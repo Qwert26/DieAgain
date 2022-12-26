@@ -16,7 +16,7 @@ public class BitFlippingTest implements ITest {
 		BIT_FLIPS.setName("Bit Flipping Test");
 		BIT_FLIPS.setDescription("WARNING: VERY HARD TEST!\n"
 				+ "Each nTuple Bits are observed for flips (0 to 1 or 1 to 0). Between two tuples should be a binomially distributed number of flipped bits. "
-				+ "The number of tuples for any given bit position to flip again should be geometrically distributed. And on average, any two bits should ahve only flipped "
+				+ "The number of tuples for any given bit position to flip again should be geometrically distributed. And on average, any two bits should have only flipped "
 				+ "half the time together: Their correlation should be close two zero.");
 		BIT_FLIPS.setNkps(3);
 		BIT_FLIPS.setpSamplesStandard(24);
@@ -32,6 +32,9 @@ public class BitFlippingTest implements ITest {
 		Dispenser bitSource = new Dispenser();
 		bitSource.setRandom(rng);
 		for (StandardTest currentTest : parameters) {
+			if (currentTest.getnTuple() == 0) {
+				currentTest.setnTuple((byte) 16);
+			}
 			final byte bitCount = currentTest.getnTuple();
 			for (int pSample = 0; pSample < currentTest.getpSamples(); pSample++) {
 				long currentNumber, prevNumber = bitSource.getBits(bitCount), difference;
@@ -92,10 +95,12 @@ public class BitFlippingTest implements ITest {
 				}
 				waitingTimesDistribution.evaluate();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
-				final double expectedCoFlips = currentTest.gettSamples() * 0.25;
+				double expectedCoFlips;
 				double chsq = 0.0;
 				for (byte bitI = 1; bitI < bitCount; bitI++) {
 					for (byte bitJ = 0; bitJ < bitI; bitJ++) {
+						expectedCoFlips = Math.min(simultaneousBitFlips[bitI][bitI], simultaneousBitFlips[bitJ][bitJ])
+								/ 2;
 						chsq += (simultaneousBitFlips[bitI][bitJ] - expectedCoFlips)
 								* (simultaneousBitFlips[bitI][bitJ] - expectedCoFlips) / expectedCoFlips;
 					}

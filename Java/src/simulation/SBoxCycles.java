@@ -66,12 +66,12 @@ public class SBoxCycles {
 
 	public static void main(String[] args) {
 		SBoxCycles sim = new SBoxCycles();
-		sim.bits = 3;
+		sim.bits = 4;
 		int[] sbox = sim.createIdentitySBox();
 		System.out.println("Numbers: "+sbox.length);
 		Random rng = new Random();
 		TreeMap<Long, Long> cycleSize2Count = new TreeMap<>();
-		for (long count = 100000000L; count > 0; count--) {
+		for (long count = 1000000L; count > 0; count--) {
 			sim.shuffleSBox(rng, sbox);
 			cycleSize2Count.compute(SBoxCycles.determineCycle(sbox), (s, c) -> {
 				if (c == null || c == 0) {

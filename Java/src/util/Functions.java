@@ -97,10 +97,17 @@ public final class Functions {
 	 * @param df
 	 * @param x
 	 * @return
-	 * @implNote Can return {@code NaN}!
 	 */
 	public static double pdfChiSquare(int df, double x) {
-		return (pow(x, (df - 2) / 2.0) * exp(-x / 2)) / (pow(2, df / 2.0) * gamma(df / 2.0));
+		double resGamma = 2 * gamma(df / 2.0);
+		if (Double.isInfinite(resGamma)) {
+			return 0;
+		}
+		double resExp = exp(-x / 2);
+		if (resExp == 0) {
+			return 0;
+		}
+		return (pow(x / 2, (df - 2) / 2.0) * resExp) / resGamma;
 	}
 
 	/**

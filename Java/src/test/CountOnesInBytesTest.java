@@ -2,7 +2,11 @@ package test;
 
 import java.util.*;
 import util.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class CountOnesInBytesTest implements ITest {
 	private static final byte[] BYTE_TO_LETTER = { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 2, 0, 0, 0, 1, 0, 1, 1,
 			2, 0, 1, 1, 2, 1, 2, 2, 3, 0, 0, 0, 1, 0, 1, 1, 2, 0, 1, 1, 2, 1, 2, 2, 3, 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2,
