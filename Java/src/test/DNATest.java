@@ -2,13 +2,15 @@ package test;
 
 import java.util.*;
 import util.*;
+import util.randoms.*;
 
 public class DNATest implements ITest {
 	public static final TestData DNA;
 	static {
 		DNA = new TestData();
 		DNA.setName("Overlapping DNA-Words Test");
-		DNA.setDescription("");
+		DNA.setDescription("Uses overlapping bits to generate ten letter long words from an alphabet with only four letters. "
+				+ "The number of missing words is known only for a fixed sample size.");
 		DNA.settSamplesStandard(2097152);
 		DNA.setpSamplesStandard(100);
 		DNA.setNkps(1);
@@ -27,6 +29,7 @@ public class DNATest implements ITest {
 	public void runTestOn(Random rng, StandardTest... parameters) {
 		for (StandardTest currentTest : parameters) {
 			currentTest.setnTuple((byte) 0);
+			currentTest.settSamples(T_SAMPLE_COUNT);
 			TestPoint pTest = new TestPoint();
 			pTest.setY(MEAN);
 			pTest.setSigma(SIGMA);
@@ -66,8 +69,8 @@ public class DNATest implements ITest {
 
 	@Deprecated
 	public static final void main(String... args) {
-		StandardTest test = DNA.createTest(48);
-		DNA.getTestMethod().runTestOn(new Random(), test);
+		StandardTest test = DNA.createTest(50);
+		DNA.getTestMethod().runTestOn(new ArcfourPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

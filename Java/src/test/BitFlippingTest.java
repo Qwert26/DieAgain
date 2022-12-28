@@ -25,6 +25,7 @@ public class BitFlippingTest implements ITest {
 	}
 
 	public BitFlippingTest() {
+		super();
 	}
 
 	@Override

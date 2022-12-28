@@ -1,14 +1,16 @@
 package simulation;
 
 import java.util.*;
+import util.randoms.*;
 
 public class SBoxCycles {
 	public byte bits = 8;
 
 	public SBoxCycles() {
+		super();
 	}
 
-	private static long determineCycle(int[] sbox) {
+	public static long determineCycle(int[] sbox) {
 		if (sbox == null || sbox.length == 0) {
 			return 0;
 		} else {
@@ -26,6 +28,33 @@ public class SBoxCycles {
 				}
 			}
 			return result;
+		}
+	}
+
+	public static Map<Integer, Integer> extractCycles(int[] sbox) {
+		if (sbox == null || sbox.length == 0) {
+			return null;
+		} else {
+			Map<Integer, Integer> ret = new TreeMap<Integer, Integer>();
+			boolean[] visited = new boolean[sbox.length];
+			for (int i = 0; i < sbox.length; i++) {
+				if (!visited[i]) {
+					visited[i] = true;
+					int current = 1;
+					for (int j = sbox[i]; j != i; j = sbox[j]) {
+						current++;
+						visited[j] = true;
+					}
+					ret.compute(current, (length, count) -> {
+						if (count == null || count == 0) {
+							return 1;
+						} else {
+							return count + 1;
+						}
+					});
+				}
+			}
+			return ret;
 		}
 	}
 
@@ -53,7 +82,7 @@ public class SBoxCycles {
 		return ret;
 	}
 
-	public void shuffleSBox(Random rng, int[] sbox) {
+	public static void shuffleSBox(Random rng, int[] sbox) {
 		for (int i = 0; i < sbox.length; i++) {
 			int j = (i + rng.nextInt(sbox.length)) % sbox.length;
 			if (i != j) {
@@ -66,21 +95,28 @@ public class SBoxCycles {
 
 	public static void main(String[] args) {
 		SBoxCycles sim = new SBoxCycles();
-		sim.bits = 4;
+		sim.bits = 8;
 		int[] sbox = sim.createIdentitySBox();
-		System.out.println("Numbers: "+sbox.length);
-		Random rng = new Random();
-		TreeMap<Long, Long> cycleSize2Count = new TreeMap<>();
-		for (long count = 1000000L; count > 0; count--) {
-			sim.shuffleSBox(rng, sbox);
-			cycleSize2Count.compute(SBoxCycles.determineCycle(sbox), (s, c) -> {
-				if (c == null || c == 0) {
-					return 1L;
-				} else {
-					return c + 1;
-				}
-			});
+		System.out.println("Numbers: " + sbox.length);
+		Random rng = new KISS32();
+		TreeMap<Long, Long> cycleSize2Count = new TreeMap<Long, Long>();
+		for (long count = 2000000L; count > 0; count--) {
+			SBoxCycles.shuffleSBox(rng, sbox);
+			for (Map.Entry<Integer, Integer> entry : SBoxCycles.extractCycles(sbox).entrySet()) {
+				cycleSize2Count.compute(entry.getKey().longValue(), (cycle, amount) -> {
+					if (amount == null || amount == 0) {
+						return entry.getValue().longValue();
+					} else {
+						return amount + entry.getValue();
+					}
+				});
+			}
 		}
-		System.out.println(cycleSize2Count);
+		for (Map.Entry<Long, Long> entry : cycleSize2Count.entrySet()) {
+			System.out.print(entry + ", ");
+			if (entry.getKey() % 16 == 0) {
+				System.out.println();
+			}
+		}
 	}
 }

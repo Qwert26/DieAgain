@@ -24,6 +24,7 @@ public class RunsTest implements ITest {
 	public static final byte RUN_MAX = 6;
 
 	public RunsTest() {
+		super();
 	}
 
 	@Override
@@ -77,6 +78,7 @@ public class RunsTest implements ITest {
 			currentTest.evaluate();
 		}
 	}
+
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = RUNS.createTest();

@@ -21,6 +21,7 @@ public class BitDistributionTest implements ITest {
 	}
 
 	public BitDistributionTest() {
+		super();
 	}
 
 	@Override

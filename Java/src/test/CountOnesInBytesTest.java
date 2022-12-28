@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 import util.*;
+
 /**
  * 
  * @author Christian Schürhoff
@@ -21,14 +22,17 @@ public class CountOnesInBytesTest implements ITest {
 	static {
 		COUNT1S_BYTES = new TestData();
 		COUNT1S_BYTES.setName("Count 1s in Bytes");
-		COUNT1S_BYTES.setDescription("Counts the set bits in five successive non-overlapping bytes and uses these to create a 5-letter world.");
+		COUNT1S_BYTES.setDescription(
+				"Counts the set bits in five successive non-overlapping bytes and uses these to create a 5-letter world.");
 		COUNT1S_BYTES.setpSamplesStandard(100);
 		COUNT1S_BYTES.settSamplesStandard(256000);
 		COUNT1S_BYTES.setNkps(1);
 		COUNT1S_BYTES.setTestMethod(new CountOnesInBytesTest());
 	}
 
-	public CountOnesInBytesTest() {}
+	public CountOnesInBytesTest() {
+		super();
+	}
 
 	@Override
 	public void runTestOn(Random rng, StandardTest... parameters) {
@@ -50,7 +54,7 @@ public class CountOnesInBytesTest implements ITest {
 				test5.setCutoff(5);
 				int j;
 				for (int i = 0; i < 625; i++) {
-					test4.getX()[i] = 0;
+					test4.getX()[i] = 0.0;
 					test4.getY()[i] = current.gettSamples();
 					j = i;
 					for (int k = 0; k < 4; k++) {
@@ -59,7 +63,7 @@ public class CountOnesInBytesTest implements ITest {
 					}
 				}
 				for (int i = 0; i < 3125; i++) {
-					test5.getX()[i] = 0;
+					test5.getX()[i] = 0.0;
 					test5.getY()[i] = current.gettSamples();
 					j = i;
 					for (int k = 0; k < 5; k++) {
@@ -72,9 +76,9 @@ public class CountOnesInBytesTest implements ITest {
 					for (int k = 0; k < 5; k++) {
 						j = j * 5 + BYTE_TO_LETTER[(short) byteSource.getBits((byte) 8)];
 					}
-					j %= 3125;
+					j %= 3125; //Cut off all letters above the fifth one.
 					test5.getX()[j]++;
-					j %= 625;
+					j %= 625; //Remove the fifth letter.
 					test4.getX()[j]++;
 				}
 				test4.evaluate();
@@ -91,7 +95,7 @@ public class CountOnesInBytesTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = COUNT1S_BYTES.createTest(48);
-		COUNT1S_BYTES.getTestMethod().runTestOn(new util.randoms.ArcfourAPlusPRG(), test);
+		COUNT1S_BYTES.getTestMethod().runTestOn(new util.randoms.ArcfourPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

@@ -8,7 +8,8 @@ public class LaggedSumsTest implements ITest {
 	static {
 		LAGGED_SUMS = new TestData();
 		LAGGED_SUMS.setName("Lagged Sums Test");
-		LAGGED_SUMS.setDescription("Lagged Sums is summing up only 1 every nTuple numbers, for a total of t-sample numbers.");
+		LAGGED_SUMS.setDescription(
+				"Lagged Sums is summing up only 1 every nTuple numbers, for a total of t-sample numbers.");
 		LAGGED_SUMS.setNkps(1);
 		LAGGED_SUMS.setpSamplesStandard(100);
 		LAGGED_SUMS.settSamplesStandard(1000000);
@@ -16,6 +17,7 @@ public class LaggedSumsTest implements ITest {
 	}
 
 	public LaggedSumsTest() {
+		super();
 	}
 
 	@Override
@@ -40,10 +42,10 @@ public class LaggedSumsTest implements ITest {
 			current.getPvLabels()[0] = "resulting CDF value for lagged Sum";
 		}
 	}
-	
+
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = LAGGED_SUMS.createTest(32,1000000);
+		StandardTest test = LAGGED_SUMS.createTest(32, 1000000);
 		test.setnTuple((byte) 3);
 		LAGGED_SUMS.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);
