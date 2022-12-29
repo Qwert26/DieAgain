@@ -69,4 +69,10 @@ public class JKISS32 extends Random {
 				&& c.compareAndSet(oldC, newC)));
 		return ((newX + newY + newZ) >>> (32 - bits));
 	}
+
+	@Override
+	public String toString() {
+		return "JKISS32 [" + (x != null ? "x=" + x + ", " : "") + (y != null ? "y=" + y + ", " : "")
+				+ (z != null ? "z=" + z + ", " : "") + (c != null ? "c=" + c : "") + "]";
+	}
 }

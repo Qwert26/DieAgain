@@ -56,7 +56,7 @@ public class DNATest implements ITest {
 				}
 				for (boolean word : words) {
 					if (!word) {
-						pTest.setX(pTest.getX() + 1);
+						pTest.setX(pTest.getX() + 1.0);
 					}
 				}
 				pTest.evaluate();

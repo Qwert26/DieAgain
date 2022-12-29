@@ -116,4 +116,12 @@ public class ArcfourAPlusPRG extends Random {
 		}
 		return ret;
 	}
+
+	@Override
+	public String toString() {
+		return "ArcfourAPlusPRG [" + (s1 != null ? "s1=" + s1 + ", " : "") + (s2 != null ? "s2=" + s2 + ", " : "")
+				+ (i != null ? "i=" + i + ", " : "") + (j1 != null ? "j1=" + j1 + ", " : "")
+				+ (j2 != null ? "j2=" + j2 + ", " : "") + (k1 != null ? "k1=" + k1 + ", " : "")
+				+ (k2 != null ? "k2=" + k2 : "") + "]";
+	}
 }

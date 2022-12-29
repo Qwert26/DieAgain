@@ -34,12 +34,24 @@ public class TestVector {
 	private double pValue;
 
 	public TestVector() {
+		super();
 	}
 
+	/**
+	 * Get the length of the two arrays.
+	 * 
+	 * @return
+	 */
 	public int getNvec() {
 		return nvec;
 	}
 
+	/**
+	 * Sets the length of the two arrays and also sets {@code ndof} to
+	 * {@code nvec - 1}.
+	 * 
+	 * @param nvec
+	 */
 	public void setNvec(int nvec) {
 		this.nvec = nvec;
 		ndof = nvec - 1;
@@ -47,38 +59,84 @@ public class TestVector {
 		y = new double[nvec];
 	}
 
+	/**
+	 * Gets the number of degrees of freedom
+	 * 
+	 * @return
+	 */
 	public int getNdof() {
 		return ndof;
 	}
 
+	/**
+	 * Sets the number of degrees of freedom. Setting it to zero indicates that this
+	 * value is currently unkown must be figured out during evaluation. The cutoff
+	 * must have been specified or else its default alue will be used.
+	 * 
+	 * @param ndof
+	 * @see #setCutoff(double)
+	 */
 	public void setNdof(int ndof) {
 		this.ndof = ndof;
 	}
 
+	/**
+	 * Gets the current cutoff-value for expected values.
+	 * 
+	 * @return
+	 */
 	public double getCutoff() {
 		return cutoff;
 	}
 
+	/**
+	 * Sets the cutoff for expected values.
+	 * 
+	 * @param cutoff
+	 */
 	public void setCutoff(double cutoff) {
 		this.cutoff = cutoff;
 	}
 
+	/**
+	 * Gets the array of measured values.
+	 * 
+	 * @return
+	 */
 	public double[] getX() {
 		return x;
 	}
 
+	/**
+	 * Gets the array of expected values.
+	 * 
+	 * @return
+	 */
 	public double[] getY() {
 		return y;
 	}
 
+	/**
+	 * Gets the chi-square value.
+	 * 
+	 * @return
+	 */
 	public double getChsq() {
 		return chsq;
 	}
 
+	/**
+	 * Gets the resulting p-value.
+	 * 
+	 * @return
+	 */
 	public double getpValue() {
 		return pValue;
 	}
 
+	/**
+	 * Evaluates the measured data against the expected data.
+	 */
 	public void evaluate() {
 		chsq = 0;
 		boolean calcNDOF = ndof == 0;

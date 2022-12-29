@@ -27,52 +27,104 @@ public class TestPoint {
 	private double pValue;
 
 	public TestPoint() {
+		super();
 	}
 
+	/**
+	 * Gets the number of datapoints that went into forming X.
+	 * 
+	 * @return
+	 */
 	public int getPoints() {
 		return points;
 	}
 
+	/**
+	 * Sets the number of datapoints that went into forming X.
+	 * 
+	 * @param points
+	 */
 	public void setPoints(int points) {
 		this.points = points;
 	}
 
+	/**
+	 * Gets the p-value of a half-normal distribution
+	 * 
+	 * @return
+	 */
 	public double getP() {
 		return p;
 	}
 
-	public void setP(double p) {
-		this.p = p;
-	}
-
+	/**
+	 * Gets the measured value.
+	 * 
+	 * @return
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * Sets the measured value.
+	 * 
+	 * @param x
+	 */
 	public void setX(double x) {
 		this.x = x;
 	}
 
+	/**
+	 * Gets the expected value.
+	 * 
+	 * @return
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * Sets the expected value.
+	 * 
+	 * @param y
+	 */
 	public void setY(double y) {
 		this.y = y;
 	}
 
+	/**
+	 * Gets the standard deviation from the expected value.
+	 * 
+	 * @return
+	 */
 	public double getSigma() {
 		return sigma;
 	}
 
+	/**
+	 * Sets the standard deviation from the expected value.
+	 * 
+	 * @param sigma
+	 */
 	public void setSigma(double sigma) {
 		this.sigma = sigma;
 	}
 
+	/**
+	 * Gets the p-value of a normal distribution.
+	 * 
+	 * @return
+	 */
 	public double getpValue() {
 		return pValue;
 	}
 
+	/**
+	 * Evaluates the the measured value against the expected value and standard
+	 * deviation. {@code X} is expected to follow a normal distribution with mean
+	 * {@code Y} and standard deviation {@code sigma}.
+	 */
 	public void evaluate() {
 		pValue = 1 - Functions.cdfStandardNormal((y - x) / sigma);
 		p = 1 - 2 * Math.abs(pValue - 0.5);

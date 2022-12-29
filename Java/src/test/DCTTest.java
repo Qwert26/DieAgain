@@ -121,7 +121,7 @@ public class DCTTest implements ITest {
 	 *         size as the input.
 	 * @throws ArithmeticException      If the type I and there is only a single
 	 *                                  input value.
-	 * @throws IllegalArgumentException If the txpe was {@code null}.
+	 * @throws IllegalArgumentException If the type was {@code null}.
 	 */
 	public static double[] discreteCosineTransform(int[] input, DCTType type) {
 		double[] output = new double[input.length];
@@ -169,9 +169,9 @@ public class DCTTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = DCT.createTest(8);
-		test.setXyz(8);
-		test.setnTuple((byte) 4);
-		DCT.getTestMethod().runTestOn(new KISS32(), test);
+		test.setXyz(64);
+		test.setnTuple((byte) 24);
+		DCT.getTestMethod().runTestOn(new AVPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

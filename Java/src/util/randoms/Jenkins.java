@@ -52,4 +52,10 @@ public class Jenkins extends Random {
 		} while (!a.compareAndSet(oldA, newA));
 		return b >> (32 - bits);
 	}
+
+	@Override
+	public String toString() {
+		return "Jenkins [" + (a != null ? "a=" + a + ", " : "") + "next=" + next + "]";
+	}
+	
 }

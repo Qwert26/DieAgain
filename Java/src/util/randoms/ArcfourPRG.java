@@ -64,4 +64,10 @@ public class ArcfourPRG extends Random {
 		}
 		return ret >> (8 * rounds - bits);
 	}
+
+	@Override
+	public String toString() {
+		return "ArcfourPRG [" + (s != null ? "s=" + s + ", " : "") + (i != null ? "i=" + i + ", " : "")
+				+ (j != null ? "j=" + j : "") + "]";
+	}
 }

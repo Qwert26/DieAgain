@@ -95,4 +95,12 @@ public class SuperKISS extends Random {
 		} while (!(index.compareAndSet(Q_MAX, 1)));
 		return q.get(0);
 	}
+
+	@Override
+	public String toString() {
+		return "SuperKISS [" + (q != null ? "q=" + q + ", " : "") + (index != null ? "index=" + index + ", " : "")
+				+ (carry != null ? "carry=" + carry + ", " : "")
+				+ (linearCongruence != null ? "linearCongruence=" + linearCongruence + ", " : "")
+				+ (xorShift != null ? "xorShift=" + xorShift : "") + "]";
+	}
 }

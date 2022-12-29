@@ -12,8 +12,8 @@ public class BitDistributionTest implements ITest {
 	static {
 		BIT_DISTRIBUTION = new TestData();
 		BIT_DISTRIBUTION.setName("Bit Patterns Distributions");
-		BIT_DISTRIBUTION.setDescription(
-				"This Test works on the premise, that Bit Patterns should be uniformly distributed and the distance between identical Bit Patterns should be geometric distributed.");
+		BIT_DISTRIBUTION.setDescription("This Test works on the premise, that Bit Patterns should be uniformly distributed "
+				+ "and the distance between identical Bit Patterns should be geometric distributed.");
 		BIT_DISTRIBUTION.setNkps(2);
 		BIT_DISTRIBUTION.setpSamplesStandard(32);
 		BIT_DISTRIBUTION.settSamplesStandard(4096);
@@ -90,8 +90,8 @@ public class BitDistributionTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = BIT_DISTRIBUTION.createTest(48, 0x10000);
-		test.setnTuple((byte) 5);
-		BIT_DISTRIBUTION.getTestMethod().runTestOn(new SuperKISS(), test);
+		test.setnTuple((byte) 6);
+		BIT_DISTRIBUTION.getTestMethod().runTestOn(new AVPRG(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");
