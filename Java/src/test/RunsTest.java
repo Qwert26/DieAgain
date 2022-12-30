@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 import util.*;
+import util.randoms.*;
 
 public class RunsTest implements ITest {
 	public static final TestData RUNS;
@@ -81,9 +82,9 @@ public class RunsTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = RUNS.createTest();
+		StandardTest test = RUNS.createTest(48);
 		test.setnTuple((byte) 8);
-		RUNS.getTestMethod().runTestOn(new Random(), test);
+		RUNS.getTestMethod().runTestOn(new AVPRG(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "  \t");

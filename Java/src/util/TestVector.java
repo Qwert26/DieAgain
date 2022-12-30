@@ -25,13 +25,17 @@ public class TestVector {
 	 */
 	private double[] y;
 	/**
-	 * Resulting Pearson's Chi-Square.
+	 * Resulting Chi-Square test statistic.
 	 */
 	private double chsq;
 	/**
 	 * Resulting p-value.
 	 */
 	private double pValue;
+	/**
+	 * Resulting G test statistic.
+	 */
+	private double g;
 
 	public TestVector() {
 		super();
@@ -57,6 +61,8 @@ public class TestVector {
 		ndof = nvec - 1;
 		x = new double[nvec];
 		y = new double[nvec];
+		chsq = -1;
+		pValue = -1;
 	}
 
 	/**
@@ -124,6 +130,14 @@ public class TestVector {
 	public double getChsq() {
 		return chsq;
 	}
+	
+	/**
+	 * Gets the g value.
+	 * @return
+	 */
+	public double getG() {
+		return g;
+	}
 
 	/**
 	 * Gets the resulting p-value.
@@ -138,6 +152,14 @@ public class TestVector {
 	 * Evaluates the measured data against the expected data.
 	 */
 	public void evaluate() {
+		evaluateChiSquareTest();
+	}
+
+	/**
+	 * Evaluates the measured data against the expected data using the
+	 * Chi-Square-Test.
+	 */
+	public void evaluateChiSquareTest() {
 		chsq = 0;
 		boolean calcNDOF = ndof == 0;
 		int indexTail = -1;
@@ -173,6 +195,44 @@ public class TestVector {
 		}
 	}
 
+	/**
+	 * Evaluates the measured data against the expected data using the G-Test.
+	 */
+	public void evaluateGTest() {
+		g = 0;
+		boolean calcNDOF = ndof == 0;
+		int indexTail = -1;
+		for (int i = 0; i < nvec; i++) {
+			if (y[i] > 0 && x[i] > 0) {
+				if (calcNDOF) {
+					ndof++;
+				}
+				g += x[i] * Math.log(x[i] / y[i]);
+			} else {
+				if (indexTail == -1) {
+					indexTail = i;
+				} else {
+					x[indexTail] += x[i];
+					y[indexTail] += y[i];
+				}
+			}
+		}
+		if (indexTail != -1) {
+			if (y[indexTail] > 0 && x[indexTail] > 0) {
+				ndof++;
+				g += x[indexTail] * Math.log(x[indexTail] / y[indexTail]);
+			}
+		}
+		g *= 2;
+		if (calcNDOF) {
+			ndof--;
+		}
+		pValue = Math.min(Math.max(1 - Functions.cdfChiSquare(ndof, g), 0), 1);
+		if (Double.isNaN(pValue)) {
+			pValue = 0.5;
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -181,6 +241,8 @@ public class TestVector {
 		temp = Double.doubleToLongBits(chsq);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(cutoff);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(g);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ndof;
 		result = prime * result + nvec;
@@ -206,6 +268,9 @@ public class TestVector {
 		if (Double.doubleToLongBits(cutoff) != Double.doubleToLongBits(other.cutoff)) {
 			return false;
 		}
+		if (Double.doubleToLongBits(g) != Double.doubleToLongBits(other.g)) {
+			return false;
+		}
 		if (ndof != other.ndof) {
 			return false;
 		}
@@ -228,6 +293,7 @@ public class TestVector {
 	public String toString() {
 		return "TestVector [nvec=" + nvec + ", ndof=" + ndof + ", cutoff=" + cutoff + ", "
 				+ (x != null ? "x=" + Arrays.toString(x) + ", " : "")
-				+ (y != null ? "y=" + Arrays.toString(y) + ", " : "") + "chsq=" + chsq + ", pValue=" + pValue + "]";
+				+ (y != null ? "y=" + Arrays.toString(y) + ", " : "") + "chsq=" + chsq + ", pValue=" + pValue + ", g="
+				+ g + "]";
 	}
 }

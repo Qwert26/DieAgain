@@ -198,7 +198,7 @@ public final class Functions {
 	}
 
 	/**
-	 * Computes nCk.
+	 * Computes nCk or alternatively n!/(k!*(n-k)!)
 	 * 
 	 * @param n
 	 * @param k
@@ -360,5 +360,35 @@ public final class Functions {
 			chisq += (observed[k] - expected[k]) * (observed[k] - expected[k]) / expected[k];
 		}
 		return 1 - cdfChiSquare(kmax - 1, chisq);
+	}
+
+	public static double chiSquarePearson(double[] observed, double[] expected) {
+		double chisq = 0;
+		final int kmax = min(observed.length, expected.length);
+		for (int k = 0; k < kmax; k++) {
+			chisq += (observed[k] - expected[k]) * (observed[k] - expected[k]) / expected[k];
+		}
+		return 1 - cdfChiSquare(kmax - 1, chisq);
+	}
+
+	public static double chiSquare2D(int[] observed, int rows, int cols, int n) {
+		double chisq = 0;
+		final int ndof = (rows - 1) * (cols - 1);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				int sum1 = 0, sum2 = 0;
+				double expected, top;
+				for (int k = 0; k < cols; k++) {
+					sum1 += observed[i * cols + k];
+				}
+				for (int k = 0; k < rows; k++) {
+					sum2 += observed[k * cols + j];
+				}
+				expected = (double) sum1 * sum2 / n;
+				top = observed[i * cols + j] - expected;
+				chisq += (top * top) / expected;
+			}
+		}
+		return 1 - cdfChiSquare(ndof, chisq);
 	}
 }

@@ -76,8 +76,8 @@ public class BitDistributionTest implements ITest {
 				for (int d = 1; d < distances.getNvec(); d++) {
 					distances.getY()[d] = distances.getY()[d - 1] * (1.0 - success);
 				}
-				counts.evaluate();
-				distances.evaluate();
+				counts.evaluateChiSquareTest();
+				distances.evaluateGTest();
 				current.getpValues()[2 * run] = counts.getpValue();
 				current.getpValues()[2 * run + 1] = distances.getpValue();
 			}
@@ -99,7 +99,7 @@ public class BitDistributionTest implements ITest {
 		System.out.println();
 		for (int pSample = 0; pSample < test.getpSamples(); pSample++) {
 			for (int nk = 0; nk < test.getNkps(); nk++) {
-				System.out.print("%f\t".formatted(test.getpValues()[pSample * test.getNkps() + nk]));
+				System.out.print("%f\t\t".formatted(test.getpValues()[pSample * test.getNkps() + nk]));
 			}
 			System.out.println();
 		}

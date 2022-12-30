@@ -45,7 +45,7 @@ public class LaggedSumsTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = LAGGED_SUMS.createTest(32, 1000000);
+		StandardTest test = LAGGED_SUMS.createTest(48, 1000000);
 		test.setnTuple((byte) 3);
 		LAGGED_SUMS.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);

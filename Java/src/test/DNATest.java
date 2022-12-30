@@ -70,7 +70,7 @@ public class DNATest implements ITest {
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = DNA.createTest(50);
-		DNA.getTestMethod().runTestOn(new ArcfourPRG(), test);
+		DNA.getTestMethod().runTestOn(new AVPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

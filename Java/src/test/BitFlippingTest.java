@@ -42,7 +42,7 @@ public class BitFlippingTest implements ITest {
 				TestVector numberOfBitFlips = new TestVector();
 				numberOfBitFlips.setNvec(bitCount + 1);
 				numberOfBitFlips.setNdof(0);
-				numberOfBitFlips.setCutoff(1);
+				numberOfBitFlips.setCutoff(5);
 				int[] lastBitFlip = new int[bitCount];
 				for (byte bit = 0; bit < bitCount; bit++) {
 					lastBitFlip[bit] = -1; // Nicht bekannt.
@@ -82,19 +82,19 @@ public class BitFlippingTest implements ITest {
 					numberOfBitFlips.getY()[bit] = Functions.binomialCoefficent(bitCount, bit) * Math.pow(0.5, bitCount)
 							* currentTest.gettSamples();
 				}
-				numberOfBitFlips.evaluate();
+				numberOfBitFlips.evaluateGTest();
 				currentTest.getpValues()[3 * pSample] = numberOfBitFlips.getpValue();
 				TestVector waitingTimesDistribution = new TestVector();
 				waitingTimesDistribution.setNvec(waitingTimes.lastKey() + 1);
 				waitingTimesDistribution.setNdof(0);
-				waitingTimesDistribution.setCutoff(1);
+				waitingTimesDistribution.setCutoff(5);
 				waitingTimesDistribution.getY()[0] = currentTest.gettSamples() * bitCount * 0.25;
 				waitingTimesDistribution.getX()[0] = waitingTimes.getOrDefault(0, 0);
 				for (int distance = 1; distance < waitingTimesDistribution.getNvec(); distance++) {
 					waitingTimesDistribution.getY()[distance] = waitingTimesDistribution.getY()[distance - 1] * 0.5;
 					waitingTimesDistribution.getX()[distance] = waitingTimes.getOrDefault(distance, 0);
 				}
-				waitingTimesDistribution.evaluate();
+				waitingTimesDistribution.evaluateChiSquareTest();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
 				double expectedCoFlips;
 				double chsq = 0.0;
@@ -122,7 +122,7 @@ public class BitFlippingTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_FLIPS.createTest(48, 0x10000);
+		StandardTest test = BIT_FLIPS.createTest(8, 0x10000);
 		test.setnTuple((byte) 8);
 		BIT_FLIPS.getTestMethod().runTestOn(new ArcfourAPlusPRG(), test);
 		// System.out.println(test);
