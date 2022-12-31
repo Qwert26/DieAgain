@@ -94,7 +94,8 @@ public class BitFlippingTest implements ITest {
 					waitingTimesDistribution.getY()[distance] = waitingTimesDistribution.getY()[distance - 1] * 0.5;
 					waitingTimesDistribution.getX()[distance] = waitingTimes.getOrDefault(distance, 0);
 				}
-				waitingTimesDistribution.evaluateChiSquareTest();
+				waitingTimesDistribution.equalize();
+				waitingTimesDistribution.evaluateGTest();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
 				double expectedCoFlips;
 				double chsq = 0.0;
@@ -107,7 +108,7 @@ public class BitFlippingTest implements ITest {
 					}
 				}
 				currentTest.getpValues()[3 * pSample + 2] = 1
-						- Functions.cdfChiSquare((bitCount - 1) * (bitCount - 2) - 1, chsq);
+						- Functions.cdfChiSquare((bitCount - 1) * (bitCount) / 2, chsq);
 			}
 			currentTest.getPvLabels()[0] = "Binomial Distributions of total Flips";
 			currentTest.getPvLabels()[1] = "Geometric Waiting Time between Flips";
@@ -123,7 +124,7 @@ public class BitFlippingTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = BIT_FLIPS.createTest(8, 0x10000);
-		test.setnTuple((byte) 8);
+		test.setnTuple((byte) 4);
 		BIT_FLIPS.getTestMethod().runTestOn(new ArcfourAPlusPRG(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {

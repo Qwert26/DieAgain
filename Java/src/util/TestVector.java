@@ -130,9 +130,10 @@ public class TestVector {
 	public double getChsq() {
 		return chsq;
 	}
-	
+
 	/**
 	 * Gets the g value.
+	 * 
 	 * @return
 	 */
 	public double getG() {
@@ -149,10 +150,29 @@ public class TestVector {
 	}
 
 	/**
+	 * Scales the expected values in order to make their sums match the one of
+	 * measured values.
+	 */
+	public void equalize() {
+		double sumX = 0, sumY = 0;
+		for (int i = 0; i < nvec; i++) {
+			sumX += x[i];
+			sumY += y[i];
+		}
+		double ratio = sumX / sumY;
+		for (int i = 0; i < nvec; i++) {
+			y[i] *= ratio;
+		}
+	}
+
+	/**
 	 * Evaluates the measured data against the expected data.
 	 */
 	public void evaluate() {
 		evaluateChiSquareTest();
+		if (Double.isNaN(chsq) || Double.isInfinite(chsq)) {
+			evaluateGTest();
+		}
 	}
 
 	/**

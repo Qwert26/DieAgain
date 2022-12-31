@@ -69,7 +69,7 @@ public class BitDistributionTest implements ITest {
 				}
 				TestVector distances = new TestVector();
 				distances.setNvec(distance2Frequency.lastKey() + 1);
-				distances.setCutoff(1);
+				distances.setCutoff(5);
 				distances.setNdof(0);
 				distance2Frequency.forEach((key, value) -> distances.getX()[key] = value);
 				distances.getY()[0] = current.gettSamples() * success;
@@ -77,6 +77,7 @@ public class BitDistributionTest implements ITest {
 					distances.getY()[d] = distances.getY()[d - 1] * (1.0 - success);
 				}
 				counts.evaluateChiSquareTest();
+				distances.equalize();
 				distances.evaluateGTest();
 				current.getpValues()[2 * run] = counts.getpValue();
 				current.getpValues()[2 * run + 1] = distances.getpValue();
