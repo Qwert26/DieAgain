@@ -39,14 +39,14 @@ public class LaggedSumsTest implements ITest {
 				current.getpValues()[p] = test.getpValue();
 			}
 			current.evaluate();
-			current.getPvLabels()[0] = "resulting CDF value for lagged Sum";
+			current.getPvLabels()[0] = "Normal Distribution of lagged Sum";
 		}
 	}
 
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = LAGGED_SUMS.createTest(48, 1000000);
-		test.setnTuple((byte) 3);
+		test.setnTuple((byte) 0);
 		LAGGED_SUMS.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {

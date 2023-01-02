@@ -116,7 +116,7 @@ public class GCDTest implements ITest {
 		return 51 * Math.log(max) / 99 + 1.0 / 6.0;
 	}
 
-	public static final double standardDeiationOfSteps(long max) {
+	public static final double standardDeviationOfSteps(long max) {
 		return Math.sqrt(varianceOfSteps(max));
 	}
 

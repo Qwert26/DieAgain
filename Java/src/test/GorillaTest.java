@@ -12,7 +12,10 @@ public class GorillaTest implements ITest {
 	static {
 		GORILLA = new TestData();
 		GORILLA.setName("Gorilla Test");
-		GORILLA.setDescription("");
+		GORILLA.setDescription(
+				"The Gorilla Test creates its numbers by creating only from a singular bit position, as such its effectivly 32 tests in parallel. "
+						+ "26 32-bit integers are getting arranged into 32 26-bit integers and overlapping samples are taking. It neasures how many bit-patterns from those "
+						+ "26-bit integers never occur in over 67 million samples.");
 		GORILLA.setpSamplesStandard(2);
 		GORILLA.settSamplesStandard(T_SAMPLES);
 		GORILLA.setNkps(32);
@@ -71,7 +74,7 @@ public class GorillaTest implements ITest {
 				}
 			}
 			for (int i = 31; i >= 0; i--) {
-				currentTest.getPvLabels()[i] = "Bit " + i;
+				currentTest.getPvLabels()[31 - i] = "Bit " + i;
 			}
 			currentTest.evaluate();
 		}
@@ -79,8 +82,8 @@ public class GorillaTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = GORILLA.createTest(8);
-		GORILLA.getTestMethod().runTestOn(new Random(), test);
+		StandardTest test = GORILLA.createTest(1);
+		GORILLA.getTestMethod().runTestOn(new ArcfourAPlusPRG(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

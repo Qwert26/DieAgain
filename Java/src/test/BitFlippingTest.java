@@ -95,7 +95,7 @@ public class BitFlippingTest implements ITest {
 					waitingTimesDistribution.getX()[distance] = waitingTimes.getOrDefault(distance, 0);
 				}
 				waitingTimesDistribution.equalize();
-				waitingTimesDistribution.evaluateGTest();
+				waitingTimesDistribution.evaluate();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
 				double expectedCoFlips;
 				double chsq = 0.0;
