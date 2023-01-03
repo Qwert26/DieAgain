@@ -82,7 +82,7 @@ public class BitFlippingTest implements ITest {
 					numberOfBitFlips.getY()[bit] = Functions.binomialCoefficent(bitCount, bit) * Math.pow(0.5, bitCount)
 							* currentTest.gettSamples();
 				}
-				numberOfBitFlips.evaluateGTest();
+				numberOfBitFlips.evaluate();
 				currentTest.getpValues()[3 * pSample] = numberOfBitFlips.getpValue();
 				TestVector waitingTimesDistribution = new TestVector();
 				waitingTimesDistribution.setNvec(waitingTimes.lastKey() + 1);
@@ -123,7 +123,7 @@ public class BitFlippingTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_FLIPS.createTest(8, 0x10000);
+		StandardTest test = BIT_FLIPS.createTest(50, 0x10000);
 		test.setnTuple((byte) 4);
 		BIT_FLIPS.getTestMethod().runTestOn(new ArcfourAPlusPRG(), test);
 		// System.out.println(test);

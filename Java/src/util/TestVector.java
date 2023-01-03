@@ -3,6 +3,48 @@ package util;
 import java.util.*;
 
 public class TestVector {
+	public static final double E_SQUARE = Math.E * Math.E;
+
+	public static enum Transform {
+		IDENTITY {
+			@Override
+			public double forward(double d) {
+				return d;
+			}
+
+			@Override
+			public double backward(double d) {
+				return d / 2;
+			}
+		},
+		LOGARITHMIC {
+			@Override
+			public double forward(double d) {
+				return Math.log1p(d);
+			}
+
+			@Override
+			public double backward(double d) {
+				return Math.expm1(d) / E_SQUARE;
+			}
+		},
+		EXPONENTIAL {
+			@Override
+			public double forward(double d) {
+				return Math.expm1(d);
+			}
+
+			@Override
+			public double backward(double d) {
+				return Math.log(d - 1);
+			}
+		};
+
+		public abstract double forward(double d);
+
+		public abstract double backward(double d);
+	}
+
 	/**
 	 * Length of the two arrays.
 	 */
@@ -167,19 +209,26 @@ public class TestVector {
 
 	/**
 	 * Evaluates the measured data against the expected data.
+	 * 
+	 * @return If the evaluation was successfull.
 	 */
-	public void evaluate() {
-		evaluateChiSquareTest();
-		if (Double.isNaN(chsq) || Double.isInfinite(chsq)) {
-			evaluateGTest();
+	public boolean evaluate() {
+		if (evaluateChiSquareTest()) {
+			return true;
 		}
+		if (evaluateGTest()) {
+			return true;
+		}
+		return evaluateAbsoluteAreaMismatch(Transform.IDENTITY);
 	}
 
 	/**
 	 * Evaluates the measured data against the expected data using the
 	 * Chi-Square-Test.
+	 * 
+	 * @return If the evaluation was successfull.
 	 */
-	public void evaluateChiSquareTest() {
+	public boolean evaluateChiSquareTest() {
 		chsq = 0;
 		boolean calcNDOF = ndof == 0;
 		int indexTail = -1;
@@ -212,13 +261,17 @@ public class TestVector {
 		pValue = Math.min(Math.max(1 - Functions.cdfChiSquare(ndof, chsq), 0), 1);
 		if (Double.isNaN(pValue)) {
 			pValue = 0.5;
+			return false;
 		}
+		return true;
 	}
 
 	/**
 	 * Evaluates the measured data against the expected data using the G-Test.
+	 * 
+	 * @return If the evaluation was successfull.
 	 */
-	public void evaluateGTest() {
+	public boolean evaluateGTest() {
 		g = 0;
 		boolean calcNDOF = ndof == 0;
 		int indexTail = -1;
@@ -250,7 +303,28 @@ public class TestVector {
 		pValue = Math.min(Math.max(1 - Functions.cdfChiSquare(ndof, g), 0), 1);
 		if (Double.isNaN(pValue)) {
 			pValue = 0.5;
+			return false;
 		}
+		return true;
+	}
+
+	public boolean evaluateAbsoluteAreaMismatch(Transform t) {
+		double sumX = 0, sumY = 0;
+		for (int i = 0; i < nvec; i++) {
+			sumX += x[i];
+			sumY += y[i];
+		}
+		double mismatch = 0, tmp;
+		if (t == null) {
+			t = Transform.IDENTITY;
+		}
+		for (int i = 0; i < nvec; i++) {
+			tmp = Math.abs(x[i] / sumX - y[i] / sumY);
+			tmp = t.forward(tmp);
+			mismatch += tmp;
+		}
+		pValue = 1 - t.backward(mismatch);
+		return true;
 	}
 
 	@Override

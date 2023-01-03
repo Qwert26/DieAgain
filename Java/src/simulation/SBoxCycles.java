@@ -71,7 +71,14 @@ public class SBoxCycles {
 			b ^= a;
 			a ^= b;
 		}
-		return gcd(b, a % b);
+		// a is now greater than b.
+		do {
+			a %= b;
+			a ^= b;
+			b ^= a;
+			a ^= b;
+		} while (b != 0);
+		return a;
 	}
 
 	public int[] createIdentitySBox() {

@@ -90,7 +90,7 @@ public class BitDistributionTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_DISTRIBUTION.createTest(48, 0x10000);
+		StandardTest test = BIT_DISTRIBUTION.createTest(50, 0x10000);
 		test.setnTuple((byte) 6);
 		BIT_DISTRIBUTION.getTestMethod().runTestOn(new AVPRG(), test);
 		// System.out.println(test);
