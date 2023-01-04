@@ -3,7 +3,7 @@ package util.randoms;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-public class ArcfourAPlusPRG extends Random {
+public class Arcfour8APlusPRG extends Random {
 	/**
 	 * 
 	 */
@@ -17,11 +17,11 @@ public class ArcfourAPlusPRG extends Random {
 	public static final int B1 = 1;
 	public static final int B2 = 1;
 
-	public ArcfourAPlusPRG() {
+	public Arcfour8APlusPRG() {
 		this(System.nanoTime());
 	}
 
-	public ArcfourAPlusPRG(long seed) {
+	public Arcfour8APlusPRG(long seed) {
 		super(seed);
 		s1 = new AtomicIntegerArray(256);
 		s2 = new AtomicIntegerArray(256);
@@ -119,7 +119,7 @@ public class ArcfourAPlusPRG extends Random {
 
 	@Override
 	public String toString() {
-		return "ArcfourAPlusPRG [" + (s1 != null ? "s1=" + s1 + ", " : "") + (s2 != null ? "s2=" + s2 + ", " : "")
+		return "Arcfour8APlusPRG [" + (s1 != null ? "s1=" + s1 + ", " : "") + (s2 != null ? "s2=" + s2 + ", " : "")
 				+ (i != null ? "i=" + i + ", " : "") + (j1 != null ? "j1=" + j1 + ", " : "")
 				+ (j2 != null ? "j2=" + j2 + ", " : "") + (k1 != null ? "k1=" + k1 + ", " : "")
 				+ (k2 != null ? "k2=" + k2 : "") + "]";

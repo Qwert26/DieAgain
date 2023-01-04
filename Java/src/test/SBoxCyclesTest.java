@@ -74,7 +74,7 @@ public class SBoxCyclesTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = SBOX_CYCLES.createTest(8);
 		test.setnTuple((byte) 8);
-		SBOX_CYCLES.getTestMethod().runTestOn(new ArcfourAPlusPRG(), test);
+		SBOX_CYCLES.getTestMethod().runTestOn(new Arcfour8APlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);
