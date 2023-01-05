@@ -32,7 +32,7 @@ public class Arcfour16PRG extends Random {
 				s.set(ii, ii);
 			}
 			for (int ii = 0, ij = 0, tmp; ii < 0x10000; ii++) {
-				ij = (int) ((ij + s.get(ii) + Long.rotateRight(seed, ii)) & 0xFF);
+				ij = (int) ((ij + s.get(ii) + Long.rotateRight(seed, ii)) & 0xFFFF);
 				tmp = s.get(ij);
 				s.set(ii, s.get(ij));
 				s.set(ij, tmp);
@@ -53,12 +53,12 @@ public class Arcfour16PRG extends Random {
 				oldI = i.get();
 				oldJ = j.get();
 
-				newI = (oldI + 1) % 0x10000;
-				newJ = (oldJ + s.get(newI)) % 0x10000;
+				newI = (oldI + 1) & 0xFFFF;
+				newJ = (oldJ + s.get(newI)) & 0xFFFF;
 				tmp = s.get(newI);
 				s.set(newI, s.get(newJ));
 				s.set(newJ, tmp);
-				tmp = s.get((s.get(newI) + s.get(newJ)) % 0x10000);
+				tmp = s.get((s.get(newI) + s.get(newJ)) & 0xFFFF);
 			} while (!(i.compareAndSet(oldI, newI) && j.compareAndSet(oldJ, newJ)));
 			ret ^= tmp;
 		}

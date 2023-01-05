@@ -17,7 +17,7 @@ public class TestVector {
 				return d / 2;
 			}
 		},
-		LOGARITHMIC {
+		LOGARITHMIC_DIVIDE {
 			@Override
 			public double forward(double d) {
 				return Math.log1p(d);
@@ -25,10 +25,21 @@ public class TestVector {
 
 			@Override
 			public double backward(double d) {
-				return Math.expm1(d) / E_SQUARE;
+				return Math.exp(d) / E_SQUARE;
 			}
 		},
-		EXPONENTIAL {
+		LOGARITHMIC_SQRT {
+			@Override
+			public double forward(double d) {
+				return Math.log1p(d);
+			}
+
+			@Override
+			public double backward(double d) {
+				return Math.sqrt(Math.exp(d)) / Math.E;
+			}
+		},
+		EXPONENTIAL_SUBTRACT {
 			@Override
 			public double forward(double d) {
 				return Math.expm1(d);
@@ -36,12 +47,37 @@ public class TestVector {
 
 			@Override
 			public double backward(double d) {
-				return Math.log(d - 1);
+				return 1 - Math.log(d - 1);
+			}
+		},
+		EXPONENTIAL_DIVIDE {
+			@Override
+			public double forward(double d) {
+				return Math.expm1(d);
+			}
+
+			@Override
+			public double backward(double d) {
+				return 1 - Math.log(d / 2);
 			}
 		};
 
+		/**
+		 * Transforms a value from the interval [0;1]. Used for individual area
+		 * mismatches.
+		 * 
+		 * @param d
+		 * @return
+		 */
 		public abstract double forward(double d);
 
+		/**
+		 * Undoes a transformation by the same instance to a sum of transformed values.
+		 * Returns a number from the interval [0;1].
+		 * 
+		 * @param d
+		 * @return
+		 */
 		public abstract double backward(double d);
 	}
 

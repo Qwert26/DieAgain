@@ -52,14 +52,14 @@ public class Arcfour8APlusPRG extends Random {
 				s2.set(ii, tmp);
 			}
 			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 1024; ii++) {
-				ij1 = (int) ((ij1 + s1.get(ij1) + W1) % 256);
-				ij2 = (int) ((ij2 + s1.get(ij2) + W2) % 256);
+				ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFF);
+				ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFF);
 				tmp = s1.get(ij1);
-				s1.set(ij1, s1.get(ii % 256));
-				s1.set(ii % 256, tmp);
+				s1.set(ij1, s1.get(ii & 0xFF));
+				s1.set(ii & 0xFF, tmp);
 				tmp = s2.get(ij2);
-				s2.set(ij2, s2.get(ii % 256));
-				s2.set(ii % 256, tmp);
+				s2.set(ij2, s2.get(ii & 0xFF));
+				s2.set(ii & 0xFF, tmp);
 			}
 			i.set(0);
 			j1.set(0);
@@ -83,26 +83,26 @@ public class Arcfour8APlusPRG extends Random {
 				oldK1 = k1.get();
 				oldK2 = k2.get();
 
-				newI = (oldI + W) % 256;
+				newI = (oldI + W) & 0xFF;
 				a1 = s1.get(newI);
 				a2 = s2.get(newI);
-				newJ1 = (oldK1 + a1 + s1.get((oldJ1 + s2.get(newI)) % 256)) % 256;
-				newK1 = (oldK1 + newI + s1.get(newJ1)) % 256;
-				newJ2 = (oldK2 + a2 + s2.get((oldJ2 + s1.get(newI)) % 256)) % 256;
-				newK2 = (oldK2 + newI + s2.get(newJ2)) % 256;
+				newJ1 = (oldK1 + a1 + s1.get((oldJ1 + s2.get(newI)) & 0xFF)) & 0xFF;
+				newK1 = (oldK1 + newI + s1.get(newJ1)) & 0xFF;
+				newJ2 = (oldK2 + a2 + s2.get((oldJ2 + s1.get(newI)) & 0xFF)) & 0xFF;
+				newK2 = (oldK2 + newI + s2.get(newJ2)) & 0xFF;
 
-				c1 = (s1.get(((newI << 5) ^ (newJ1 >> 3)) % 256) + s1.get(((newJ1 << 5) ^ (newI >> 3)) % 256)) % 256;
-				c2 = (s2.get(((newI << 5) ^ (newJ2 >> 3)) % 256) + s2.get(((newJ2 << 5) ^ (newI >> 3)) % 256)) % 256;
+				c1 = (s1.get(((newI << 5) ^ (newJ1 >> 3)) & 0xFF) + s1.get(((newJ1 << 5) ^ (newI >> 3)) & 0xFF)) & 0xFF;
+				c2 = (s2.get(((newI << 5) ^ (newJ2 >> 3)) & 0xFF) + s2.get(((newJ2 << 5) ^ (newI >> 3)) & 0xFF)) & 0xFF;
 
 				output = s1.get((newJ1 + s2.get(
-						(newI + (s1.get((a1 + B1) % 256) + s1.get(c1 ^ 0xAA)) ^ (s1.get((newJ1 + B1) % 256) + newK1))
-								% 256))
-						% 256);
+						(newI + (s1.get((a1 + B1) & 0xFF) + s1.get(c1 ^ 0xAA)) ^ (s1.get((newJ1 + B1) & 0xFF) + newK1))
+								& 0xFF))
+						& 0xFF);
 				output <<= 8;
 				output ^= s2.get((newJ2 + s1.get(
-						(newI + (s2.get((a2 + B2) % 256) + s2.get(c2 ^ 0x55)) ^ (s2.get((newJ2 + B2) % 256) + newK2))
-								% 256))
-						% 256);
+						(newI + (s2.get((a2 + B2) & 0xFF) + s2.get(c2 ^ 0x55)) ^ (s2.get((newJ2 + B2) & 0xFF) + newK2))
+								& 0xFF))
+						& 0xFF);
 
 				tmp = s1.get(newJ1);
 				s1.set(newJ1, s1.get(newI));
