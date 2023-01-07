@@ -34,7 +34,7 @@ public class SBoxCyclesTest implements ITest {
 			for (int pSample = 0; pSample < currentTest.getpSamples(); pSample++) {
 				TestVector test = new TestVector();
 				test.setNvec(1 << currentTest.getnTuple());
-				test.setCutoff(0);
+				test.setCutoff(5);
 				int[] sbox = new int[test.getNvec()];
 				for (int i = 0; i < sbox.length; i++) {
 					sbox[i] = i;
@@ -73,8 +73,8 @@ public class SBoxCyclesTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = SBOX_CYCLES.createTest(8);
-		test.setnTuple((byte) 8);
-		SBOX_CYCLES.getTestMethod().runTestOn(new Arcfour8APlusPRG(), test);
+		test.setnTuple((byte) 4);
+		SBOX_CYCLES.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

@@ -23,8 +23,8 @@ public class Arcfour8APlusPRG extends Random {
 
 	public Arcfour8APlusPRG(long seed) {
 		super(seed);
-		s1 = new AtomicIntegerArray(256);
-		s2 = new AtomicIntegerArray(256);
+		s1 = new AtomicIntegerArray(0x100);
+		s2 = new AtomicIntegerArray(0x100);
 		i = new AtomicInteger(0);
 		j1 = new AtomicInteger(0);
 		j2 = new AtomicInteger(0);
@@ -37,11 +37,11 @@ public class Arcfour8APlusPRG extends Random {
 	@Override
 	public synchronized void setSeed(long seed) {
 		if (initialized) {
-			for (int ii = 0; ii < 256; ii++) {
+			for (int ii = 0; ii < 0x100; ii++) {
 				s1.set(ii, ii);
 				s2.set(ii, ii);
 			}
-			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 256; ii++) {
+			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x100; ii++) {
 				ij1 = (int) ((ij1 + s1.get(ij1) + Long.rotateLeft(seed, ii)) & 0xFF);
 				ij2 = (int) ((ij2 + s1.get(ij2) + Long.rotateRight(seed, ii)) & 0xFF);
 				tmp = s1.get(ij1);
@@ -51,7 +51,7 @@ public class Arcfour8APlusPRG extends Random {
 				s2.set(ij2, s2.get(ii));
 				s2.set(ii, tmp);
 			}
-			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 1024; ii++) {
+			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x400; ii++) {
 				ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFF);
 				ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFF);
 				tmp = s1.get(ij1);

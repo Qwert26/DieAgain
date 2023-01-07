@@ -90,9 +90,9 @@ public class BitDistributionTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_DISTRIBUTION.createTest(50, 0x20000);
-		test.setnTuple((byte) 6);
-		BIT_DISTRIBUTION.getTestMethod().runTestOn(new SuperKISS(), test);
+		StandardTest test = BIT_DISTRIBUTION.createTest(50, 0x10000);
+		test.setnTuple((byte) 2);
+		BIT_DISTRIBUTION.getTestMethod().runTestOn(new MiddleSquare(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");
