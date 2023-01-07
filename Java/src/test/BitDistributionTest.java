@@ -30,8 +30,9 @@ public class BitDistributionTest implements ITest {
 		bitSource.setRandom(rng);
 		for (StandardTest current : parameters) {
 			if (current.getnTuple() == 0) {
-				current.setnTuple((byte) 2);
+				current.setnTuple((byte) 1);
 			} else if (current.getnTuple() > 30) {
+				//Skip
 				continue;
 			}
 			final double success = Math.pow(2.0, -current.getnTuple());
@@ -91,8 +92,8 @@ public class BitDistributionTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = BIT_DISTRIBUTION.createTest(50, 0x10000);
-		test.setnTuple((byte) 2);
-		BIT_DISTRIBUTION.getTestMethod().runTestOn(new MiddleSquare(), test);
+		test.setnTuple((byte) 8);
+		BIT_DISTRIBUTION.getTestMethod().runTestOn(new MiddleSquareSolo(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");
