@@ -49,4 +49,10 @@ public class MiddleSquareSolo extends Random {
 		} while (!(a.compareAndSet(oldA, newA) && usedSeed.compareAndSet(oldUS, newUS)));
 		return (int) ((newA ^ (newA << 32)) >>> (64 - bits));
 	}
+
+	@Override
+	public String toString() {
+		return "MiddleSquareSolo [" + (a != null ? "a=" + a + ", " : "")
+				+ (usedSeed != null ? "usedSeed=" + usedSeed : "") + "]";
+	}
 }

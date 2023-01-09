@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 /**
- * @author George Marsaglia (C Version)
- * @author Christian Schürhoff
+ * @author George Marsaglia (C-Version)
+ * @author Christian Schürhoff (Java-Version)
  */
 public class KISS32 extends Random {
 	/**

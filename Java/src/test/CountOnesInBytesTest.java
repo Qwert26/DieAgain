@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 import util.*;
+import util.randoms.*;
 
 /**
  * 
@@ -95,7 +96,7 @@ public class CountOnesInBytesTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = COUNT1S_BYTES.createTest(48);
-		COUNT1S_BYTES.getTestMethod().runTestOn(new util.randoms.Arcfour8PRG(), test);
+		COUNT1S_BYTES.getTestMethod().runTestOn(new MiddleSquareSolo(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 /**
- * @author David Jones
- * @author Christian Schürhoff
+ * @author David Jones (C-Version)
+ * @author Christian Schürhoff (Java-Version)
  */
 public class JKISS32 extends Random {
 	/**

@@ -61,13 +61,13 @@ public class AVPRG extends Random {
 			newC = newD + e;
 			newD = e + newA;
 			newKKK++;
-			if (newKKK == 31) {
+			if (newKKK == 32) {
 				newKKK = 1;
 				newJJJ++;
-				if (newJJJ == 31) {
+				if (newJJJ == 32) {
 					newJJJ = 1;
 					newIII++;
-					if (newIII == 31) {
+					if (newIII == 32) {
 						newIII = 1;
 					}
 				}

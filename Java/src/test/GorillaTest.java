@@ -82,8 +82,8 @@ public class GorillaTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = GORILLA.createTest(8);
-		GORILLA.getTestMethod().runTestOn(new Arcfour16PRG(), test);
+		StandardTest test = GORILLA.createTest(50);
+		GORILLA.getTestMethod().runTestOn(new AVPRG(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}
