@@ -83,6 +83,10 @@ public class GorillaTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = GORILLA.createTest(50);
+		TestObserver observer = new TestObserver();
+		observer.setTests(test);
+		Thread t = new Thread(observer);
+		t.start();
 		GORILLA.getTestMethod().runTestOn(new AVPRG(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
