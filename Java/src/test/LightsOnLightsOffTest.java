@@ -108,7 +108,7 @@ public class LightsOnLightsOffTest implements ITest {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(30, 1000000);
+		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(30, 1000);
 		test.setnTuple((byte) 8);
 		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new Random(), test);
 		System.out.println(test.getPvLabels()[0]);
