@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 import util.*;
+import util.randoms.*;
 
 public class LightsOnLightsOffTest implements ITest {
 	public static final TestData LIGHTS_ON_LIGHTS_OFF;
@@ -10,8 +11,8 @@ public class LightsOnLightsOffTest implements ITest {
 		LIGHTS_ON_LIGHTS_OFF.setName("Lights On Lights Off");
 		LIGHTS_ON_LIGHTS_OFF.setDescription("");
 		LIGHTS_ON_LIGHTS_OFF.setNkps(1);
-		LIGHTS_ON_LIGHTS_OFF.settSamplesStandard(1000000);
-		LIGHTS_ON_LIGHTS_OFF.setpSamplesStandard(50);
+		LIGHTS_ON_LIGHTS_OFF.settSamplesStandard(50000);
+		LIGHTS_ON_LIGHTS_OFF.setpSamplesStandard(64);
 		LIGHTS_ON_LIGHTS_OFF.setTestMethod(new LightsOnLightsOffTest());
 	}
 
@@ -108,21 +109,30 @@ public class LightsOnLightsOffTest implements ITest {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(30, 1000);
+		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(8, 5000);
 		test.setnTuple((byte) 8);
-		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new Random(), test);
-		System.out.println(test.getPvLabels()[0]);
-		for (int pv = 0; pv < test.getpSamples(); pv++) {
-			System.out.println(test.getpValues()[pv]);
+		TestObserver observer = new TestObserver();
+		observer.setTests(test);
+		Thread t = new Thread(observer);
+		t.start();
+		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new AVPRG(), test);
+		for (int nk = 0; nk < test.getNkps(); nk++) {
+			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}
-		System.out.println("Final p-Value: " + test.getKs_pValue());
-		System.out.print("Final Verdict: ");
+		System.out.println();
+		for (int pSample = 0; pSample < test.getpSamples(); pSample++) {
+			for (int nk = 0; nk < test.getNkps(); nk++) {
+				System.out.print("%.7f\t".formatted(test.getpValues()[pSample * test.getNkps() + nk]));
+			}
+			System.out.println();
+		}
+		System.out.println("Final p-Value of KS-Test: %.7f".formatted(test.getKs_pValue()));
 		if (test.hasFailed()) {
-			System.out.println("Failed");
+			System.out.println("Bits are not random!");
 		} else if (test.isWeak()) {
-			System.out.println("Weak");
+			System.out.println("Bits are weakly non-random.");
 		} else {
-			System.out.println("Passed");
+			System.out.println("Bits are random.");
 		}
 	}
 }

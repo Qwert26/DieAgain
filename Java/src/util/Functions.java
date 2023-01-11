@@ -48,6 +48,16 @@ public final class Functions {
 		 */
 	}
 
+	public static double doubleFactorial(long n) {
+		if (n < 0) {
+			throw new ArithmeticException("Double Factorial not defined for negtaive numbers!");
+		} else if (n < 2) {
+			return 1;
+		} else {
+			return n * doubleFactorial(n - 2);
+		}
+	}
+
 	/**
 	 * Probability density function for the standard normal distribution.
 	 * 
