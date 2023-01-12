@@ -4,6 +4,10 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 public class BitJuggler extends Random {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1690861520758930997L;
 	private boolean initialized = false;
 	private AtomicLongArray data;
 	private AtomicInteger index;
