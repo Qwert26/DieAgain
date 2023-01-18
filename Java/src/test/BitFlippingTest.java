@@ -95,14 +95,14 @@ public class BitFlippingTest implements ITest {
 					waitingTimesDistribution.getX()[distance] = waitingTimes.getOrDefault(distance, 0);
 				}
 				waitingTimesDistribution.equalize();
-				waitingTimesDistribution.evaluate();
+				waitingTimesDistribution.evaluateGTest();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
 				double expectedCoFlips;
 				double chsq = 0.0;
 				for (byte bitI = 1; bitI < bitCount; bitI++) {
 					for (byte bitJ = 0; bitJ < bitI; bitJ++) {
 						expectedCoFlips = Math.min(simultaneousBitFlips[bitI][bitI], simultaneousBitFlips[bitJ][bitJ])
-								/ 2;
+								/ 2.0;
 						chsq += (simultaneousBitFlips[bitI][bitJ] - expectedCoFlips)
 								* (simultaneousBitFlips[bitI][bitJ] - expectedCoFlips) / expectedCoFlips;
 					}
@@ -123,7 +123,7 @@ public class BitFlippingTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_FLIPS.createTest(50, 0x10000);
+		StandardTest test = BIT_FLIPS.createTest(8, 0x40000);
 		test.setnTuple((byte) 6);
 		BIT_FLIPS.getTestMethod().runTestOn(new AVPRG(), test);
 		// System.out.println(test);

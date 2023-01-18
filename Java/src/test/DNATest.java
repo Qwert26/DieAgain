@@ -16,8 +16,8 @@ public class DNATest implements ITest {
 		DNA.setNkps(1);
 		DNA.setTestMethod(new DNATest());
 	}
-	public static final double MEAN = 141910.4026047629D;
-	public static final double SIGMA = 337.2901506904D;
+	public static final double MEAN = 141910.4026047629;
+	public static final double SIGMA = 337.2901506904;
 	public static final int T_SAMPLE_COUNT = 2097152;
 	public static final int FLATTENED = 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4;
 

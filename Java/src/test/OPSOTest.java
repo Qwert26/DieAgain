@@ -35,22 +35,20 @@ public class OPSOTest implements ITest {
 			Dispenser index0 = new Dispenser(), index1 = new Dispenser();
 			index0.setRandom(rng);
 			index1.setRandom(rng);
-			//Konvertiere zu Parallel.
+			// Konvertiere zu Parallel.
 			for (byte i = 0; i < 3; i++) {
 				index0.getBits((byte) 32);
 				index1.getBits((byte) 32);
 			}
 			for (int pSample = 0; pSample < currentTest.getpSamples(); pSample++) {
 				pTest.setX(0);
-				boolean[][] words = new boolean[1024][1024];
+				boolean[] words = new boolean[1024 * 1024];
 				for (int tSample = 0; tSample < T_SAMPLES; tSample++) {
-					words[index0.getBitsAsInteger((byte) 10)][index1.getBitsAsInteger((byte) 10)] = true;
+					words[1024 * index0.getBitsAsInteger((byte) 10) + index1.getBitsAsInteger((byte) 10)] = true;
 				}
-				for (boolean[] firstLetter : words) {
-					for (boolean secondLetter : firstLetter) {
-						if (!secondLetter) {
-							pTest.setX(pTest.getX() + 1.0);
-						}
+				for (boolean word : words) {
+					if (!word) {
+						pTest.setX(pTest.getX() + 1.0);
 					}
 				}
 				pTest.evaluate();
@@ -64,7 +62,7 @@ public class OPSOTest implements ITest {
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = OPSO.createTest(50);
-		OPSO.getTestMethod().runTestOn(new Arcfour16PRG(), test);
+		OPSO.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

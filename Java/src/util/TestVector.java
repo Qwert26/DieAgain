@@ -39,17 +39,6 @@ public class TestVector {
 				return Math.sqrt(Math.exp(d)) / Math.E;
 			}
 		},
-		EXPONENTIAL_SUBTRACT {
-			@Override
-			public double forward(double d) {
-				return Math.expm1(d);
-			}
-
-			@Override
-			public double backward(double d) {
-				return 1 - Math.log(d - 1);
-			}
-		},
 		EXPONENTIAL_DIVIDE {
 			@Override
 			public double forward(double d) {
@@ -59,6 +48,28 @@ public class TestVector {
 			@Override
 			public double backward(double d) {
 				return 1 - Math.log(d / 2);
+			}
+		},
+		BOX_COX_RECIPROCAL {
+			@Override
+			public double forward(double d) {
+				return 1.0 - d;
+			}
+
+			@Override
+			public double backward(double d) {
+				return 1.0 - 1.0 / (d + 1.0);
+			}
+		},
+		BOX_COX_NEGATIVE_EXPONENTIAL {
+			@Override
+			public double forward(double d) {
+				return 1.0 - d;
+			}
+
+			@Override
+			public double backward(double d) {
+				return 1.0 - Math.exp(-d);
 			}
 		};
 

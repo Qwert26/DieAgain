@@ -14,6 +14,18 @@ import util.randoms.*;
 public class DCTTest implements ITest {
 	public static enum DCTType {
 		TYPE_I, TYPE_II, TYPE_III, TYPE_IV, TYPE_V, TYPE_VI, TYPE_VII, TYPE_VIII;
+
+		public boolean hasDCCoefficent() {
+			switch (this) {
+			case TYPE_I:
+			case TYPE_II:
+			case TYPE_V:
+			case TYPE_VI:
+				return true;
+			default:
+				return false;
+			}
+		}
 	}
 
 	public static final TestData DCT;
@@ -21,8 +33,9 @@ public class DCTTest implements ITest {
 		DCT = new TestData();
 		DCT.setName("Discrete Cosinus Transformation");
 		DCT.setDescription(
-				"Transforms extra[0] output-values of the PRNG into a frequency-strength-relationship. The peaks of this relation should be uniformly distributed.");
-		DCT.setpSamplesStandard(3);
+				"Transforms extra[0] output-values of the PRNG into a frequency-strength-relationship. The peaks of this relation should be uniformly distributed. "
+						+ "The theory is, that a good PRNG is effectivly producing white noise.");
+		DCT.setpSamplesStandard(32);
 		DCT.settSamplesStandard(48000);
 		DCT.setNkps(1);
 		DCT.setTestMethod(new DCTTest());
@@ -97,7 +110,7 @@ public class DCTTest implements ITest {
 				} else {
 					TestVector p = new TestVector();
 					p.setNvec(input.length);
-					p.setCutoff(0);
+					p.setCutoff(5);
 					for (int i = 0; i < input.length; i++) {
 						p.getX()[i] = positionCounts[i];
 						p.getY()[i] = current.gettSamples() / current.getXyz()[0];
@@ -112,8 +125,8 @@ public class DCTTest implements ITest {
 	}
 
 	/**
-	 * Performs a DCT on the input. The input can be of any length. Only the
-	 * type I DCT requires at least two values in the input.
+	 * Performs a DCT on the input. The input can be of any length. Only the type I
+	 * DCT requires at least two values in the input.
 	 * 
 	 * @param input
 	 * @param type  The exact type of the DCT.
@@ -163,15 +176,15 @@ public class DCTTest implements ITest {
 	}
 
 	private static int rotateLeft(int value, byte bits, byte amount) {
-		return (value << amount) | (value >> (bits - amount));
+		return ((value << amount) | (value >>> (bits - amount))) & ((1 << bits) - 1);
 	}
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = DCT.createTest(8);
-		test.setXyz(128);
-		test.setnTuple((byte) 24);
-		DCT.getTestMethod().runTestOn(new Arcfour16PRG(), test);
+		StandardTest test = DCT.createTest(8, 0x1000);
+		test.setXyz(64);
+		test.setnTuple((byte) 8);
+		DCT.getTestMethod().runTestOn(new JKISS32(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

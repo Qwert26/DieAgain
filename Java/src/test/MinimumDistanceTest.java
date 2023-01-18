@@ -89,7 +89,7 @@ public class MinimumDistanceTest implements ITest, Comparator<double[]> {
 	@Deprecated
 	public static void main(String[] args) {
 		StandardTest test = MINIMUM_DISTANCE.createTest(10,100000);
-		test.setnTuple((byte) 5);
+		test.setnTuple((byte) 4);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
 		Thread t = new Thread(observer);

@@ -9,7 +9,10 @@ public class LightsOnLightsOffTest implements ITest {
 	static {
 		LIGHTS_ON_LIGHTS_OFF = new TestData();
 		LIGHTS_ON_LIGHTS_OFF.setName("Lights On Lights Off");
-		LIGHTS_ON_LIGHTS_OFF.setDescription("");
+		LIGHTS_ON_LIGHTS_OFF.setDescription(
+				"This Test uses boolean operators (AND/OR) to first bring nTuple Bits on and then the same Bits off. "
+						+ "The distribution of required steps should follow a discrete phase-type one and as such, "
+						+ "it will take longer to compute the final distribution for a higher number of Bits.");
 		LIGHTS_ON_LIGHTS_OFF.setNkps(1);
 		LIGHTS_ON_LIGHTS_OFF.settSamplesStandard(50000);
 		LIGHTS_ON_LIGHTS_OFF.setpSamplesStandard(64);
@@ -113,9 +116,9 @@ public class LightsOnLightsOffTest implements ITest {
 		test.setnTuple((byte) 8);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
-		Thread t = new Thread(observer);
-		t.start();
-		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new AVPRG(), test);
+		//Thread t = new Thread(observer);
+		//t.start();
+		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new KISS32(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

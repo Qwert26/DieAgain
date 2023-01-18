@@ -8,7 +8,7 @@ public class GCDTest implements ITest {
 	/**
 	 * Average value of steps of the euclid algorith for finding the gcd of two
 	 * numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
-	 * numbers must be unsigened 32-bit integers.
+	 * numbers must be unsigned 32-bit integers.
 	 */
 	public static final double MEAN = 18.7585;
 	/**
@@ -23,8 +23,8 @@ public class GCDTest implements ITest {
 	 */
 	public static final double PROBABILITY = 1 - SIGMA * SIGMA / MEAN;
 	/**
-	 * Euclid takes the maximum of steps, when the two choosen numbers are
-	 * consecutive fibonnaci-numbers.
+	 * Euclid's algorithm takes the maximum amount of steps, when the two choosen
+	 * numbers are consecutive fibonnaci-numbers.
 	 */
 	public static final byte N = 51;
 	private static final double[] K_PROBABILITIES = { 0.0, 5.39e-09, 6.077e-08, 4.8421e-07, 2.94869e-06, 1.443266e-05,
