@@ -1,0 +1,75 @@
+<html>
+<head>
+	<meta charset="iso-8859-2" />
+	<title>DieAgain in Java</title>
+</head>
+<body>
+	<h1>Bit-Verteilungs-Test</h1>
+	<ul>
+		<li><a href="packageTest.html">Zurück zum Paket</a></li>
+		<li><a href="indexJava.html">Zurück zum Java-Index</a></li>
+		<li><a href="../index.html">Zurück zur Homepage</a></li>
+	</ul>
+	<p>
+		Die Klasse "<code>BitDistributionTest</code>" implementiert zwei Tests gleichzeitig:
+	</p>
+	<ul>
+		<li>Alle möglichen Bit-Muster sollten gleich häufig auftreten.</li>
+		<li>Der Abstand zwischen identischen Bit-Mustern sollte einer geometrischen Verteilung folgen. Dies funktioniert nur, da keine überlappende Proben genommen werden.</li>
+	</ul>
+	<table border="1">
+		<thead>
+			<tr>
+				<th rowspan="2">Bits</th>
+				<th rowspan="2">Anzahl möglicher Muster</th>
+				<th>Parameter der geometrischen Verteilung</th>
+			</tr>
+			<tr>
+				<td>Variante: Fehlversuche vor Erfolg</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>p = 0,5</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>4</td>
+				<td>p = 0,25</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>8</td>
+				<td>p = 0,125</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>16</td>
+				<td>p = 0,0625</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>32</td>
+				<td>p = 0,03125</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>64</td>
+				<td>p = 0,015625</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>x</th>
+				<th>2<sup>x</sup></th>
+				<th>p = 2<sup>-x</sup></th>
+			</tr>
+		</tfoot>
+	</table>
+	<p>
+		Für gewöhnlich reichen 6 Bits aus, damit die meisten PRNGs beim zweiten Teiltest durchfallen.
+	</p>
+</body>
+</html>
