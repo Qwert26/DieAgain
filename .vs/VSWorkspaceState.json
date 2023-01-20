@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\docs",
-    "\\docs\\javaDocs",
-    "\\Java",
-    "\\Java\\src",
-    "\\Java\\src\\test"
+    ""
   ],
-  "SelectedNode": "\\Java\\src\\test\\CountOnesInBytesTest.java",
+  "SelectedNode": "\\docs",
   "PreviewInSolutionExplorer": false
 }
