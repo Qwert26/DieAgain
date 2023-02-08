@@ -125,6 +125,10 @@ public class TestVector {
 	 * Resulting G test statistic.
 	 */
 	private double g;
+	/**
+	 * 
+	 */
+	private double kl;
 
 	public TestVector() {
 		super();
@@ -151,6 +155,8 @@ public class TestVector {
 		x = new double[nvec];
 		y = new double[nvec];
 		chsq = -1;
+		g = 0;
+		kl = -1;
 		pValue = -1;
 	}
 
@@ -238,6 +244,10 @@ public class TestVector {
 		return pValue;
 	}
 
+	public double getKl() {
+		return kl;
+	}
+
 	/**
 	 * Scales the expected values in order to make their sums match the one of
 	 * measured values.
@@ -263,10 +273,11 @@ public class TestVector {
 		if (evaluateChiSquareTest()) {
 			return true;
 		}
+		equalize();
 		if (evaluateGTest()) {
 			return true;
 		}
-		return evaluateAbsoluteAreaMismatch(Transform.IDENTITY);
+		return evaluateKLDivergence();
 	}
 
 	/**
@@ -352,6 +363,21 @@ public class TestVector {
 			pValue = 0.5;
 			return false;
 		}
+		return true;
+	}
+
+	public boolean evaluateKLDivergence() {
+		double sumX = 0;
+		for (double p : x) {
+			sumX += p;
+		}
+		kl = 0;
+		for (int i = 0; i < nvec; i++) {
+			if (x[i] > 0 && y[i] > 0) {
+				kl += x[i] / sumX * Math.log(x[i] / y[i]);
+			}
+		}
+		pValue = 1 - Math.exp(-kl);
 		return true;
 	}
 

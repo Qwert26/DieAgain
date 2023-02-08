@@ -5,8 +5,8 @@ import util.*;
 import util.randoms.*;
 
 public class GorillaTest implements ITest {
-	public static final double MEAN = 24687971;
-	public static final double SIGMA = 4170;
+	public static final int MEAN = 24687971;
+	public static final int SIGMA = 4170;
 	public static final int T_SAMPLES = 1 << 26;
 	public static final TestData GORILLA;
 	static {

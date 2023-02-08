@@ -4,7 +4,6 @@ import java.util.*;
 import util.*;
 import util.randoms.*;
 
-@Deprecated
 public class SBoxCyclesTest implements ITest {
 	public static final TestData SBOX_CYCLES;
 	static {
@@ -62,7 +61,8 @@ public class SBoxCyclesTest implements ITest {
 						}
 					}
 				}
-				test.evaluate();
+				test.equalize();
+				test.evaluateGTest();
 				currentTest.getpValues()[pSample] = test.getpValue();
 			}
 			currentTest.evaluate();
@@ -72,7 +72,7 @@ public class SBoxCyclesTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = SBOX_CYCLES.createTest(8);
+		StandardTest test = SBOX_CYCLES.createTest();
 		test.setnTuple((byte) 4);
 		SBOX_CYCLES.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
