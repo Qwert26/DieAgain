@@ -51,18 +51,18 @@ public class KISS32 extends Random {
 		int newX, newY, newZ, newC;
 		long t;
 		do {
-			oldX = x.get();
-			oldY = y.get();
-			oldZ = z.get();
-			oldC = c.get();
+			newX = oldX = x.get();
+			newY = oldY = y.get();
+			newZ = oldZ = z.get();
+			newC = oldC = c.get();
 
-			newX = LCG_MULT * oldX + LCG_ADD;
+			newX = LCG_MULT * newX + LCG_ADD;
 
-			newY = oldY ^ (oldY << 13);
+			newY = newY ^ (newY << 13);
 			newY ^= newY >> 17;
 			newY ^= newY << 5;
 
-			t = MWC_MULT * oldZ + oldC;
+			t = MWC_MULT * newZ + newC;
 			newC = (int) (t >> 32);
 			newZ = (int) t;
 		} while (!(x.compareAndSet(oldX, newX) && y.compareAndSet(oldY, newY) && z.compareAndSet(oldZ, newZ)

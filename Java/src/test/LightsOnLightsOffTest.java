@@ -112,8 +112,8 @@ public class LightsOnLightsOffTest implements ITest {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(8, 5000);
-		test.setnTuple((byte) 8);
+		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(16, 50000);
+		test.setnTuple((byte) 10);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
 		//Thread t = new Thread(observer);

@@ -18,6 +18,7 @@ public class OQSOTest implements ITest {
 	public static final int T_SAMPLES = 2097152;
 	public static final double MEAN = 141909.6005321316;
 	public static final double SIGMA = 294.6558723658;
+	public static final int WORD_COUNT = 32 * 32 * 32 * 32;
 
 	public OQSOTest() {
 		super();
@@ -38,7 +39,7 @@ public class OQSOTest implements ITest {
 			index1.setRandom(rng);
 			index2.setRandom(rng);
 			index3.setRandom(rng);
-			//Konvertiere zu Parallel.
+			// Konvertiere zu Parallel.
 			for (byte i = 0; i < 3; i++) {
 				index0.getBits((byte) 32);
 				index1.getBits((byte) 32);
@@ -46,29 +47,24 @@ public class OQSOTest implements ITest {
 				index3.getBits((byte) 32);
 			}
 			for (int pSample = 0; pSample < currentTest.getpSamples(); pSample++) {
-				boolean[][][][] words = new boolean[32][32][32][32];
+				boolean[] words = new boolean[WORD_COUNT];
 				for (int tSample = 0; tSample < T_SAMPLES; tSample++) {
-					words[index0.getBitsAsInteger((byte) 5)][index1.getBitsAsInteger((byte) 5)][index2
-							.getBitsAsInteger((byte) 5)][index3.getBitsAsInteger((byte) 5)] = true;
+					words[32 * 32 * 32 * index0.getBitsAsInteger((byte) 5) + 32 * 32 * index1.getBitsAsInteger((byte) 5)
+							+ 32 * index2.getBitsAsInteger((byte) 5) + index3.getBitsAsInteger((byte) 5)] = true;
 				}
-				for (boolean[][][] firstLetter : words) {
-					for (boolean[][] secondLetter : firstLetter) {
-						for (boolean[] thirdLetter : secondLetter) {
-							for (boolean fourthLetter : thirdLetter) {
-								if (!fourthLetter) {
-									pTest.setX(pTest.getX() + 1.0);
-								}
-							}
-						}
+				for (boolean word : words) {
+					if (!word) {
+						pTest.setX(pTest.getX() + 1.0);
 					}
 				}
 				pTest.evaluate();
-				currentTest.getpValues()[pSample]=pTest.getpValue();
+				currentTest.getpValues()[pSample] = pTest.getpValue();
 			}
 			currentTest.evaluate();
 			currentTest.getPvLabels()[0] = "Normal Distribution of missing words";
 		}
 	}
+
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = OQSO.createTest(50);
