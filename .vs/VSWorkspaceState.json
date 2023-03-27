@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\docs"
   ],
-  "SelectedNode": "\\Java",
+  "SelectedNode": "\\docs\\cSharpDocs",
   "PreviewInSolutionExplorer": false
 }

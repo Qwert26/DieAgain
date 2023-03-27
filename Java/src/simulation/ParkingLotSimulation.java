@@ -8,6 +8,7 @@ public class ParkingLotSimulation {
 	private double length = 100;
 
 	public ParkingLotSimulation() {
+		super();
 	}
 
 	public int runForTries(long tries) {
@@ -44,9 +45,11 @@ public class ParkingLotSimulation {
 
 	public static void main(String... args) {
 		ParkingLotSimulation sim = new ParkingLotSimulation();
-		for (long count = 100; count > 0; count--) {
-			System.out.print(sim.runForTries(20000) + "\t");
-			if ((count - 1) % 10 == 0) {
+		sim.dimensions = 3;
+		sim.length = 100;
+		for (long count = 200; count > 0; count--) {
+			System.out.print(sim.runForTries(1000) + "\t");
+			if ((count - 1) % 20 == 0) {
 				System.out.println();
 			}
 		}
