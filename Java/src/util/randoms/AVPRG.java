@@ -55,9 +55,9 @@ public class AVPRG extends Random {
 			newIII = oldIII = iii.get();
 			newJJJ = oldJJJ = jjj.get();
 			newKKK = oldKKK = kkk.get();
-			e = newA - Integer.rotateRight(newB, oldIII);
-			newA = newB ^ Integer.rotateRight(newC, oldJJJ);
-			newB = newC + Integer.rotateRight(newD, oldKKK);
+			e = newA - Integer.rotateRight(newB, newIII);
+			newA = newB ^ Integer.rotateRight(newC, newJJJ);
+			newB = newC + Integer.rotateRight(newD, newKKK);
 			newC = newD + e;
 			newD = e + newA;
 			newKKK++;
