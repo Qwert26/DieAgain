@@ -6,24 +6,24 @@ import util.randoms.*;
 
 public class GCDTest implements ITest {
 	/**
-	 * Average value of steps of the euclid algorith for finding the gcd of two
+	 * Average value of steps of the euclid's algorithm for finding the gcd of two
 	 * numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
 	 * numbers must be unsigned 32-bit integers.
 	 */
 	public static final double MEAN = 18.7585;
 	/**
-	 * Standard deviation of steps of the euclid algorith for finding the gcd of two
-	 * numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
-	 * numbers must be unsigened 32-bit integers.
+	 * Standard deviation of steps of the euclid's algorithm for finding the gcd of
+	 * two numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
+	 * numbers must be unsigned 32-bit integers.
 	 */
 	public static final double SIGMA = 3.405;
 	/**
-	 * Resulting success propability for a binomial distribution. An approximate for
+	 * Resulting success probability for a binomial distribution. An approximate for
 	 * the number of steps.
 	 */
 	public static final double PROBABILITY = 1 - SIGMA * SIGMA / MEAN;
 	/**
-	 * Euclid's algorithm takes the maximum amount of steps, when the two choosen
+	 * Euclid's algorithm takes the maximum amount of steps, when the two chosen
 	 * numbers are consecutive fibonnaci-numbers.
 	 */
 	public static final byte N = 51;

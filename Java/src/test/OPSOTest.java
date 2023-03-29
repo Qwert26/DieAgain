@@ -62,7 +62,7 @@ public class OPSOTest implements ITest {
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = OPSO.createTest(50);
-		OPSO.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
+		OPSO.getTestMethod().runTestOn(new KISS64(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

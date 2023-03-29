@@ -113,12 +113,12 @@ public class LightsOnLightsOffTest implements ITest {
 	@Deprecated
 	public static void main(String[] args) {
 		StandardTest test = LIGHTS_ON_LIGHTS_OFF.createTest(16, 50000);
-		test.setnTuple((byte) 10);
+		test.setnTuple((byte) 2);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
 		//Thread t = new Thread(observer);
 		//t.start();
-		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new KISS32(), test);
+		LIGHTS_ON_LIGHTS_OFF.getTestMethod().runTestOn(new JKISS32(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

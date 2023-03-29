@@ -7,30 +7,29 @@ import java.util.concurrent.atomic.*;
  * @author George Marsaglia (C-Version)
  * @author Christian Schürhoff (Java-Version)
  */
-public class KISS32 extends Random {
+public class KISS64 extends Random {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5611147565705032105L;
-	private AtomicInteger x;
-	private AtomicInteger y;
-	private AtomicInteger z;
-	private AtomicInteger c;
+	private static final long serialVersionUID = 6132274730913057146L;
+	private AtomicLong x;
+	private AtomicLong y;
+	private AtomicLong z;
+	private AtomicLong c;
 	private boolean initialized = false;
-	private static final int LCG_MULT = 69069;
-	private static final short LCG_ADD = 12345;
-	private static final long MWC_MULT = 698769069L;
+	private static final long LCG_MULT = 6906969069L;
+	private static final int LCG_ADD = 1234567;
 
-	public KISS32() {
+	public KISS64() {
 		this(System.nanoTime());
 	}
 
-	public KISS32(long seed) {
+	public KISS64(long seed) {
 		super();
-		x = new AtomicInteger();
-		y = new AtomicInteger();
-		z = new AtomicInteger();
-		c = new AtomicInteger();
+		x = new AtomicLong();
+		y = new AtomicLong();
+		z = new AtomicLong();
+		c = new AtomicLong();
 		initialized = true;
 		setSeed(seed);
 	}
@@ -38,17 +37,17 @@ public class KISS32 extends Random {
 	@Override
 	public synchronized void setSeed(long seed) {
 		if (initialized) {
-			x.set((int) (seed ^ (seed >>> 32)));
+			x.set(seed);
 			y.set(x.get());
-			z.set((int) seed);
-			c.set((int) (1 + (seed >>> 32)));
+			z.set(seed);
+			c.set(1);
 		}
 	}
 
 	@Override
 	protected int next(int bits) {
-		int oldX, oldY, oldZ, oldC;
-		int newX, newY, newZ, newC;
+		long oldX, oldY, oldZ, oldC;
+		long newX, newY, newZ, newC;
 		long t;
 		do {
 			newX = oldX = x.get();
@@ -60,19 +59,20 @@ public class KISS32 extends Random {
 
 			newY ^= newY << 13;
 			newY ^= newY >> 17;
-			newY ^= newY << 5;
+			newY ^= newY << 43;
 
-			t = MWC_MULT * newZ + newC;
-			newC = (int) (t >> 32);
-			newZ = (int) t;
+			t = (newZ << 58) + newC;
+			newC = newZ >> 6;
+			newZ += t;
+			newC += newZ < t ? 1 : 0;
 		} while (!(x.compareAndSet(oldX, newX) && y.compareAndSet(oldY, newY) && z.compareAndSet(oldZ, newZ)
 				&& c.compareAndSet(oldC, newC)));
-		return (newX + newY + newZ) >>> (32 - bits);
+		return (int) ((newX + newY + newZ) >>> (64 - bits));
 	}
 
 	@Override
 	public String toString() {
-		return "KISS32 [" + (x != null ? "x=" + x + ", " : "") + (y != null ? "y=" + y + ", " : "")
+		return "KISS64 [" + (x != null ? "x=" + x + ", " : "") + (y != null ? "y=" + y + ", " : "")
 				+ (z != null ? "z=" + z + ", " : "") + (c != null ? "c=" + c : "") + "]";
 	}
 }

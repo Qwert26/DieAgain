@@ -9,8 +9,9 @@ public class DNATest implements ITest {
 	static {
 		DNA = new TestData();
 		DNA.setName("Overlapping DNA-Words Test");
-		DNA.setDescription("Uses overlapping bits to generate ten letter long words from an alphabet with only four letters. "
-				+ "The number of missing words is known only for a fixed sample size.");
+		DNA.setDescription(
+				"Uses overlapping bits to generate ten letter long words from an alphabet with only four letters. "
+						+ "The number of missing words is known only for a fixed sample size.");
 		DNA.settSamplesStandard(2097152);
 		DNA.setpSamplesStandard(100);
 		DNA.setNkps(1);
@@ -19,7 +20,7 @@ public class DNATest implements ITest {
 	public static final double MEAN = 141910.4026047629;
 	public static final double SIGMA = 337.2901506904;
 	public static final int T_SAMPLE_COUNT = 2097152;
-	public static final int FLATTENED = 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4 * 4;
+	public static final int FLATTENED = 0x100000;
 
 	public DNATest() {
 		super();
@@ -70,7 +71,7 @@ public class DNATest implements ITest {
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = DNA.createTest(50);
-		DNA.getTestMethod().runTestOn(new CellularAutomaton(), test);
+		DNA.getTestMethod().runTestOn(new KISS64(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 import util.*;
+import util.randoms.*;
 
 public class LaggedSumsTest implements ITest {
 	public static final TestData LAGGED_SUMS;
@@ -9,7 +10,7 @@ public class LaggedSumsTest implements ITest {
 		LAGGED_SUMS = new TestData();
 		LAGGED_SUMS.setName("Lagged Sums Test");
 		LAGGED_SUMS.setDescription(
-				"Lagged Sums is summing up only 1 every nTuple numbers, for a total of t-sample numbers.");
+				"Lagged Sums is summing up only 1 every (nTuple+1) numbers, for a total of t-sample numbers.");
 		LAGGED_SUMS.setNkps(1);
 		LAGGED_SUMS.setpSamplesStandard(100);
 		LAGGED_SUMS.settSamplesStandard(1000000);
@@ -46,8 +47,8 @@ public class LaggedSumsTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = LAGGED_SUMS.createTest(48, 1000000);
-		test.setnTuple((byte) 0);
-		LAGGED_SUMS.getTestMethod().runTestOn(new Random(), test);
+		test.setnTuple((byte) 3);
+		LAGGED_SUMS.getTestMethod().runTestOn(new KISS64(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);
