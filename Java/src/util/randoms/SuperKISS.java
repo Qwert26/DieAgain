@@ -98,9 +98,20 @@ public class SuperKISS extends Random {
 
 	@Override
 	public String toString() {
-		return "SuperKISS [" + (q != null ? "q=" + q + ", " : "") + (index != null ? "index=" + index + ", " : "")
-				+ (carry != null ? "carry=" + carry + ", " : "")
-				+ (linearCongruence != null ? "linearCongruence=" + linearCongruence + ", " : "")
-				+ (xorShift != null ? "xorShift=" + xorShift : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("SuperKISS [q=");
+		builder.append(q);
+		builder.append(", index=");
+		builder.append(index);
+		builder.append(", carry=");
+		builder.append(carry);
+		builder.append(", linearCongruence=");
+		builder.append(linearCongruence);
+		builder.append(", xorShift=");
+		builder.append(xorShift);
+		builder.append(", initialized=");
+		builder.append(initialized);
+		builder.append("]");
+		return builder.toString();
 	}
 }

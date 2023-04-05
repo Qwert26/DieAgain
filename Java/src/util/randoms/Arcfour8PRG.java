@@ -67,7 +67,16 @@ public class Arcfour8PRG extends Random {
 
 	@Override
 	public String toString() {
-		return "Arcfour8PRG [" + (s != null ? "s=" + s + ", " : "") + (i != null ? "i=" + i + ", " : "")
-				+ (j != null ? "j=" + j : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Arcfour8PRG [s=");
+		builder.append(s);
+		builder.append(", i=");
+		builder.append(i);
+		builder.append(", j=");
+		builder.append(j);
+		builder.append(", initialized=");
+		builder.append(initialized);
+		builder.append("]");
+		return builder.toString();
 	}
 }

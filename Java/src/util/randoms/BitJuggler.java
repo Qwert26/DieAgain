@@ -71,6 +71,19 @@ public class BitJuggler extends Random {
 		return (int) ((newData ^ (newData << 32)) >>> (64 - bits));
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BitJuggler [initialized=");
+		builder.append(initialized);
+		builder.append(", data=");
+		builder.append(data);
+		builder.append(", index=");
+		builder.append(index);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	@Deprecated
 	public static void main(String... args) {
 		BitJuggler rng = new BitJuggler();

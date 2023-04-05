@@ -104,4 +104,17 @@ public class CellularAutomaton extends Random {
 		return ret >>> (32 - bits);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CellularAutomaton [initialized=");
+		builder.append(initialized);
+		builder.append(", config=");
+		builder.append(config);
+		builder.append(", currentCell=");
+		builder.append(currentCell);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

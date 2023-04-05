@@ -52,7 +52,14 @@ public class MiddleSquareSolo extends Random {
 
 	@Override
 	public String toString() {
-		return "MiddleSquareSolo [" + (a != null ? "a=" + a + ", " : "")
-				+ (usedSeed != null ? "usedSeed=" + usedSeed : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("MiddleSquareSolo [a=");
+		builder.append(a);
+		builder.append(", usedSeed=");
+		builder.append(usedSeed);
+		builder.append(", initialized=");
+		builder.append(initialized);
+		builder.append("]");
+		return builder.toString();
 	}
 }

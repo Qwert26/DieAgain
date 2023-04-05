@@ -55,7 +55,15 @@ public class Jenkins extends Random {
 
 	@Override
 	public String toString() {
-		return "Jenkins [" + (a != null ? "a=" + a + ", " : "") + "next=" + next + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Jenkins [a=");
+		builder.append(a);
+		builder.append(", next=");
+		builder.append(next);
+		builder.append(", initalized=");
+		builder.append(initalized);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

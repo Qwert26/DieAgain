@@ -80,9 +80,24 @@ public class AVPRG extends Random {
 
 	@Override
 	public String toString() {
-		return "AVPRG [" + (a != null ? "a=" + a + ", " : "") + (b != null ? "b=" + b + ", " : "")
-				+ (c != null ? "c=" + c + ", " : "") + (d != null ? "d=" + d + ", " : "")
-				+ (iii != null ? "iii=" + iii + ", " : "") + (jjj != null ? "jjj=" + jjj + ", " : "")
-				+ (kkk != null ? "kkk=" + kkk : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("AVPRG [initialized=");
+		builder.append(initialized);
+		builder.append(", a=");
+		builder.append(a);
+		builder.append(", b=");
+		builder.append(b);
+		builder.append(", c=");
+		builder.append(c);
+		builder.append(", d=");
+		builder.append(d);
+		builder.append(", iii=");
+		builder.append(iii);
+		builder.append(", jjj=");
+		builder.append(jjj);
+		builder.append(", kkk=");
+		builder.append(kkk);
+		builder.append("]");
+		return builder.toString();
 	}
 }

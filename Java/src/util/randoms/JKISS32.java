@@ -72,7 +72,18 @@ public class JKISS32 extends Random {
 
 	@Override
 	public String toString() {
-		return "JKISS32 [" + (x != null ? "x=" + x + ", " : "") + (y != null ? "y=" + y + ", " : "")
-				+ (z != null ? "z=" + z + ", " : "") + (c != null ? "c=" + c : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("JKISS32 [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append(", z=");
+		builder.append(z);
+		builder.append(", c=");
+		builder.append(c);
+		builder.append(", initialized=");
+		builder.append(initialized);
+		builder.append("]");
+		return builder.toString();
 	}
 }

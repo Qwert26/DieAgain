@@ -80,7 +80,16 @@ public class MiddleSquareDuo extends Random {
 
 	@Override
 	public String toString() {
-		return "MiddleSquareDuo [" + (usedSeed != null ? "usedSeed=" + usedSeed + ", " : "")
-				+ (a != null ? "a=" + a + ", " : "") + (b != null ? "b=" + b : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("MiddleSquareDuo [usedSeed=");
+		builder.append(usedSeed);
+		builder.append(", a=");
+		builder.append(a);
+		builder.append(", b=");
+		builder.append(b);
+		builder.append(", initialized=");
+		builder.append(initialized);
+		builder.append("]");
+		return builder.toString();
 	}
 }
