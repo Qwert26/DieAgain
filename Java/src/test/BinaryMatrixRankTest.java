@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class BinaryMatrixRankTest implements ITest {
 	public static final TestData BINARY_MATRIX_RANK;
 	static {

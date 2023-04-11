@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class GCDTest implements ITest {
 	/**
 	 * Average value of steps of the euclid's algorithm for finding the gcd of two

@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class SBoxCyclesTest implements ITest {
 	public static final TestData SBOX_CYCLES;
 	static {
@@ -62,7 +66,8 @@ public class SBoxCyclesTest implements ITest {
 					}
 				}
 				test.equalize();
-				test.evaluateGTest();
+				//test.evaluateGTest();
+				test.evaluateKLDivergence();
 				currentTest.getpValues()[pSample] = test.getpValue();
 			}
 			currentTest.evaluate();
@@ -74,6 +79,7 @@ public class SBoxCyclesTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = SBOX_CYCLES.createTest();
 		test.setnTuple((byte) 4);
+		test.setpSamples(10);
 		SBOX_CYCLES.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {

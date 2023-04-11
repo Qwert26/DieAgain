@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class LaggedSumsTest implements ITest {
 	public static final TestData LAGGED_SUMS;
 	static {

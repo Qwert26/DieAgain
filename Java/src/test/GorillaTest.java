@@ -3,10 +3,23 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class GorillaTest implements ITest {
+	/**
+	 * 
+	 */
 	public static final int MEAN = 24687971;
+	/**
+	 * 
+	 */
 	public static final int SIGMA = 4170;
+	/**
+	 * The amount of samples to take, this number is fixed.
+	 */
 	public static final int T_SAMPLES = 1 << 26;
 	public static final TestData GORILLA;
 	static {

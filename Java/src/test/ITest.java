@@ -1,6 +1,12 @@
 package test;
 import util.*;
 import java.util.*;
+/**
+ * 
+ * @author Christian Schürhoff
+ * @see FunctionalInterface
+ *
+ */
 @FunctionalInterface
 public interface ITest {
 	/**

@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class LightsOnLightsOffTest implements ITest {
 	public static final TestData LIGHTS_ON_LIGHTS_OFF;
 	static {
@@ -101,7 +105,7 @@ public class LightsOnLightsOffTest implements ITest {
 
 	private static final double[] updateStateVector(double[] vector, byte bits) {
 		double[] ret = new double[vector.length];
-		Arrays.fill(ret, 0);
+		Arrays.fill(ret, 0.0);
 		for (int start = 0; start < vector.length; start++) {
 			for (int end = 0; end < vector.length; end++) {
 				ret[end] += vector[start] * calculateTransitionChance(start, end, bits);

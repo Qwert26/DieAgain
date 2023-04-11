@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class MinimumDistanceTest implements ITest, Comparator<double[]> {
 	public static final TestData MINIMUM_DISTANCE;
 	static {

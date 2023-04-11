@@ -3,7 +3,11 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
-
+/**
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class RunsTest implements ITest {
 	public static final TestData RUNS;
 	static {
@@ -21,6 +25,9 @@ public class RunsTest implements ITest {
 			{ 18091.0, 36187.0, 54281.0, 72414.0, 90470.0, 111580.0 },
 			{ 22615.0, 45234.0, 67852.0, 90470.0, 113262.0, 139476.0 },
 			{ 27892.0, 55789.0, 83685.0, 111580.0, 139476.0, 172860.0 } };
+	/**
+	 * Half of the chances of gaining a run of a certain length.
+	 */
 	private static final double[] b = { 1.0 / 6.0, 5.0 / 24.0, 11.0 / 120.0, 19.0 / 720.0, 29.0 / 5040.0, 1.0 / 840.0 };
 	public static final byte RUN_MAX = 6;
 
