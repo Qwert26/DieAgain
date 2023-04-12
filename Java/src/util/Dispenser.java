@@ -29,14 +29,31 @@ public class Dispenser {
 	 */
 	private byte availableBits = 0;
 
+	/**
+	 * Creates a new Dispenser without a source of random bits.
+	 */
 	public Dispenser() {
+		super();
+	}
+
+	/**
+	 * Creates a new Dispenser with a source of random bits.
+	 * 
+	 * @param rng
+	 */
+	public Dispenser(Random rng) {
+		super();
+		setRandom(rng);
 	}
 
 	public Random getRandom() {
 		return random;
 	}
+
 	/**
-	 * Sets the random to use, also replaces the {@link generated}-array with three new values and also sets {@link #availableBits} to 32.
+	 * Sets the random to use, also replaces the {@link generated}-array with three
+	 * new values and also sets {@link #availableBits} to 32.
+	 * 
 	 * @param random
 	 */
 	public void setRandom(Random random) {
@@ -104,8 +121,11 @@ public class Dispenser {
 			throw new IllegalArgumentException("Can not provide " + bits + " Bits!");
 		}
 	}
+
 	/**
-	 * Creates a double value in the same manner as all {@link Random}-instances would: By taking the first 26 and then 27 bits of two consecutive integers
+	 * Creates a double value in the same manner as all {@link Random}-instances
+	 * would: By taking the first 26 and then 27 bits of two consecutive integers
+	 * 
 	 * @return
 	 * @see Random#nextDouble()
 	 */
@@ -165,8 +185,10 @@ public class Dispenser {
 			throw new IllegalArgumentException("Can at most provide 32 Bits!");
 		}
 	}
+
 	/**
 	 * Returns a float value by taking first 24 bits of an integer.
+	 * 
 	 * @return
 	 * @see Random#nextFloat()
 	 */

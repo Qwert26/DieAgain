@@ -29,7 +29,8 @@ public class StandardTest {
 	 */
 	private String[] pvLabels;
 	/**
-	 * Final KS p-value from run of many tests. Any value outside [0;1] means unset.
+	 * Final KS p-value claculated from the runs of many tests. Any value outside
+	 * [0;1] means unset.
 	 */
 	private double ks_pValue = -1.0;
 	/**
@@ -37,7 +38,11 @@ public class StandardTest {
 	 */
 	private double[] xyz;
 
+	/**
+	 * Creates a new StandardTest.
+	 */
 	public StandardTest() {
+		super();
 	}
 
 	/**
@@ -77,6 +82,10 @@ public class StandardTest {
 		this.tSamples = tSamples;
 	}
 
+	/**
+	 * 
+	 * @return produced p-values per run.
+	 */
 	public int getpSamples() {
 		return pSamples;
 	}
@@ -94,6 +103,10 @@ public class StandardTest {
 		}
 	}
 
+	/**
+	 * 
+	 * @return the amount of bits to use.
+	 */
 	public byte getnTuple() {
 		return nTuple;
 	}
@@ -117,10 +130,6 @@ public class StandardTest {
 
 	public double getKs_pValue() {
 		return ks_pValue;
-	}
-
-	public void setKs_pValue(double ks_pValue) {
-		this.ks_pValue = ks_pValue;
 	}
 
 	public double[] getXyz() {
@@ -210,9 +219,24 @@ public class StandardTest {
 
 	@Override
 	public String toString() {
-		return "StandardTest [nkps=" + nkps + ", tSamples=" + tSamples + ", pSamples=" + pSamples + ", nTuple=" + nTuple
-				+ ", " + (pValues != null ? "pValues=" + Arrays.toString(pValues) + ", " : "")
-				+ (pvLabels != null ? "pvLabels=" + Arrays.toString(pvLabels) + ", " : "") + "ks_pValue=" + ks_pValue
-				+ ", " + (xyz != null ? "xyz=" + Arrays.toString(xyz) : "") + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StandardTest [nkps=");
+		builder.append(nkps);
+		builder.append(", tSamples=");
+		builder.append(tSamples);
+		builder.append(", pSamples=");
+		builder.append(pSamples);
+		builder.append(", nTuple=");
+		builder.append(nTuple);
+		builder.append(", pValues=");
+		builder.append(Arrays.toString(pValues));
+		builder.append(", pvLabels=");
+		builder.append(Arrays.toString(pvLabels));
+		builder.append(", ks_pValue=");
+		builder.append(ks_pValue);
+		builder.append(", xyz=");
+		builder.append(Arrays.toString(xyz));
+		builder.append("]");
+		return builder.toString();
 	}
 }

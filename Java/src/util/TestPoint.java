@@ -1,5 +1,14 @@
 package util;
 
+/**
+ * The TestPoints is used for statistical tests, which only generate a single
+ * value. According to the central limit theorem, any sum of many independent
+ * and maybe even different distributions can be approximated by a normal
+ * distribution.
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class TestPoint {
 	/**
 	 * How many generated values went into forming x.
@@ -31,7 +40,7 @@ public class TestPoint {
 	}
 
 	/**
-	 * Gets the number of datapoints that went into forming X.
+	 * Gets the number of data points that went into forming X.
 	 * 
 	 * @return
 	 */
@@ -40,7 +49,7 @@ public class TestPoint {
 	}
 
 	/**
-	 * Sets the number of datapoints that went into forming X.
+	 * Sets the number of data points that went into forming X.
 	 * 
 	 * @param points
 	 */
@@ -181,7 +190,20 @@ public class TestPoint {
 
 	@Override
 	public String toString() {
-		return "TestPoint [points=" + points + ", p=" + p + ", x=" + x + ", y=" + y + ", sigma=" + sigma + ", pValue="
-				+ pValue + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TestPoint [points=");
+		builder.append(points);
+		builder.append(", p=");
+		builder.append(p);
+		builder.append(", x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append(", sigma=");
+		builder.append(sigma);
+		builder.append(", pValue=");
+		builder.append(pValue);
+		builder.append("]");
+		return builder.toString();
 	}
 }

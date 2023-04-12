@@ -79,8 +79,8 @@ public class BitFlippingTest implements ITest {
 					}
 				}
 				for (byte bit = 0; bit <= bitCount; bit++) {
-					numberOfBitFlips.getY()[bit] = Functions.binomialCoefficent(bitCount, bit) * Math.pow(0.5, bitCount)
-							* currentTest.gettSamples();
+					numberOfBitFlips.getY()[bit] = currentTest.gettSamples()
+							* Functions.binomialCoefficent(bitCount, bit) * Math.pow(0.5, bitCount);
 				}
 				numberOfBitFlips.evaluate();
 				currentTest.getpValues()[3 * pSample] = numberOfBitFlips.getpValue();

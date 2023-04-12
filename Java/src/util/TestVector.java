@@ -2,10 +2,29 @@ package util;
 
 import java.util.*;
 
+/**
+ * The TestVector is used by statistical tests, which have a concrete expected
+ * distribution ready.
+ * 
+ * @author Christian Schürhoff
+ *
+ */
 public class TestVector {
+	/**
+	 * The Value e<sup>2</sup>.
+	 */
 	public static final double E_SQUARE = Math.E * Math.E;
 
+	/**
+	 * The transformation to be used for calculating the area mismatch.
+	 * 
+	 * @author Christian Schürhoff
+	 * @see TestVector#evaluateAbsoluteAreaMismatch(Transform)
+	 */
 	public static enum Transform {
+		/**
+		 * Applies no transformation in the forward direction.
+		 */
 		IDENTITY {
 			@Override
 			public double forward(double d) {
@@ -17,6 +36,14 @@ public class TestVector {
 				return d / 2;
 			}
 		},
+		/**
+		 * The forward transform is the natural logarithm. The backwards transform is
+		 * the exp-function, followed by a division.
+		 * 
+		 * @see Math#log1p(double)
+		 * @see Math#exp(double)
+		 * @see TestVector#E_SQUARE
+		 */
 		LOGARITHMIC_DIVIDE {
 			@Override
 			public double forward(double d) {
@@ -28,6 +55,14 @@ public class TestVector {
 				return Math.exp(d) / E_SQUARE;
 			}
 		},
+		/**
+		 * The forward transform is the natural logarithm. The backwards transform is
+		 * the exp-function, followed by taking the square root and a final division.
+		 * 
+		 * @see Math#log1p(double)
+		 * @see Math#exp(double)
+		 * @see Math#sqrt(double)
+		 */
 		LOGARITHMIC_SQRT {
 			@Override
 			public double forward(double d) {
@@ -39,6 +74,13 @@ public class TestVector {
 				return Math.sqrt(Math.exp(d)) / Math.E;
 			}
 		},
+		/**
+		 * The forward transformation is the expm1-function. The backward function is
+		 * the natural logarithm.
+		 * 
+		 * @see Math#expm1(double)
+		 * @see Math#log(double)
+		 */
 		EXPONENTIAL_DIVIDE {
 			@Override
 			public double forward(double d) {
@@ -130,6 +172,9 @@ public class TestVector {
 	 */
 	private double kl;
 
+	/**
+	 * Creates a new TestVector.
+	 */
 	public TestVector() {
 		super();
 	}
@@ -244,6 +289,11 @@ public class TestVector {
 		return pValue;
 	}
 
+	/**
+	 * Gets the resulting KL-divergence.
+	 * 
+	 * @return
+	 */
 	public double getKl() {
 		return kl;
 	}
@@ -267,7 +317,7 @@ public class TestVector {
 	/**
 	 * Evaluates the measured data against the expected data.
 	 * 
-	 * @return If the evaluation was successfull.
+	 * @return If the evaluation was successful.
 	 */
 	public boolean evaluate() {
 		if (evaluateChiSquareTest()) {
@@ -284,7 +334,7 @@ public class TestVector {
 	 * Evaluates the measured data against the expected data using the
 	 * Chi-Square-Test.
 	 * 
-	 * @return If the evaluation was successfull.
+	 * @return If the evaluation was successful.
 	 */
 	public boolean evaluateChiSquareTest() {
 		chsq = 0;
@@ -327,7 +377,7 @@ public class TestVector {
 	/**
 	 * Evaluates the measured data against the expected data using the G-Test.
 	 * 
-	 * @return If the evaluation was successfull.
+	 * @return If the evaluation was successful.
 	 */
 	public boolean evaluateGTest() {
 		g = 0;
@@ -366,6 +416,10 @@ public class TestVector {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return Always true, as NaN values are not possible.
+	 */
 	public boolean evaluateKLDivergence() {
 		double sumX = 0;
 		for (double p : x) {
@@ -381,6 +435,13 @@ public class TestVector {
 		return true;
 	}
 
+	/**
+	 * Evaluates the measured data against the expected data using the absolute are
+	 * mismatch.
+	 * 
+	 * @param t
+	 * @return Always true, as NaN values are not possible.
+	 */
 	public boolean evaluateAbsoluteAreaMismatch(Transform t) {
 		double sumX = 0, sumY = 0;
 		for (int i = 0; i < nvec; i++) {
@@ -458,9 +519,26 @@ public class TestVector {
 
 	@Override
 	public String toString() {
-		return "TestVector [nvec=" + nvec + ", ndof=" + ndof + ", cutoff=" + cutoff + ", "
-				+ (x != null ? "x=" + Arrays.toString(x) + ", " : "")
-				+ (y != null ? "y=" + Arrays.toString(y) + ", " : "") + "chsq=" + chsq + ", pValue=" + pValue + ", g="
-				+ g + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TestVector [nvec=");
+		builder.append(nvec);
+		builder.append(", ndof=");
+		builder.append(ndof);
+		builder.append(", cutoff=");
+		builder.append(cutoff);
+		builder.append(", x=");
+		builder.append(Arrays.toString(x));
+		builder.append(", y=");
+		builder.append(Arrays.toString(y));
+		builder.append(", chsq=");
+		builder.append(chsq);
+		builder.append(", pValue=");
+		builder.append(pValue);
+		builder.append(", g=");
+		builder.append(g);
+		builder.append(", kl=");
+		builder.append(kl);
+		builder.append("]");
+		return builder.toString();
 	}
 }

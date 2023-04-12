@@ -120,8 +120,8 @@ public class SBoxCycles {
 			}
 		}
 		for (Map.Entry<Long, Long> entry : cycleSize2Count.entrySet()) {
-			System.out.print(entry + ", ");
-			if (entry.getKey() % 16 == 0) {
+			System.out.print(entry + ",\t");
+			if (entry.getKey() % 8 == 0) {
 				System.out.println();
 			}
 		}

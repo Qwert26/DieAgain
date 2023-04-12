@@ -10,6 +10,7 @@ import java.util.*;
  */
 public final class Functions {
 	private Functions() {
+		super();
 	}
 
 	private static final double[] erfCoefficientsT = { -1.26551223, 1.00002368, 0.37409196, 0.09678418, -0.18628806,
@@ -48,6 +49,12 @@ public final class Functions {
 		 */
 	}
 
+	/**
+	 * Calculates the double factorial of a number.
+	 * 
+	 * @param n
+	 * @return
+	 */
 	public static double doubleFactorial(long n) {
 		if (n < 0) {
 			throw new ArithmeticException("Double Factorial not defined for negtaive numbers!");
@@ -179,6 +186,14 @@ public final class Functions {
 		return 1 - 0.4938691 * exp(-1.050321 * z) - 0.5946335 * exp(-1.527198 * z);
 	}
 
+	/**
+	 * Probability mass function of the binomial distribution.
+	 * 
+	 * @param k
+	 * @param n
+	 * @param p
+	 * @return
+	 */
 	public static double pmfBinomial(long k, long n, double p) {
 		if (0 <= p && p <= 1) {
 			if (0 <= k && k <= n) {
@@ -191,6 +206,14 @@ public final class Functions {
 		}
 	}
 
+	/**
+	 * Cumulative probability function of the binomial distribution.
+	 * 
+	 * @param k
+	 * @param n
+	 * @param p
+	 * @return
+	 */
 	public static double cdfBinomial(long k, long n, double p) {
 		if (0 <= p && p <= 1) {
 			if (0 <= k && k <= n) {
@@ -282,6 +305,12 @@ public final class Functions {
 		return pvalue;
 	}
 
+	/**
+	 * Calculates the number of leading zeros for a short.
+	 * 
+	 * @param s
+	 * @return a value between 0 and 16.
+	 */
 	public static int numberOfLeadingZeros(short s) {
 		if (s < 0) {
 			return 0;
@@ -297,6 +326,12 @@ public final class Functions {
 		}
 	}
 
+	/**
+	 * Calculates the number of trailing zeros for a short.
+	 * 
+	 * @param s
+	 * @return a value between 0 and 16.
+	 */
 	public static int numberOfTrailingZeros(short s) {
 		if (s == 0) {
 			return Short.SIZE;
@@ -310,6 +345,12 @@ public final class Functions {
 		}
 	}
 
+	/**
+	 * Calculates the number of leading zeros for a byte.
+	 * 
+	 * @param b
+	 * @return a value between 0 and 8.
+	 */
 	public static int numberOfLeadingZeros(byte b) {
 		if (b < 0) {
 			return 0;
@@ -325,6 +366,12 @@ public final class Functions {
 		}
 	}
 
+	/**
+	 * Calculates the number of trailing zeros for a byte.
+	 * 
+	 * @param b
+	 * @return a value between 0 and 8.
+	 */
 	public static int numberOfTrailingZeros(byte b) {
 		if (b == 0) {
 			return Byte.SIZE;
@@ -360,6 +407,17 @@ public final class Functions {
 		return ext;
 	}
 
+	/**
+	 * Calculates the probability that the observed data came from a poisson
+	 * distribution with the given parameters.
+	 * 
+	 * @param observed what actually was measured
+	 * @param lambda   first parameter of the poisson distribution
+	 * @param kmax     second parameter of the poisson distribution
+	 * @param nSamples the total amount of samples taken.
+	 * @return a value between 0 and 1 indicating the goodness of fit.
+	 * @see #pdfPoisson(double, int)
+	 */
 	public static double chiSquarePoisson(int[] observed, double lambda, int kmax, int nSamples) {
 		double[] expected = new double[kmax];
 		double chisq = 0;
@@ -372,6 +430,14 @@ public final class Functions {
 		return 1 - cdfChiSquare(kmax - 1, chisq);
 	}
 
+	/**
+	 * Calculates the probability that the observed data has the same underlying
+	 * distribution as the expected data.
+	 * 
+	 * @param observed what was measured.
+	 * @param expected what was expected.
+	 * @return a value between 0 and 1 indicating the goodness of fit.
+	 */
 	public static double chiSquarePearson(double[] observed, double[] expected) {
 		double chisq = 0;
 		final int kmax = min(observed.length, expected.length);
@@ -381,7 +447,17 @@ public final class Functions {
 		return 1 - cdfChiSquare(kmax - 1, chisq);
 	}
 
-	public static double chiSquare2D(int[] observed, int rows, int cols, int n) {
+	/**
+	 * Calculates the probability the the observed data as a matrix is following a
+	 * uniform distribution.
+	 * 
+	 * @param observed what was measured.
+	 * @param rows     the number of rows to assume.
+	 * @param cols     the number of columns to assume.
+	 * @param n        the total number of measurements.
+	 * @return a value between 0 and 1 indicating the goodness of fit.
+	 */
+	public static double chiSquare2D(int[] observed, int rows, int cols, long n) {
 		double chisq = 0;
 		final int ndof = (rows - 1) * (cols - 1);
 		for (int i = 0; i < rows; i++) {

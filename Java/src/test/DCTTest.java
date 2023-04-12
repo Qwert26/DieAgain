@@ -132,8 +132,8 @@ public class DCTTest implements ITest {
 	 * @param type  The exact type of the DCT.
 	 * @return the dct coefficients, an array of {@code double}s with the identical
 	 *         size as the input.
-	 * @throws ArithmeticException      If the type I and there is only a single
-	 *                                  input value.
+	 * @throws ArithmeticException      If the type I was requested and there is
+	 *                                  only a single input value.
 	 * @throws IllegalArgumentException If the type was {@code null}.
 	 */
 	public static double[] discreteCosineTransform(int[] input, DCTType type) {

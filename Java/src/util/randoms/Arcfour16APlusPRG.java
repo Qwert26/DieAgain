@@ -52,8 +52,8 @@ public class Arcfour16APlusPRG extends Random {
 				s2.set(ii, tmp);
 			}
 			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x40000; ii++) {
-				ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFF);
-				ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFF);
+				ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFFFF);
+				ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFFFF);
 				tmp = s1.get(ij1);
 				s1.set(ij1, s1.get(ii & 0xFFFF));
 				s1.set(ii & 0xFFFF, tmp);
@@ -100,12 +100,16 @@ public class Arcfour16APlusPRG extends Random {
 			output ^= s2.get((newJ2 + s1.get((newI + (s2.get((a2 + B2) & 0xFFFF) + s2.get(c2 ^ 0x5555))
 					^ (s2.get((newJ2 + B2) & 0xFFFF) + newK2)) & 0xFFFF)) & 0xFFFF);
 
-			tmp = s1.get(newJ1);
-			s1.set(newJ1, s1.get(newI));
-			s1.set(newI, tmp);
-			tmp = s2.get(newJ2);
-			s2.set(newJ2, s2.get(newI));
-			s2.set(newI, tmp);
+			synchronized (s1) {
+				tmp = s1.get(newJ1);
+				s1.set(newJ1, s1.get(newI));
+				s1.set(newI, tmp);
+			}
+			synchronized (s2) {
+				tmp = s2.get(newJ2);
+				s2.set(newJ2, s2.get(newI));
+				s2.set(newI, tmp);
+			}
 		} while (!(i.compareAndSet(oldI, newI) && j1.compareAndSet(oldJ1, newJ1) && j2.compareAndSet(oldJ2, newJ2)
 				&& k1.compareAndSet(oldK1, newK1) && k2.compareAndSet(oldK2, newK2)));
 		return output >> (32 - bits);

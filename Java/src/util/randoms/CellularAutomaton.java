@@ -8,7 +8,12 @@ public class CellularAutomaton extends Random {
 	 * 
 	 */
 	private static final long serialVersionUID = -6570347899181855192L;
-	public static final int CA_WIDTH = 2056, RULESIZE = 256, INITIAL_DUMP = CA_WIDTH * CA_WIDTH / 4;
+	/**
+	 * Number of cells in the automaton.
+	 */
+	public static final int CA_WIDTH = 2056;
+	public static final int RULESIZE = 256;
+	public static final int INITIAL_DUMP = CA_WIDTH * CA_WIDTH / 4;
 	private static final int[] RULE = { 100, 75, 16, 3, 229, 51, 197, 118, 24, 62, 198, 11, 141, 152, 241, 188, 2, 17,
 			71, 47, 179, 177, 126, 231, 202, 243, 59, 25, 77, 196, 30, 134, 199, 163, 34, 216, 21, 84, 37, 182, 224,
 			186, 64, 79, 225, 45, 143, 20, 48, 147, 209, 221, 125, 29, 99, 12, 46, 190, 102, 220, 80, 215, 242, 105, 15,
