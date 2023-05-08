@@ -3,6 +3,7 @@ package test;
 import java.util.*;
 import util.*;
 import util.randoms.*;
+
 /**
  * 
  * @author Christian Schürhoff
@@ -14,13 +15,13 @@ public class GCDTest implements ITest {
 	 * numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
 	 * numbers must be unsigned 32-bit integers.
 	 */
-	public static final double MEAN = 18.7585;
+	public static final double MEAN = expectedAverageOfSteps(Integer.toUnsignedLong(-1));
 	/**
 	 * Standard deviation of steps of the euclid's algorithm for finding the gcd of
 	 * two numbers, when said numbers are in range from 1 to 2<sup>32</sup>-1. These
 	 * numbers must be unsigned 32-bit integers.
 	 */
-	public static final double SIGMA = 3.405;
+	public static final double SIGMA = standardDeviationOfSteps(Integer.toUnsignedLong(-1));
 	/**
 	 * Resulting success probability for a binomial distribution. An approximate for
 	 * the number of steps.
@@ -127,7 +128,7 @@ public class GCDTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = GCD.createTest(8);
-		GCD.getTestMethod().runTestOn(new KISS32(), test);
+		GCD.getTestMethod().runTestOn(new SuperKISS(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");
