@@ -72,7 +72,7 @@ public class OQSOTest implements ITest {
 	@Deprecated
 	public static final void main(String... args) {
 		StandardTest test = OQSO.createTest(50);
-		OQSO.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
+		OQSO.getTestMethod().runTestOn(new PCGHash(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

@@ -100,7 +100,7 @@ public class GorillaTest implements ITest {
 		observer.setTests(test);
 		Thread t = new Thread(observer);
 		t.start();
-		GORILLA.getTestMethod().runTestOn(new KISS64(), test);
+		GORILLA.getTestMethod().runTestOn(new PCGHash(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

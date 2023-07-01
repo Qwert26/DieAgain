@@ -52,7 +52,7 @@ public class LaggedSumsTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = LAGGED_SUMS.createTest(48, 1000000);
 		test.setnTuple((byte) 3);
-		LAGGED_SUMS.getTestMethod().runTestOn(new KISS64(), test);
+		LAGGED_SUMS.getTestMethod().runTestOn(new PCGHash(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {
 			System.out.println(test.getpValues()[pv]);

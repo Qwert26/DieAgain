@@ -128,7 +128,7 @@ public class GCDTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = GCD.createTest(8);
-		GCD.getTestMethod().runTestOn(new SuperKISS(), test);
+		GCD.getTestMethod().runTestOn(new PCGHash(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");

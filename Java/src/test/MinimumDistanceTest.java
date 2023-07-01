@@ -98,7 +98,7 @@ public class MinimumDistanceTest implements ITest, Comparator<double[]> {
 		observer.setTests(test);
 		Thread t = new Thread(observer);
 		t.start();
-		MINIMUM_DISTANCE.getTestMethod().runTestOn(new AVPRG(), test);
+		MINIMUM_DISTANCE.getTestMethod().runTestOn(new PCGHash(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

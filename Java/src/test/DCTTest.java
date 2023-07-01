@@ -184,7 +184,7 @@ public class DCTTest implements ITest {
 		StandardTest test = DCT.createTest(8, 0x1000);
 		test.setXyz(64);
 		test.setnTuple((byte) 8);
-		DCT.getTestMethod().runTestOn(new JKISS32(), test);
+		DCT.getTestMethod().runTestOn(new PCGHash(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

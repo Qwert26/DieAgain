@@ -134,7 +134,7 @@ public class BinaryMatrixRankTest implements ITest {
 		observer.setTests(test);
 		//Thread t = new Thread(observer);
 		//t.start();
-		BINARY_MATRIX_RANK.getTestMethod().runTestOn(new KISS32(), test);
+		BINARY_MATRIX_RANK.getTestMethod().runTestOn(new PCGHash(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

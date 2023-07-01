@@ -50,7 +50,7 @@ public class MonobitTest implements ITest {
 	public static void main(String[] args) {
 		StandardTest test = MONO_BIT.createTest(100, 1000000);
 		test.setnTuple((byte) 32);
-		MONO_BIT.getTestMethod().runTestOn(new KISS64(), test);
+		MONO_BIT.getTestMethod().runTestOn(new PCGHash(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}
