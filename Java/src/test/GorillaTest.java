@@ -95,7 +95,7 @@ public class GorillaTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = GORILLA.createTest(1);
+		StandardTest test = GORILLA.createTest(24);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
 		Thread t = new Thread(observer);
