@@ -16,4 +16,7 @@
   </build>
   <name>DieAgainInJava</name>
   <groupId>com.github.qwert26.dieAgain</groupId>
+  <properties>
+  	<java.version>19</java.version>
+  </properties>
 </project>
