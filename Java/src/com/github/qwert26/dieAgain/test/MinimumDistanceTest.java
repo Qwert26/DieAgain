@@ -5,7 +5,7 @@ import com.github.qwert26.dieAgain.util.*;
 import com.github.qwert26.dieAgain.util.randoms.*;
 /**
  * 
- * @author Christian Sch�rhoff
+ * @author Christian Schürhoff
  *
  */
 public class MinimumDistanceTest implements ITest, Comparator<double[]> {
@@ -92,7 +92,7 @@ public class MinimumDistanceTest implements ITest, Comparator<double[]> {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = MINIMUM_DISTANCE.createTest(10,100000);
+		StandardTest test = MINIMUM_DISTANCE.createTest(10, 100000);
 		test.setnTuple((byte) 4);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
