@@ -78,14 +78,24 @@ public class ParkingLotSimulation {
 
 	public static void main(String... args) {
 		ParkingLotSimulation sim = new ParkingLotSimulation();
-		sim.dimensions = 2;
-		sim.length = 100;
-		int lines = 50, numbersPerLine = 20;
+		sim.dimensions = 3;
+		sim.length = 10;
+		int lines = 50, numbersPerLine = 20, result;
+		TreeMap<Integer, Long> counts = new TreeMap<Integer, Long>();
 		for (long count = lines * numbersPerLine; count > 0; count--) {
-			System.out.print(sim.runUntilCrash() + "\t");
+			result = sim.runUntilCrash();
+			counts.compute(result, (k, v) -> {
+				if (v == null || v == 0) {
+					return 1L;
+				} else {
+					return v + 1L;
+				}
+			});
+			System.out.print(result + "\t");
 			if ((count - 1) % numbersPerLine == 0) {
 				System.out.println();
 			}
 		}
+		System.out.print(counts);
 	}
 }
