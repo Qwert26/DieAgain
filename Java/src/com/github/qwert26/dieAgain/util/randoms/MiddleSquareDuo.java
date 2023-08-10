@@ -2,7 +2,9 @@ package com.github.qwert26.dieAgain.util.randoms;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
-
+/**
+ * @author Christian Schürhoff
+ */
 public class MiddleSquareDuo extends Random {
 	/**
 	 * 
@@ -87,8 +89,6 @@ public class MiddleSquareDuo extends Random {
 		builder.append(a);
 		builder.append(", b=");
 		builder.append(b);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

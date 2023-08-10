@@ -233,9 +233,9 @@ public final class Functions {
 	/**
 	 * Computes nCk or alternatively n!/(k!*(n-k)!)
 	 * 
-	 * @param n
-	 * @param k
-	 * @return
+	 * @param n the size of the set of elements
+	 * @param k the number of chosen elements.
+	 * @return Number of unordered subsets containing exactly k elements.
 	 */
 	public static double binomialCoefficent(long n, long k) {
 		if (k < 0 || k > n)
@@ -279,7 +279,7 @@ public final class Functions {
 				else
 					return 0.1 - 10 * abs(x - 0.99);
 			default:
-				throw new ArithmeticException("spline can not be computed for n>9!");
+				throw new ArithmeticException("spline(x) can not be computed for n > 9");
 			}
 		}
 	}

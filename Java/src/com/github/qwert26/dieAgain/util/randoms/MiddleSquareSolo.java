@@ -3,6 +3,12 @@ package com.github.qwert26.dieAgain.util.randoms;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
+/**
+ * Implements the middle-square algorithm for pseudo-random numbers using a
+ * single 64-bit number.
+ * 
+ * @author Christian Schürhoff
+ */
 public class MiddleSquareSolo extends Random {
 	/**
 	 * 
@@ -30,6 +36,9 @@ public class MiddleSquareSolo extends Random {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected int next(int bits) {
 		long oldA, oldUS;
@@ -57,8 +66,6 @@ public class MiddleSquareSolo extends Random {
 		builder.append(a);
 		builder.append(", usedSeed=");
 		builder.append(usedSeed);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}
