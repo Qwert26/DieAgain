@@ -2,6 +2,7 @@ package com.github.qwert26.dieAgain.util.randoms;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
+
 /**
  * @author Christian Schürhoff
  */
@@ -76,6 +77,8 @@ public class MiddleSquareDuo extends Random {
 			unsignedShorts[i] = (int) ((input >>> (48 - 16 * i)) & 0xFFFF);
 		}
 		int out = unsignedShorts[2] ^ (unsignedShorts[1] << 16);
+		// Usually that would the final value, but we have some extra bits, that we can
+		// use.
 		out += unsignedShorts[0] ^ (unsignedShorts[3] << 16);
 		return Integer.toUnsignedLong(out);
 	}

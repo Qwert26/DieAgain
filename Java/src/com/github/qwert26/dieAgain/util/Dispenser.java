@@ -39,7 +39,7 @@ public class Dispenser {
 	/**
 	 * Creates a new Dispenser with a source of random bits.
 	 * 
-	 * @param rng
+	 * @param rng The source of randomness.
 	 */
 	public Dispenser(Random rng) {
 		super();
@@ -79,6 +79,8 @@ public class Dispenser {
 	 * @param bitsToMove How many bits to move forward in the bitstream of the
 	 *                   {@link #Random}-object.
 	 * @return
+	 * @throws ArithmeticException If the second parameter is
+	 *                             {@link Long#MIN_VALUE}.
 	 */
 	public long getBits(byte bits, long bitsToMove) {
 		if (0 <= bits && bits <= 64) {
@@ -136,10 +138,21 @@ public class Dispenser {
 		return ret / (double) (1L << 53);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @return
+	 */
 	public double getBitsAsDouble(byte bits) {
 		return getBitsAsDouble(bits, bits);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @param bitsToMove
+	 * @return
+	 */
 	public double getBitsAsDouble(byte bits, long bitsToMove) {
 		if (bits <= 63) {
 			long raw = getBits(bits, bitsToMove);
@@ -150,10 +163,21 @@ public class Dispenser {
 		}
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @return
+	 */
 	public byte getBitsAsByte(byte bits) {
 		return getBitsAsByte(bits, bits);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @param bitsToMove
+	 * @return
+	 */
 	public byte getBitsAsByte(byte bits, long bitsToMove) {
 		if (bits <= 8) {
 			return (byte) getBits(bits, bitsToMove);
@@ -162,10 +186,21 @@ public class Dispenser {
 		}
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @return
+	 */
 	public short getBitsAsShort(byte bits) {
 		return getBitsAsShort(bits, bits);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @param bitsToMove
+	 * @return
+	 */
 	public short getBitsAsShort(byte bits, long bitsToMove) {
 		if (bits <= 16) {
 			return (short) getBits(bits, bitsToMove);
@@ -174,10 +209,21 @@ public class Dispenser {
 		}
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @return
+	 */
 	public int getBitsAsInteger(byte bits) {
 		return getBitsAsInteger(bits, bits);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @param bitsToMove
+	 * @return
+	 */
 	public int getBitsAsInteger(byte bits, long bitsToMove) {
 		if (bits <= 32) {
 			return (int) getBits(bits, bitsToMove);
@@ -196,10 +242,21 @@ public class Dispenser {
 		return getBitsAsFloat((byte) 24, 32);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @return
+	 */
 	public float getBitsAsFloat(byte bits) {
 		return getBitsAsFloat(bits, bits);
 	}
 
+	/**
+	 * 
+	 * @param bits
+	 * @param bitsToMove
+	 * @return
+	 */
 	public float getBitsAsFloat(byte bits, long bitsToMove) {
 		if (bits <= 31) {
 			int raw = getBitsAsInteger(bits, bitsToMove);

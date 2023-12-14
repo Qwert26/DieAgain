@@ -54,6 +54,7 @@ public class MiddleSquareSolo extends Random {
 			tempH = Math.multiplyHigh(newA, newA);
 			tempL = newA * newA;
 			newA = (tempL >>> 32) ^ (tempH << 32);
+			// Usually that would be it, but we have some extra bits, that we can use.
 			newA += (tempL << 32) ^ (tempH >>> 32);
 		} while (!(a.compareAndSet(oldA, newA) && usedSeed.compareAndSet(oldUS, newUS)));
 		return (int) ((newA ^ (newA << 32)) >>> (64 - bits));

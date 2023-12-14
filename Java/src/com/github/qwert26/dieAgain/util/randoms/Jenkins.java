@@ -42,7 +42,6 @@ public class Jenkins extends Random {
 		int oldA, newA, b;
 		do {
 			oldA = a.get();
-
 			newA = oldA + next;
 			newA += newA << 10;
 			newA ^= newA >> 6;

@@ -7,6 +7,14 @@ public class PCGHash extends Random {
 	/**
 	 * 
 	 */
+	public static final long LCG_ADD = 2891336453L;
+	/**
+	 * 
+	 */
+	public static final long LCG_MULT = 747796405L;
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -7858768246882098416L;
 	private boolean initialized = false;
 	private AtomicLong state;
@@ -34,7 +42,7 @@ public class PCGHash extends Random {
 		long oldState, newState;
 		do {
 			oldState = newState = state.get();
-			newState = newState * 747796405L + 2891336453L;
+			newState = newState * LCG_MULT + LCG_ADD;
 			newState = ((newState >> ((newState >>> 59) + 4)) ^ newState) * 277803737L;
 			newState = newState ^ (newState >> 22);
 		} while (!state.compareAndSet(oldState, newState));
