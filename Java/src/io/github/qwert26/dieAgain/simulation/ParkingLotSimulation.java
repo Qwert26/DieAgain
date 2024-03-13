@@ -11,6 +11,13 @@ public class ParkingLotSimulation {
 		super();
 	}
 
+	/**
+	 * Try to park {@link tries} squares/cubes/hypercubes on a equally dimensioned
+	 * grid of a certain size.
+	 * 
+	 * @param tries How many placement attempts should be made
+	 * @return The actual number of placed "objects".
+	 */
 	public int runForTries(long tries) {
 		List<double[]> points = new LinkedList<>();
 		double[] point = new double[dimensions];
@@ -44,6 +51,13 @@ public class ParkingLotSimulation {
 		return points.size();
 	}
 
+	/**
+	 * Tries to park as many squares/cubes/hyper-cubes as possible on the grid.
+	 * 
+	 * @return The amount of parked objects, before the first crash occurred.
+	 * @implNote The returned value is very likely to follow a "Modified half-normal
+	 *           distribution".
+	 */
 	public int runUntilCrash() {
 		List<double[]> points = new LinkedList<>();
 		double[] point = new double[dimensions];
@@ -79,10 +93,10 @@ public class ParkingLotSimulation {
 	public static void main(String... args) {
 		ParkingLotSimulation sim = new ParkingLotSimulation();
 		sim.dimensions = 3;
-		sim.length = 10;
-		int lines = 45, numbersPerLine = 30, result;
+		sim.length = 15;
+		int result;
 		TreeMap<Integer, Long> counts = new TreeMap<Integer, Long>();
-		for (long count = lines * numbersPerLine; count > 0; count--) {
+		for (long count = 1_000_000; count > 0; count--) {
 			result = sim.runUntilCrash();
 			counts.compute(result, (k, v) -> {
 				if (v == null || v == 0) {
@@ -91,12 +105,13 @@ public class ParkingLotSimulation {
 					return v + 1L;
 				}
 			});
-			System.out.print(result + "\t");
-			if ((count - 1) % numbersPerLine == 0) {
+		}
+		int entryCount = 0;
+		for (Map.Entry<Integer, Long> e : counts.entrySet()) {
+			System.out.print(e.getKey() + "=" + e.getValue() + "\t");
+			if (++entryCount % 5 == 0) {
 				System.out.println();
 			}
 		}
-		System.out.println();
-		System.out.print(counts);
 	}
 }
