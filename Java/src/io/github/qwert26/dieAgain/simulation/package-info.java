@@ -1,0 +1,1 @@
+package io.github.qwert26.dieAgain.simulation;
