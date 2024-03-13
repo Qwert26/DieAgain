@@ -38,7 +38,7 @@ public class Transcriptase {
 
 	public static void main(String[] args) {
 		Random source = new PCGHash();
-		createProteins(100, source);
+		createProteins(1000, source);
 	}
 
 	private static void createProteins(long count, Random r) {
