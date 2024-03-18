@@ -93,7 +93,7 @@ public class ParkingLotSimulation {
 	public static void main(String... args) {
 		ParkingLotSimulation sim = new ParkingLotSimulation();
 		sim.dimensions = 3;
-		sim.length = 15;
+		sim.length = 10;
 		int result;
 		TreeMap<Integer, Long> counts = new TreeMap<Integer, Long>();
 		for (long count = 1_000_000; count > 0; count--) {
