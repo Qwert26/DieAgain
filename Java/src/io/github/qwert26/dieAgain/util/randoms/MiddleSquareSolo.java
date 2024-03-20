@@ -47,7 +47,7 @@ public class MiddleSquareSolo extends Random {
 		do {
 			newA = oldA = a.get();
 			newUS = oldUS = usedSeed.get();
-			if (newA == 0) {
+			if (Long.bitCount(newA) <= 1) {
 				newUS = Long.rotateLeft(newUS, 1) + 1;
 				newA = newUS;
 			}
