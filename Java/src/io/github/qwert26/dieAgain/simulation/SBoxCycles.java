@@ -31,7 +31,11 @@ public class SBoxCycles {
 			return result;
 		}
 	}
-
+	/**
+	 * Extracting the cycles of a randomly created s-box follows a harmonic distribution.
+	 * @param sbox
+	 * @return
+	 */
 	public static Map<Integer, Integer> extractCycles(int[] sbox) {
 		if (sbox == null || sbox.length == 0) {
 			return null;
@@ -108,7 +112,7 @@ public class SBoxCycles {
 		System.out.println("Numbers: " + sbox.length);
 		Random rng = new KISS32();
 		TreeMap<Long, Long> cycleSize2Count = new TreeMap<Long, Long>();
-		for (long count = 2000000L; count > 0; count--) {
+		for (long count = 2_000_000L; count > 0; count--) {
 			SBoxCycles.shuffleSBox(rng, sbox);
 			for (Map.Entry<Integer, Integer> entry : SBoxCycles.extractCycles(sbox).entrySet()) {
 				cycleSize2Count.compute(entry.getKey().longValue(), (cycle, amount) -> {

@@ -43,10 +43,6 @@ public final class Functions {
 		} else {
 			throw new IllegalArgumentException("z is less than or equal to -0.5, gamma(z) can not be calculated!");
 		}
-		/*
-		 * switch (tmp) { case 0: return Double.POSITIVE_INFINITY; case 1: return
-		 * sqrt(PI); case 2: return 1; default: break; } return (z - 1) * gamma(z - 1);
-		 */
 	}
 
 	/**
@@ -148,11 +144,6 @@ public final class Functions {
 			}
 		}
 		return prevCDFs[prevCDFs.length - 1];
-		/*
-		 * switch (df) { case 1: return 2 * cdfStandardNormal(sqrt(x)) - 1; case 2:
-		 * return 1 - exp(-x / 2); default: return cdfChiSquare(df - 2, x) - 2 *
-		 * pdfChiSquare(df, x); }
-		 */
 	}
 
 	/**

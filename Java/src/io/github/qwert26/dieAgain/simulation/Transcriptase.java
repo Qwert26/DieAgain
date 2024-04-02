@@ -37,7 +37,7 @@ public class Transcriptase {
 	}
 
 	public static void main(String[] args) {
-		Random source = new MiddleSquareSolo(2);
+		Random source = new MiddleSquareSolo();
 		createProteins(1000, source);
 	}
 
