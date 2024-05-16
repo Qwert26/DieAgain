@@ -75,6 +75,7 @@ public class CountOnesInBytesTest implements ITest {
 				}
 				j = 0;
 				for (long tSample = 0; tSample < current.gettSamples(); tSample++) {
+					// Create next "word"
 					for (int k = 0; k < 5; k++) {
 						j = j * 5 + BYTE_TO_LETTER[(short) byteSource.getBits((byte) 8)];
 					}

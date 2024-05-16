@@ -217,7 +217,7 @@ public class TestVector {
 	/**
 	 * Sets the number of degrees of freedom. Setting it to zero indicates that this
 	 * value is currently unkown must be figured out during evaluation. The cutoff
-	 * must have been specified or else its default alue will be used.
+	 * must have been specified or else its default value will be used.
 	 * 
 	 * @param ndof
 	 * @see #setCutoff(double)
@@ -418,7 +418,7 @@ public class TestVector {
 
 	/**
 	 * 
-	 * @return Always true, as NaN values are not possible.
+	 * @return Always true, as {@code NaN} values are not possible.
 	 */
 	public boolean evaluateKLDivergence() {
 		double sumX = 0;
@@ -440,7 +440,7 @@ public class TestVector {
 	 * mismatch.
 	 * 
 	 * @param t
-	 * @return Always true, as NaN values are not possible.
+	 * @return Always true, as {@code NaN} values are not possible.
 	 */
 	public boolean evaluateAbsoluteAreaMismatch(Transform t) {
 		double sumX = 0, sumY = 0;

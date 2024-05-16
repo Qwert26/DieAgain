@@ -84,14 +84,15 @@ public class CountOnesInStreamTest implements ITest {
 				}
 				vTest4.evaluate();
 				vTest5.evaluate();
-				pTest.setX(vTest5.getChsq()-vTest4.getChsq());
+				pTest.setX(vTest5.getChsq() - vTest4.getChsq());
 				pTest.evaluate();
-				currentTest.getpValues()[pSample]=pTest.getpValue();
+				currentTest.getpValues()[pSample] = pTest.getpValue();
 			}
-			currentTest.getPvLabels()[0]="Normal Distribution of Chi-Square Difference";
+			currentTest.getPvLabels()[0] = "Normal Distribution of Chi-Square Difference";
 			currentTest.evaluate();
 		}
 	}
+
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = COUNT1S_STREAM.createTest(50);
