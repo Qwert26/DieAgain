@@ -88,7 +88,7 @@ public class CrapsTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = CRAPS.createTest();
+		StandardTest test = CRAPS.createTest(40);
 		CRAPS.getTestMethod().runTestOn(new PCGHash(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {

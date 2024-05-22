@@ -95,8 +95,7 @@ public class BitFlippingTest implements ITest {
 					waitingTimesDistribution.getY()[distance] = waitingTimesDistribution.getY()[distance - 1] * 0.5;
 					waitingTimesDistribution.getX()[distance] = waitingTimes.getOrDefault(distance, 0);
 				}
-				waitingTimesDistribution.equalize();
-				waitingTimesDistribution.evaluateGTest();
+				waitingTimesDistribution.evaluate();
 				currentTest.getpValues()[3 * pSample + 1] = waitingTimesDistribution.getpValue();
 				double expectedCoFlips;
 				double chsq = 0.0;
@@ -124,8 +123,8 @@ public class BitFlippingTest implements ITest {
 
 	@Deprecated
 	public static void main(String... args) {
-		StandardTest test = BIT_FLIPS.createTest(8, 0x40000);
-		test.setnTuple((byte) 2);
+		StandardTest test = BIT_FLIPS.createTest(40, 0x10000);
+		test.setnTuple((byte) 8);
 		BIT_FLIPS.getTestMethod().runTestOn(new PCGHash(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
