@@ -66,9 +66,7 @@ public class SBoxCyclesTest implements ITest {
 						}
 					}
 				}
-				test.equalize();
-				//test.evaluateGTest();
-				test.evaluateKLDivergence();
+				test.evaluate();
 				currentTest.getpValues()[pSample] = test.getpValue();
 			}
 			currentTest.evaluate();
@@ -80,7 +78,7 @@ public class SBoxCyclesTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = SBOX_CYCLES.createTest();
 		test.setnTuple((byte) 4);
-		test.setpSamples(10);
+		test.setpSamples(40);
 		SBOX_CYCLES.getTestMethod().runTestOn(new PCGHash(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (int pv = 0; pv < test.getpSamples(); pv++) {

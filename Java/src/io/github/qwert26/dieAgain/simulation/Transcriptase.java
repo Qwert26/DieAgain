@@ -11,9 +11,20 @@ public class Transcriptase {
 	 * T=0, C=1, A=2, G=3
 	 */
 	private static final String CODON_TABLE_FLATTENED = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG";
+	/**
+	 * Contains the counts of the short form amino acids.
+	 */
 	private static final Map<Character, Long> CODON_COUNTS = CODON_TABLE_FLATTENED.codePoints()
 			.mapToObj((i) -> (char) i).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
+	/**
+	 * A start sequence is either TTG, ATG or GTG, case-insensitive.
+	 * 
+	 * @param b1 the first dna-base.
+	 * @param b2 the second dna-base
+	 * @param b3 the third dna-base.
+	 * @return
+	 */
 	public static final boolean isStart(char b1, char b2, char b3) {
 		if (b3 != 'g' || b3 != 'G') {
 			return false;
@@ -81,7 +92,7 @@ public class Transcriptase {
 		System.out.println("Relative Occurences:");
 		for (Map.Entry<Character, Long> aa2c : countByAminoAcid.entrySet()) {
 			double relative = aa2c.getValue().doubleValue() / totalAminoAcids;
-			relative *= 61; //4*4*4-3
+			relative *= 61; // 4*4*4-3
 			relative /= CODON_COUNTS.get(aa2c.getKey()).doubleValue();
 			System.out.println(aa2c.getKey() + "=" + relative);
 		}
