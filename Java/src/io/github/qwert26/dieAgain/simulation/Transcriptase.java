@@ -20,9 +20,12 @@ public class Transcriptase {
 	/**
 	 * A start sequence is either TTG, ATG or GTG, case-insensitive.
 	 * 
-	 * @param b1 the first dna-base.
-	 * @param b2 the second dna-base
-	 * @param b3 the third dna-base.
+	 * @param b1 the first dna-base. Must <b>NOT</b> be '{@code c}' or '{@code C}'
+	 *           for the function to return <code>true</code>.
+	 * @param b2 the second dna-base. Must be '{@code t}' or '{@code T}' for the
+	 *           function to return <code>true</code>.
+	 * @param b3 the third dna-base. Must be '{@code g}' or '{@code G}' for the
+	 *           function to return <code>true</code>.
 	 * @return
 	 */
 	public static final boolean isStart(char b1, char b2, char b3) {
@@ -35,6 +38,11 @@ public class Transcriptase {
 		return b1 != 'c' && b1 != 'C';
 	}
 
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
 	public static final boolean isStart(int v) {
 		if (v % 4 != 3) {
 			return false;
@@ -52,6 +60,11 @@ public class Transcriptase {
 		createProteins(1000, source);
 	}
 
+	/**
+	 * 
+	 * @param count The number of proteins to create
+	 * @param r
+	 */
 	private static void createProteins(long count, Random r) {
 		List<String> proteins = new LinkedList<String>();
 		StringBuilder sb = null;
@@ -76,25 +89,27 @@ public class Transcriptase {
 		}
 		System.out.println("Total amino acids: " + totalAminoAcids);
 		TreeMap<Character, Long> countByAminoAcid = new TreeMap<Character, Long>();
+		TreeMap<Integer, Long> countByLength = new TreeMap<Integer, Long>();
 		for (String protein : proteins) {
+			countByLength.compute(protein.length(), (k, v) -> 1L + (v == null ? 0 : v));
 			for (char shortForm : protein.toCharArray()) {
-				countByAminoAcid.compute(shortForm, (k, v) -> {
-					if (v == null || v == 0) {
-						return 1L;
-					} else {
-						return v + 1L;
-					}
-				});
+				countByAminoAcid.compute(shortForm, (k, v) -> 1L + (v == null ? 0 : v));
 			}
 		}
 		System.out.println("Count for each amino acid:");
 		System.out.println(countByAminoAcid);
+		System.out.println("Count for each protein-length:");
+		System.out.println(countByLength);
 		System.out.println("Relative Occurences:");
+		double areaMismatch = 0;
 		for (Map.Entry<Character, Long> aa2c : countByAminoAcid.entrySet()) {
 			double relative = aa2c.getValue().doubleValue() / totalAminoAcids;
 			relative *= 61; // 4*4*4-3
 			relative /= CODON_COUNTS.get(aa2c.getKey()).doubleValue();
-			System.out.println(aa2c.getKey() + "=" + relative);
+			System.out.println(aa2c.getKey() + " = " + relative);
+			areaMismatch += Math.abs(relative - 1);
 		}
+		areaMismatch /= 2;
+		System.out.println("Relative Area Mismatch: " + areaMismatch);
 	}
 }
