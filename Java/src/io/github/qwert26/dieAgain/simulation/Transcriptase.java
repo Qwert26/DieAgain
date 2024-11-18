@@ -57,7 +57,7 @@ public class Transcriptase {
 
 	public static void main(String[] args) {
 		Random source = new MiddleSquareSolo();
-		createProteins(1000, source);
+		createProteins(1, source);
 	}
 
 	/**
@@ -109,7 +109,6 @@ public class Transcriptase {
 			System.out.println(aa2c.getKey() + " = " + relative);
 			areaMismatch += Math.abs(relative - 1);
 		}
-		areaMismatch /= 2;
-		System.out.println("Relative Area Mismatch: " + areaMismatch);
+		System.out.println("Absolute Area Mismatch: " + areaMismatch);
 	}
 }
