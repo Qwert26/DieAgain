@@ -49,7 +49,7 @@ public class MonobitTest implements ITest {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = MONO_BIT.createTest(100, 1000000);
+		StandardTest test = MONO_BIT.createTest(50, 1000000);
 		test.setnTuple((byte) 32);
 		MONO_BIT.getTestMethod().runTestOn(new PCGHash(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {

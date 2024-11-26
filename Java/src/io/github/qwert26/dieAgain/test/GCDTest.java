@@ -39,7 +39,7 @@ public class GCDTest implements ITest {
 			0.10853040184, 0.09336837411, 0.07389607162, 0.05380182248, 0.03601960159, 0.02215902902, 0.01251328472,
 			0.00647884418, 0.00306981507, 0.00132828179, 0.00052381841, 0.00018764452, 6.084138e-05, 1.779885e-05,
 			4.66795e-06, 1.09504e-06, 2.2668e-07, 4.104e-08, 6.42e-09, 8.4e-10, 1.4e-10 };
-	public static final double RECIPROCAL_ZETA_2 = 6 / (Math.PI * Math.PI);
+	public static final double RECIPROCAL_ZETA_2 = 6.0 / (Math.PI * Math.PI);
 	public static final TestData GCD;
 	static {
 		GCD = new TestData();
