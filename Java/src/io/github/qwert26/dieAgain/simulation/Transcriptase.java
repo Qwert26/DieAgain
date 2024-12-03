@@ -70,7 +70,7 @@ public class Transcriptase {
 		return ret;
 	}
 
-	public static void main(String[] args) {
+	public final static void main(String[] args) {
 		Random source = new MiddleSquareSolo();
 		List<String> proteins = createStrandAndTranscribe(10000, source, false);
 		int totalAminoAcids = 0;
@@ -111,7 +111,7 @@ public class Transcriptase {
 	 * @param r
 	 * @return A list of generated proteins.
 	 */
-	private static List<String> createProteins(long count, Random r) {
+	public final static List<String> createProteins(long count, Random r) {
 		List<String> proteins = new LinkedList<String>();
 		StringBuilder sb = null;
 		char last = '*';
@@ -138,7 +138,7 @@ public class Transcriptase {
 	 *                          the generated strand.
 	 * @return a list of transcribed proteins from a generated dna-strand.
 	 */
-	private static List<String> createStrandAndTranscribe(int length, Random r, boolean includeIncomplete) {
+	public final static List<String> createStrandAndTranscribe(int length, Random r, boolean includeIncomplete) {
 		StringBuffer strand = new StringBuffer(length);
 		for (; length > 0; length--) {
 			switch (r.nextInt(4)) {

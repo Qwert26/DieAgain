@@ -2,12 +2,12 @@ package io.github.qwert26.dieAgain.simulation;
 
 import java.util.*;
 
-public class ParkingLotSimulation {
+public class ParkingLot {
 	private Random r = new Random();
 	private int dimensions = 2;
 	private double length = 100;
 
-	public ParkingLotSimulation() {
+	public ParkingLot() {
 		super();
 	}
 
@@ -91,12 +91,12 @@ public class ParkingLotSimulation {
 	}
 
 	public static void main(String... args) {
-		ParkingLotSimulation sim = new ParkingLotSimulation();
+		ParkingLot sim = new ParkingLot();
 		sim.dimensions = 3;
 		sim.length = 10;
 		int result;
 		TreeMap<Integer, Long> counts = new TreeMap<Integer, Long>();
-		for (long count = 1_000_000; count > 0; count--) {
+		for (long count = 2_000_000L; count > 0; count--) {
 			result = sim.runUntilCrash();
 			counts.compute(result, (k, v) -> {
 				if (v == null || v == 0) {
