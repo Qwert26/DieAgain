@@ -17,6 +17,6 @@
   <name>DieAgainInJava</name>
   <groupId>com.github.qwert26.dieAgain</groupId>
   <properties>
-  	<java.version>19</java.version>
+  	<maven.compiler.release>25</maven.compiler.release>
   </properties>
 </project>
