@@ -98,7 +98,7 @@ public class ParkingLot {
 		TreeMap<Integer, Long> counts = new TreeMap<Integer, Long>();
 		for (long count = 2_000_000L; count > 0; count--) {
 			result = sim.runUntilCrash();
-			counts.compute(result, (k, v) -> {
+			counts.compute(result, (_, v) -> {
 				if (v == null || v == 0) {
 					return 1L;
 				} else {

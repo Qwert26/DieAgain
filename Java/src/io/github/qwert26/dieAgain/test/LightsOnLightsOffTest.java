@@ -49,7 +49,7 @@ public class LightsOnLightsOffTest implements ITest {
 						lights |= bitSource.getBits(bits);
 						tries++;
 					} while (lights != allOn);
-					tries2Counts.compute(tries, (k, v) -> {
+					tries2Counts.compute(tries, (_, v) -> {
 						if (v == null || v == 0) {
 							return 1;
 						} else {
@@ -61,7 +61,7 @@ public class LightsOnLightsOffTest implements ITest {
 						lights &= bitSource.getBits(bits);
 						tries++;
 					} while (lights != 0);
-					tries2Counts.compute(tries, (k, v) -> {
+					tries2Counts.compute(tries, (_, v) -> {
 						if (v == null || v == 0) {
 							return 1;
 						} else {

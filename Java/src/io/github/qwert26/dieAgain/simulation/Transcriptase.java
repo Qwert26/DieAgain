@@ -55,6 +55,11 @@ public class Transcriptase {
 		return v % 4 != 1;
 	}
 
+	/**
+	 * 
+	 * @param cs
+	 * @return
+	 */
 	public static final int decode(char... cs) {
 		int ret = 0;
 		for (char c : cs) {
@@ -72,7 +77,7 @@ public class Transcriptase {
 
 	public final static void main(String[] args) {
 		Random source = new MiddleSquareSolo();
-		List<String> proteins = createStrandAndTranscribe(10000, source, false);
+		List<String> proteins = createStrandAndTranscribe(10000, source, false, true);
 		int totalAminoAcids = 0;
 		System.out.println("Individual Proteins by length:");
 		proteins.sort((s1, s2) -> s1.length() - s2.length());
@@ -84,9 +89,9 @@ public class Transcriptase {
 		TreeMap<Character, Long> countByAminoAcid = new TreeMap<Character, Long>();
 		TreeMap<Integer, Long> countByLength = new TreeMap<Integer, Long>();
 		for (String protein : proteins) {
-			countByLength.compute(protein.length(), (k, v) -> 1L + (v == null ? 0 : v));
+			countByLength.compute(protein.length(), (_, v) -> 1L + (v == null ? 0 : v));
 			for (char shortForm : protein.toCharArray()) {
-				countByAminoAcid.compute(shortForm, (k, v) -> 1L + (v == null ? 0 : v));
+				countByAminoAcid.compute(shortForm, (_, v) -> 1L + (v == null ? 0 : v));
 			}
 		}
 		System.out.println("Count for each amino acid:");
@@ -131,14 +136,16 @@ public class Transcriptase {
 
 	/**
 	 * 
-	 * @param length            the length of the DNA-Strand to create
+	 * @param length                  the length of the DNA-Strand to create
 	 * @param r
-	 * @param includeIncomplete If any incomplete proteins should be included in the
-	 *                          output: These proteins do not have a stop-codon on
-	 *                          the generated strand.
+	 * @param includeIncomplete       If any incomplete proteins should be included
+	 *                                in the output: These proteins do not have a
+	 *                                stop-codon on the generated strand.
+	 * @param transcribeComplementary
 	 * @return a list of transcribed proteins from a generated dna-strand.
 	 */
-	public final static List<String> createStrandAndTranscribe(int length, Random r, boolean includeIncomplete) {
+	public final static List<String> createStrandAndTranscribe(int length, Random r, boolean includeIncomplete,
+			boolean transcribeComplementary) {
 		StringBuffer strand = new StringBuffer(length);
 		for (; length > 0; length--) {
 			switch (r.nextInt(4)) {
@@ -148,7 +155,25 @@ public class Transcriptase {
 			case 3 -> strand.append('G');
 			}
 		}
-		length = strand.length();
+		List<String> ret = transcribe(includeIncomplete, strand);
+		if (transcribeComplementary) {
+			strand.reverse();
+			for (; length < strand.length(); length++) {
+				strand.setCharAt(length, getBindingPartner(strand.charAt(length)));
+			}
+		}
+		ret.addAll(transcribe(includeIncomplete, strand));
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param includeIncomplete
+	 * @param strand
+	 * @return
+	 */
+	public static final List<String> transcribe(boolean includeIncomplete, CharSequence strand) {
+		int length = strand.length();
 		List<String> proteins = new LinkedList<String>();
 		for (int i = 2; i < length; i++) {
 			char first = strand.charAt(i - 2);
@@ -179,5 +204,24 @@ public class Transcriptase {
 			}
 		}
 		return proteins;
+	}
+
+	/**
+	 * 
+	 * @param letter
+	 * @return
+	 */
+	public final static char getBindingPartner(final char letter) {
+		return switch (letter) {
+		case 'a' -> 't';
+		case 'A' -> 'T';
+		case 't' -> 'a';
+		case 'T' -> 'A';
+		case 'G' -> 'C';
+		case 'g' -> 'c';
+		case 'C' -> 'G';
+		case 'c' -> 'g';
+		default -> throw new IllegalArgumentException("Unknown Base: " + letter);
+		};
 	}
 }

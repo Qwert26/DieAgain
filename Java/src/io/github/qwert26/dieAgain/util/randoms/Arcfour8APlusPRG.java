@@ -7,7 +7,7 @@ public class Arcfour8APlusPRG extends Random {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -522360271923578108L;
+	private static final long serialVersionUID = 465816673429409958L;
 	private AtomicIntegerArray s1, s2;
 	private AtomicInteger i, j1, j2, k1, k2;
 	private boolean initialized = false;

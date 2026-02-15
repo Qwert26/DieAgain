@@ -11,6 +11,11 @@ public class SBoxCycles {
 		super();
 	}
 
+	/**
+	 * 
+	 * @param sbox
+	 * @return
+	 */
 	public static long determineCycle(int[] sbox) {
 		if (sbox == null || sbox.length == 0) {
 			return 0;
@@ -31,8 +36,11 @@ public class SBoxCycles {
 			return result;
 		}
 	}
+
 	/**
-	 * Extracting the cycles of a randomly created s-box follows a harmonic distribution.
+	 * Extracting the cycles of a randomly created s-box follows a distribution akin
+	 * to the harmonic series.
+	 * 
 	 * @param sbox
 	 * @return
 	 */
@@ -50,7 +58,7 @@ public class SBoxCycles {
 						current++;
 						visited[j] = true;
 					}
-					ret.compute(current, (length, count) -> {
+					ret.compute(current, (_, count) -> {
 						if (count == null || count == 0) {
 							return 1;
 						} else {
@@ -86,6 +94,10 @@ public class SBoxCycles {
 		return a;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int[] createIdentitySBox() {
 		int[] ret = new int[1 << bits];
 		for (int i = 0; i < ret.length; i++) {
@@ -94,6 +106,11 @@ public class SBoxCycles {
 		return ret;
 	}
 
+	/**
+	 * 
+	 * @param rng
+	 * @param sbox
+	 */
 	public static void shuffleSBox(Random rng, int[] sbox) {
 		for (int i = 0; i < sbox.length; i++) {
 			int j = (i + rng.nextInt(sbox.length)) % sbox.length;
@@ -115,7 +132,7 @@ public class SBoxCycles {
 		for (long count = 2_000_000L; count > 0; count--) {
 			SBoxCycles.shuffleSBox(rng, sbox);
 			for (Map.Entry<Integer, Integer> entry : SBoxCycles.extractCycles(sbox).entrySet()) {
-				cycleSize2Count.compute(entry.getKey().longValue(), (cycle, amount) -> {
+				cycleSize2Count.compute(entry.getKey().longValue(), (_, amount) -> {
 					if (amount == null || amount == 0) {
 						return entry.getValue().longValue();
 					} else {

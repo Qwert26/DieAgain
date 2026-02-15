@@ -26,7 +26,7 @@ public final class Functions {
 	public static double gamma(double z) {
 		int tmp = (int) (2 * z);
 		if (tmp != 2 * z) {
-			System.err.println("2z was not an integer! Result might be inaccurate.");
+			System.err.println("2z was not an integer!");
 		}
 		if (tmp == 0) {
 			return Double.POSITIVE_INFINITY;

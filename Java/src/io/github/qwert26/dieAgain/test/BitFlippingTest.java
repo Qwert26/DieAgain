@@ -58,7 +58,7 @@ public class BitFlippingTest implements ITest {
 					for (byte bitI = 0; bitI < bitCount; bitI++) {
 						if (lastBitFlip[bitI] != -1) {
 							if (isBitSet(difference, bitI)) {
-								waitingTimes.compute(lastBitFlip[bitI], (distance, frequency) -> {
+								waitingTimes.compute(lastBitFlip[bitI], (_, frequency) -> {
 									if (frequency == null || frequency == 0) {
 										return 1;
 									} else {

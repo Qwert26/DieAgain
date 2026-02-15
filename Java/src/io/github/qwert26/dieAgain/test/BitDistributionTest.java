@@ -55,7 +55,7 @@ public class BitDistributionTest implements ITest {
 					for (int p = 0; p < lastSeen.length; p++) {
 						if (lastSeen[p] != -1) {
 							if (p == pattern) {
-								distance2Frequency.compute(lastSeen[p], (key, oldV) -> {
+								distance2Frequency.compute(lastSeen[p], (_, oldV) -> {
 									if (oldV == null || oldV == 0) {
 										return 1;
 									} else {
