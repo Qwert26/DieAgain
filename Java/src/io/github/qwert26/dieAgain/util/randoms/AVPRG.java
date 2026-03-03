@@ -8,7 +8,6 @@ public class AVPRG extends Random {
 	 * 
 	 */
 	private static final long serialVersionUID = 4344425970872148065L;
-	private boolean initialized = false;
 	private AtomicInteger a, b, c, d;
 	private AtomicInteger iii, jjj, kkk;
 
@@ -17,7 +16,6 @@ public class AVPRG extends Random {
 	}
 
 	public AVPRG(long seed) {
-		super(seed);
 		a = new AtomicInteger(0);
 		b = new AtomicInteger(0);
 		c = new AtomicInteger(0);
@@ -25,20 +23,17 @@ public class AVPRG extends Random {
 		iii = new AtomicInteger(1);
 		jjj = new AtomicInteger(1);
 		kkk = new AtomicInteger(1);
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			a.set(0xf1ea5eed);
-			b.set(a.get());
-			c.set(a.get());
-			d.set((int) (seed - a.get()));
-			for (int i = 0; i < 20; i++) {
-				next(0);
-			}
+		a.set(0xf1ea5eed);
+		b.set(a.get());
+		c.set(a.get());
+		d.set((int) (seed - a.get()));
+		for (int i = 0; i < 20; i++) {
+			next(0);
 		}
 	}
 
@@ -81,9 +76,7 @@ public class AVPRG extends Random {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AVPRG [initialized=");
-		builder.append(initialized);
-		builder.append(", a=");
+		builder.append("AVPRG [a=");
 		builder.append(a);
 		builder.append(", b=");
 		builder.append(b);

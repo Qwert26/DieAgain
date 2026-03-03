@@ -16,7 +16,6 @@ public class KISS64 extends Random {
 	private AtomicLong y;
 	private AtomicLong z;
 	private AtomicLong c;
-	private boolean initialized = false;
 	private static final long LCG_MULT = 6906969069L;
 	private static final int LCG_ADD = 1234567;
 
@@ -25,23 +24,19 @@ public class KISS64 extends Random {
 	}
 
 	public KISS64(long seed) {
-		super();
 		x = new AtomicLong();
 		y = new AtomicLong();
 		z = new AtomicLong();
 		c = new AtomicLong();
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			x.set(seed);
-			y.set(x.get());
-			z.set(seed);
-			c.set(1);
-		}
+		x.set(seed);
+		y.set(x.get());
+		z.set(seed);
+		c.set(1);
 	}
 
 	@Override
@@ -81,8 +76,6 @@ public class KISS64 extends Random {
 		builder.append(z);
 		builder.append(", c=");
 		builder.append(c);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

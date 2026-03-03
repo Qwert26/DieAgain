@@ -16,7 +16,6 @@ public class KISS32 extends Random {
 	private AtomicInteger y;
 	private AtomicInteger z;
 	private AtomicInteger c;
-	private boolean initialized = false;
 	private static final int LCG_MULT = 69069;
 	private static final short LCG_ADD = 12345;
 	private static final long MWC_MULT = 698769069L;
@@ -26,23 +25,19 @@ public class KISS32 extends Random {
 	}
 
 	public KISS32(long seed) {
-		super();
 		x = new AtomicInteger();
 		y = new AtomicInteger();
 		z = new AtomicInteger();
 		c = new AtomicInteger();
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			x.set((int) (seed ^ (seed >>> 32)));
-			y.set(x.get());
-			z.set((int) seed);
-			c.set((int) (1 + (seed >>> 32)));
-		}
+		x.set((int) (seed ^ (seed >>> 32)));
+		y.set(x.get());
+		z.set((int) seed);
+		c.set((int) (1 + (seed >>> 32)));
 	}
 
 	@Override
@@ -81,8 +76,6 @@ public class KISS32 extends Random {
 		builder.append(z);
 		builder.append(", c=");
 		builder.append(c);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

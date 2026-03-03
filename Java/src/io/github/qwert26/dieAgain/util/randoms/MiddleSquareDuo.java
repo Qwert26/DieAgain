@@ -13,27 +13,23 @@ public class MiddleSquareDuo extends Random {
 	private static final long serialVersionUID = 329566499844353412L;
 	private AtomicLong usedSeed;
 	private AtomicInteger a, b;
-	private boolean initialized = false;
 
 	public MiddleSquareDuo() {
 		this(System.nanoTime());
 	}
 
 	public MiddleSquareDuo(long seed) {
-		super(seed);
 		usedSeed = new AtomicLong(seed);
 		a = new AtomicInteger((int) (seed >>> 32));
 		b = new AtomicInteger((int) seed);
-		initialized = true;
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			usedSeed.set(seed);
-			a.set((int) (seed >>> 32));
-			b.set((int) seed);
-		}
+		usedSeed.set(seed);
+		a.set((int) (seed >>> 32));
+		b.set((int) seed);
 	}
 
 	@Override

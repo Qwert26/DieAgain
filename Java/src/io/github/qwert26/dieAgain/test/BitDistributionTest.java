@@ -13,8 +13,9 @@ public class BitDistributionTest implements ITest {
 	static {
 		BIT_DISTRIBUTION = new TestData();
 		BIT_DISTRIBUTION.setName("Bit Patterns Distributions");
-		BIT_DISTRIBUTION.setDescription("This Test works on the premise, that Bit Patterns should be uniformly distributed "
-				+ "and the distance between identical Bit Patterns should be geometric distributed.");
+		BIT_DISTRIBUTION
+				.setDescription("This Test works on the premise, that Bit Patterns should be uniformly distributed "
+						+ "and the distance between identical Bit Patterns should be geometric distributed.");
 		BIT_DISTRIBUTION.setNkps(2);
 		BIT_DISTRIBUTION.setpSamplesStandard(32);
 		BIT_DISTRIBUTION.settSamplesStandard(4096);
@@ -33,10 +34,13 @@ public class BitDistributionTest implements ITest {
 			if (current.getnTuple() == 0) {
 				current.setnTuple((byte) 1);
 			} else if (current.getnTuple() > 30) {
-				//Skip
+				// Skip
 				continue;
 			}
-			final double success = Math.pow(2.0, -current.getnTuple());
+			if (current.gettSamples() < (1 << current.getnTuple())) {
+				continue;
+			}
+			final double success = Math.pow(0.5, current.getnTuple());
 			TreeMap<Integer, Integer> distance2Frequency = new TreeMap<>();
 			for (int run = 0; run < current.getpSamples(); run++) {
 				TestVector counts = new TestVector();
@@ -93,8 +97,8 @@ public class BitDistributionTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = BIT_DISTRIBUTION.createTest(50, 0x1000);
-		test.setnTuple((byte) 16);
-		BIT_DISTRIBUTION.getTestMethod().runTestOn(new Arcfour16APlusPRG(), test);
+		test.setnTuple((byte) 1);
+		BIT_DISTRIBUTION.getTestMethod().runTestOn(new QSPLFSR(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t");

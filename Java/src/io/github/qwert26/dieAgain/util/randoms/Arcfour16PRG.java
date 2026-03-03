@@ -10,36 +10,31 @@ public class Arcfour16PRG extends Random {
 	private static final long serialVersionUID = -5485178410017833467L;
 	private AtomicIntegerArray s;
 	private AtomicInteger i, j;
-	private boolean initialized = false;
 
 	public Arcfour16PRG() {
 		this(System.nanoTime());
 	}
 
 	public Arcfour16PRG(long seed) {
-		super(seed);
 		s = new AtomicIntegerArray(0x10000);
 		i = new AtomicInteger(0);
 		j = new AtomicInteger(0);
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			for (int ii = 0; ii < 0x10000; ii++) {
-				s.set(ii, ii);
-			}
-			for (int ii = 0, ij = 0, tmp; ii < 0x10000; ii++) {
-				ij = (int) ((ij + s.get(ii) + Long.rotateRight(seed, ii)) & 0xFFFF);
-				tmp = s.get(ij);
-				s.set(ii, s.get(ij));
-				s.set(ij, tmp);
-			}
-			i.set(0);
-			j.set(0);
+		for (int ii = 0; ii < 0x10000; ii++) {
+			s.set(ii, ii);
 		}
+		for (int ii = 0, ij = 0, tmp; ii < 0x10000; ii++) {
+			ij = (int) ((ij + s.get(ii) + Long.rotateRight(seed, ii)) & 0xFFFF);
+			tmp = s.get(ij);
+			s.set(ii, s.get(ij));
+			s.set(ij, tmp);
+		}
+		i.set(0);
+		j.set(0);
 	}
 
 	@Override
@@ -74,8 +69,6 @@ public class Arcfour16PRG extends Random {
 		builder.append(i);
 		builder.append(", j=");
 		builder.append(j);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -26,7 +26,6 @@ public class CellularAutomaton extends Random {
 			222, 207, 208, 137, 128, 135, 96, 144, 18, 95, 234, 139, 173, 92, 1, 203, 115, 223, 130, 97, 91, 227, 146,
 			4, 31, 120, 211, 38, 22, 138, 140, 237, 238, 251, 240, 160, 142, 119, 73, 103, 166, 33, 148, 9, 111, 136,
 			168, 150, 82, 204 };
-	private boolean initialized = false;
 	private AtomicIntegerArray config;
 	private AtomicInteger currentCell;
 
@@ -35,37 +34,33 @@ public class CellularAutomaton extends Random {
 	}
 
 	public CellularAutomaton(long seed) {
-		super(seed);
 		config = new AtomicIntegerArray(CA_WIDTH);
 		currentCell = new AtomicInteger();
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			for (int i = 0; i < CA_WIDTH; i++) {
-				config.set(i, 0);
-			}
-			config.set(CA_WIDTH - 1, (int) (seed & 0xFF));
-			config.set(CA_WIDTH - 2, (int) ((seed >> 8) & 0xFF));
-			config.set(CA_WIDTH - 3, (int) ((seed >> 16) & 0xFF));
-			config.set(CA_WIDTH - 4, (int) ((seed >> 24) & 0xFF));
-			config.set(CA_WIDTH - 5, (int) ((seed >> 32) & 0xFF));
-			config.set(CA_WIDTH - 6, (int) ((seed >> 40) & 0xFF));
-			config.set(CA_WIDTH - 7, (int) ((seed >> 48) & 0xFF));
-			config.set(CA_WIDTH - 8, (int) ((seed >> 56) & 0xFF));
-			if (seed != -1) {
-				seed++;
-			}
-			for (int i = 0; i < CA_WIDTH - 8; i++) {
-				config.set(i, (int) (Long.rotateLeft(seed, i % 64) & 0xFF));
-			}
-			currentCell.set(CA_WIDTH - 1);
-			for (int i = 0; i < INITIAL_DUMP; i++) {
-				next(0);
-			}
+		for (int i = 0; i < CA_WIDTH; i++) {
+			config.set(i, 0);
+		}
+		config.set(CA_WIDTH - 1, (int) (seed & 0xFF));
+		config.set(CA_WIDTH - 2, (int) ((seed >> 8) & 0xFF));
+		config.set(CA_WIDTH - 3, (int) ((seed >> 16) & 0xFF));
+		config.set(CA_WIDTH - 4, (int) ((seed >> 24) & 0xFF));
+		config.set(CA_WIDTH - 5, (int) ((seed >> 32) & 0xFF));
+		config.set(CA_WIDTH - 6, (int) ((seed >> 40) & 0xFF));
+		config.set(CA_WIDTH - 7, (int) ((seed >> 48) & 0xFF));
+		config.set(CA_WIDTH - 8, (int) ((seed >> 56) & 0xFF));
+		if (seed != -1) {
+			seed++;
+		}
+		for (int i = 0; i < CA_WIDTH - 8; i++) {
+			config.set(i, (int) (Long.rotateLeft(seed, i % 64) & 0xFF));
+		}
+		currentCell.set(CA_WIDTH - 1);
+		for (int i = 0; i < INITIAL_DUMP; i++) {
+			next(0);
 		}
 	}
 
@@ -112,9 +107,7 @@ public class CellularAutomaton extends Random {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CellularAutomaton [initialized=");
-		builder.append(initialized);
-		builder.append(", config=");
+		builder.append("CellularAutomaton [config=");
 		builder.append(config);
 		builder.append(", currentCell=");
 		builder.append(currentCell);

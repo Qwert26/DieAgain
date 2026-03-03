@@ -17,35 +17,30 @@ public class SuperKISS extends Random {
 	private AtomicInteger carry;
 	private AtomicInteger linearCongruence;
 	private AtomicInteger xorShift;
-	private boolean initialized = false;
 
 	public SuperKISS() {
 		this(System.nanoTime());
 	}
 
 	public SuperKISS(long seed) {
-		super(seed);
 		q = new AtomicIntegerArray(Q_MAX);
 		index = new AtomicInteger();
 		carry = new AtomicInteger();
 		linearCongruence = new AtomicInteger();
 		xorShift = new AtomicInteger();
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			super.setSeed(seed);
-			for (int i = 0; i < Q_MAX; i++) {
-				q.set(i, super.next(32));
-			}
-			carry.set(362436);
-			linearCongruence.set(1236789);
-			xorShift.set(521288629);
-			index.set(Q_MAX);
+		super.setSeed(seed);
+		for (int i = 0; i < Q_MAX; i++) {
+			q.set(i, super.next(32));
 		}
+		carry.set(362436);
+		linearCongruence.set(1236789);
+		xorShift.set(521288629);
+		index.set(Q_MAX);
 	}
 
 	@Override
@@ -109,8 +104,6 @@ public class SuperKISS extends Random {
 		builder.append(linearCongruence);
 		builder.append(", xorShift=");
 		builder.append(xorShift);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -4,6 +4,7 @@ import java.util.*;
 
 import io.github.qwert26.dieAgain.util.*;
 import io.github.qwert26.dieAgain.util.randoms.*;
+
 /**
  * 
  * @author Christian Schürhoff
@@ -93,13 +94,13 @@ public class MinimumDistanceTest implements ITest, Comparator<double[]> {
 
 	@Deprecated
 	public static void main(String[] args) {
-		StandardTest test = MINIMUM_DISTANCE.createTest(10, 100000);
+		StandardTest test = MINIMUM_DISTANCE.createTest(40, 100000);
 		test.setnTuple((byte) 4);
 		TestObserver observer = new TestObserver();
 		observer.setTests(test);
-		Thread t = new Thread(observer);
-		t.start();
-		MINIMUM_DISTANCE.getTestMethod().runTestOn(new PCGHash(), test);
+		// Thread t = new Thread(observer);
+		// t.start();
+		MINIMUM_DISTANCE.getTestMethod().runTestOn(new QSPLFSR(), test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "\t\t");
 		}

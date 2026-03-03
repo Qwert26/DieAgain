@@ -10,7 +10,6 @@ public class Arcfour16APlusPRG extends Random {
 	private static final long serialVersionUID = -522360271923578108L;
 	private AtomicIntegerArray s1, s2;
 	private AtomicInteger i, j1, j2, k1, k2;
-	private boolean initialized = false;
 	public static final int W = 3;
 	public static final int W1 = 255;
 	public static final int W2 = 257;
@@ -22,7 +21,6 @@ public class Arcfour16APlusPRG extends Random {
 	}
 
 	public Arcfour16APlusPRG(long seed) {
-		super(seed);
 		s1 = new AtomicIntegerArray(0x10000);
 		s2 = new AtomicIntegerArray(0x10000);
 		i = new AtomicInteger(0);
@@ -30,43 +28,40 @@ public class Arcfour16APlusPRG extends Random {
 		j2 = new AtomicInteger(0);
 		k1 = new AtomicInteger(0);
 		k2 = new AtomicInteger(0);
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			for (int ii = 0; ii < 0x10000; ii++) {
-				s1.set(ii, ii);
-				s2.set(ii, ii);
-			}
-			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x10000; ii++) {
-				ij1 = (int) ((ij1 + s1.get(ij1) + Long.rotateLeft(seed, ii)) & 0xFFFF);
-				ij2 = (int) ((ij2 + s1.get(ij2) + Long.rotateRight(seed, ii)) & 0xFFFF);
-				tmp = s1.get(ij1);
-				s1.set(ij1, s1.get(ii));
-				s1.set(ii, tmp);
-				tmp = s2.get(ij2);
-				s2.set(ij2, s2.get(ii));
-				s2.set(ii, tmp);
-			}
-			for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x40000; ii++) {
-				ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFFFF);
-				ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFFFF);
-				tmp = s1.get(ij1);
-				s1.set(ij1, s1.get(ii & 0xFFFF));
-				s1.set(ii & 0xFFFF, tmp);
-				tmp = s2.get(ij2);
-				s2.set(ij2, s2.get(ii & 0xFFFF));
-				s2.set(ii & 0xFFFF, tmp);
-			}
-			i.set(0);
-			j1.set(0);
-			j2.set(0);
-			k1.set(0);
-			k2.set(0);
+		for (int ii = 0; ii < 0x10000; ii++) {
+			s1.set(ii, ii);
+			s2.set(ii, ii);
 		}
+		for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x10000; ii++) {
+			ij1 = (int) ((ij1 + s1.get(ij1) + Long.rotateLeft(seed, ii)) & 0xFFFF);
+			ij2 = (int) ((ij2 + s1.get(ij2) + Long.rotateRight(seed, ii)) & 0xFFFF);
+			tmp = s1.get(ij1);
+			s1.set(ij1, s1.get(ii));
+			s1.set(ii, tmp);
+			tmp = s2.get(ij2);
+			s2.set(ij2, s2.get(ii));
+			s2.set(ii, tmp);
+		}
+		for (int ii = 0, ij1 = 0, ij2 = 0, tmp; ii < 0x40000; ii++) {
+			ij1 = (int) ((ij1 + s1.get(ij1) + W1) & 0xFFFF);
+			ij2 = (int) ((ij2 + s1.get(ij2) + W2) & 0xFFFF);
+			tmp = s1.get(ij1);
+			s1.set(ij1, s1.get(ii & 0xFFFF));
+			s1.set(ii & 0xFFFF, tmp);
+			tmp = s2.get(ij2);
+			s2.set(ij2, s2.get(ii & 0xFFFF));
+			s2.set(ii & 0xFFFF, tmp);
+		}
+		i.set(0);
+		j1.set(0);
+		j2.set(0);
+		k1.set(0);
+		k2.set(0);
 	}
 
 	@Override
@@ -132,8 +127,6 @@ public class Arcfour16APlusPRG extends Random {
 		builder.append(k1);
 		builder.append(", k2=");
 		builder.append(k2);
-		builder.append(", initialized=");
-		builder.append(initialized);
 		builder.append("]");
 		return builder.toString();
 	}

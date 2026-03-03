@@ -125,7 +125,7 @@ public class BitFlippingTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = BIT_FLIPS.createTest(40, 0x10000);
 		test.setnTuple((byte) 8);
-		BIT_FLIPS.getTestMethod().runTestOn(new PCGHash(), test);
+		BIT_FLIPS.getTestMethod().runTestOn(new QSPLFSR(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print("|" + test.getPvLabels()[nk] + "\t");

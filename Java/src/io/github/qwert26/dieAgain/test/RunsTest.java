@@ -92,7 +92,7 @@ public class RunsTest implements ITest {
 	public static void main(String... args) {
 		StandardTest test = RUNS.createTest(48);
 		test.setnTuple((byte) 8);
-		RUNS.getTestMethod().runTestOn(new PCGHash(), test);
+		RUNS.getTestMethod().runTestOn(new QSPLFSR(), test);
 		// System.out.println(test);
 		for (int nk = 0; nk < test.getNkps(); nk++) {
 			System.out.print(test.getPvLabels()[nk] + "  \t");

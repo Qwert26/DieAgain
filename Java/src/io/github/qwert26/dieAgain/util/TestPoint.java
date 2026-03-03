@@ -1,10 +1,15 @@
 package io.github.qwert26.dieAgain.util;
 
 /**
+ * <p>
  * The TestPoints is used for statistical tests, which only generate a single
  * value. According to the central limit theorem, any sum of many independent
  * and maybe even different distributions can be approximated by a normal
  * distribution.
+ * </p>
+ * <p>
+ * Except the Cauchy-Distribution: It has no defined mean or variance.
+ * </p>
  * 
  * @author Christian Schürhoff
  *

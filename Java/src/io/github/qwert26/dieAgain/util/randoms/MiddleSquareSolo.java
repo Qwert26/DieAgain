@@ -15,25 +15,21 @@ public class MiddleSquareSolo extends Random {
 	 */
 	private static final long serialVersionUID = -3139031035635606891L;
 	private AtomicLong a, usedSeed;
-	private boolean initialized = false;
 
 	public MiddleSquareSolo() {
 		this(System.nanoTime());
 	}
 
 	public MiddleSquareSolo(long seed) {
-		super(seed);
 		a = new AtomicLong(seed);
 		usedSeed = new AtomicLong(seed);
-		initialized = true;
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			a.set(seed);
-			usedSeed.set(seed);
-		}
+		a.set(seed);
+		usedSeed.set(seed);
 	}
 
 	/**

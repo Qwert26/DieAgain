@@ -96,7 +96,7 @@ public class CountOnesInStreamTest implements ITest {
 	@Deprecated
 	public static void main(String... args) {
 		StandardTest test = COUNT1S_STREAM.createTest(50);
-		COUNT1S_STREAM.getTestMethod().runTestOn(new PCGHash(), test);
+		COUNT1S_STREAM.getTestMethod().runTestOn(new QSPLFSR(), test);
 		System.out.println(test.getPvLabels()[0]);
 		for (double p : test.getpValues()) {
 			System.out.println(p);

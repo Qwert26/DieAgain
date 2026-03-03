@@ -16,7 +16,6 @@ public class PCGHash extends Random {
 	 * 
 	 */
 	private static final long serialVersionUID = -7858768246882098416L;
-	private boolean initialized = false;
 	private AtomicLong state;
 
 	public PCGHash() {
@@ -24,17 +23,13 @@ public class PCGHash extends Random {
 	}
 
 	public PCGHash(long seed) {
-		super(seed);
 		state = new AtomicLong(0);
-		initialized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initialized) {
-			state.set(seed);
-		}
+		state.set(seed);
 	}
 
 	@Override
@@ -48,4 +43,14 @@ public class PCGHash extends Random {
 		} while (!state.compareAndSet(oldState, newState));
 		return (int) newState >>> (32 - bits);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PCGHash [state=");
+		builder.append(state);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

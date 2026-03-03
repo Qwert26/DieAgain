@@ -10,7 +10,6 @@ public class Jenkins extends Random {
 	private static final long serialVersionUID = 507944173644930234L;
 	private AtomicInteger a;
 	private char next = 0;
-	private boolean initalized = false;
 	public final static int OFFSET_A = 0xBB48E941;
 
 	public Jenkins() {
@@ -18,10 +17,8 @@ public class Jenkins extends Random {
 	}
 
 	public Jenkins(long seed) {
-		super(seed);
 		a = new AtomicInteger();
-		initalized = true;
-		setSeed(seed);
+		super(seed);
 	}
 
 	/**
@@ -31,10 +28,8 @@ public class Jenkins extends Random {
 	 */
 	@Override
 	public synchronized void setSeed(long seed) {
-		if (initalized) {
-			next = (char) seed;
-			a.set((int) ((seed >>> 16) + OFFSET_A));
-		}
+		next = (char) seed;
+		a.set((int) ((seed >>> 16) + OFFSET_A));
 	}
 
 	@Override
@@ -59,10 +54,8 @@ public class Jenkins extends Random {
 		builder.append(a);
 		builder.append(", next=");
 		builder.append(next);
-		builder.append(", initalized=");
-		builder.append(initalized);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
